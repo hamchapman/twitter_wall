@@ -7,6 +7,5 @@ module.exports = function(sequelize, DataTypes) {
       secret: DataTypes.STRING
     }
   );
-
   return PusherConfig;
 };

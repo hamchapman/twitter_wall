@@ -11,11 +11,11 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-    db.User.find({where: {id: id}}).success(function(user){
-        done(null, user);
-    }).error(function(err){
-        done(err, null);
-    });
+  db.User.find({where: {id: id}}).success(function(user){
+    done(null, user);
+  }).error(function(err){
+    done(err, null);
+  });
 });
 
 // Use local strategy to create admin account
@@ -34,35 +34,35 @@ passport.use(new LocalStrategy(
       done(err);
     });
   }
-));
+  ));
 
 // Use twitter strategy just to save oauth token 
 // and token secret to use with the Twitter API
 passport.use(new TwitterStrategy({
-        consumerKey: config.twitter.clientID,
-        consumerSecret: config.twitter.clientSecret,
-        callbackURL: config.twitter.callbackURL
-    },
-    function(token, tokenSecret, profile, done) {
-    
-        db.TwitterOAuth.find({where: {oauth_token: token}}).success(function(oauthData){
-            if(!oauthData){
-                db.TwitterOAuth.create({
-                    oauth_token: token,
-                    oauth_secret: tokenSecret
-                }).success(function(u){
-                    console.log('New oauth data saved');
-                    done(null, u);
-                });
-            } else {
-                console.log('Oauth data already exists');
-                done(null, user);
-            }
-        
-        }).error(function(err){
-            done(err, null);
-        });
+  consumerKey: config.twitter.clientID,
+  consumerSecret: config.twitter.clientSecret,
+  callbackURL: config.twitter.callbackURL
+},
+function(token, tokenSecret, profile, done) {
+  
+  db.TwitterOAuth.find({where: {oauth_token: token}}).success(function(oauthData){
+    if(!oauthData){
+      db.TwitterOAuth.create({
+        oauth_token: token,
+        oauth_secret: tokenSecret
+      }).success(function(u){
+        console.log('New oauth data saved');
+        done(null, u);
+      });
+    } else {
+      console.log('Oauth data already exists');
+      done(null, user);
     }
+    
+  }).error(function(err){
+    done(err, null);
+  });
+}
 ));
 
 module.exports = passport;

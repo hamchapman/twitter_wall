@@ -15,23 +15,24 @@ exports.signin = function(req, res) {
 };
 
 exports.signup = function(req, res) {
-  res.render('users/signup', {
-    title: 'Sign up',
+  // Check if an admin has already been created
+  // If it has then send on to next stage of setup
+  db.User.findAll().success(function(users) {
+    if(users.length > 0) { 
+      res.redirect('/pusher');
+    } else {
+      res.render('users/signup', {
+        title: 'Sign up',
+      });
+    }
   });
 };
 
-/**
- * Logout
- */
  exports.signout = function(req, res) {
-  console.log('Logout: { id: ' + req.user.id + ', username: ' + req.user.username + '}');
   req.logout();
   res.redirect('/');
 };
 
-/**
- * Session
- */
  exports.session = function(req, res) {
   res.redirect('/');
 };
@@ -41,7 +42,6 @@ exports.create = function(req, res) {
 
   var user = db.User.build(req.body);
 
-    // user.provider = 'local';
     user.salt = user.makeSalt();
     user.hashedPassword = user.encryptPassword(req.body.password, user.salt);
     console.log('New User (local) : { id: ' + user.id + ' username: ' + user.username + ' }');
@@ -57,13 +57,6 @@ exports.create = function(req, res) {
         user: user
       });
     });
-  };
-
-/**
- * Send User
- */
- exports.me = function(req, res) {
-  res.jsonp(req.user || null);
 };
 
 /**

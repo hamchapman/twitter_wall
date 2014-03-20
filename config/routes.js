@@ -10,14 +10,16 @@ exports.init = function(app, passport, auth) {
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/signout', users.signout);
-  app.get('/users/me', users.me);
-  app.get('/pusher', setup.pusher);
-  app.get('/twitter', setup.twitter);
 
   // Setting up the users api
   app.post('/users', users.create);
 
+  // Setting up route to save Pusher config
   app.post('/pusher', setup.pusherCreate);
+  app.get('/pusher', setup.pusher);
+
+  // Route for connecting to Twitter API
+  app.get('/twitter', setup.twitter);
 
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {

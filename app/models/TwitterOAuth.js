@@ -6,6 +6,5 @@ module.exports = function(sequelize, DataTypes) {
     oauth_secret: DataTypes.STRING
   }
   );
-
   return TwitterOAuth;
 };
