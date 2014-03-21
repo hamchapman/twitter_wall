@@ -1,6 +1,7 @@
 var users = require('../app/controllers/users');
 var index = require('../app/controllers/index');
 var setup = require('../app/controllers/setup');
+var api = require('../app/controllers/api');
 
 exports.init = function(app, passport, auth) {
 
@@ -15,11 +16,18 @@ exports.init = function(app, passport, auth) {
   app.post('/users', users.create);
 
   // Setting up route to save Pusher config
-  app.post('/pusher', setup.pusherCreate);
   app.get('/pusher', setup.pusher);
-
+  app.post('/pusher', setup.pusherCreate);
+  
   // Route for connecting to Twitter API
   app.get('/twitter', setup.twitter);
+
+  // Routes for the tweets api
+  app.get('/api/tweets/:queries', api.tweets);
+  app.get('/api/clean-tweets', api.cleanTweets);
+  app.post('/api/add-clean-tweet', api.addCleanTweet);
+  app.post('/api/remove-clean-tweet', api.removeCleanTweet);
+  app.post('/api/remove-tweet', api.removeTweet);
 
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {

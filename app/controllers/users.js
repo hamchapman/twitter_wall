@@ -38,22 +38,17 @@ exports.signup = function(req, res) {
 };
 
 exports.create = function(req, res) {
-  var message = null;
-
   var user = db.User.build(req.body);
-
     user.salt = user.makeSalt();
     user.hashedPassword = user.encryptPassword(req.body.password, user.salt);
-    console.log('New User (local) : { id: ' + user.id + ' username: ' + user.username + ' }');
-    
+
     user.save().success(function(){
       req.login(user, function(err){
         if(err) return next(err);
         res.redirect('/pusher');
       });
     }).error(function(err){
-      res.render('users/signup',{
-        message: message,
+      res.render('users/signup', {
         user: user
       });
     });

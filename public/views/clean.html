@@ -1,0 +1,6 @@
+<div ng-controller="AdminCtrl">
+  <div ng-click="logCleanTweets()">Clean Tweets</div>
+  <ul>
+    <li class="tweet" ng-repeat="tweet in cleanTweets">{{tweet.text}}</li>
+  </ul>
+</div>

@@ -4,8 +4,8 @@ module.exports = function(sequelize, DataTypes) {
 
   var User = sequelize.define('User', 
   {
-    username: DataTypes.STRING,
-    salt: DataTypes.STRING,
+    username:       DataTypes.STRING,
+    salt:           DataTypes.STRING,
     hashedPassword: DataTypes.STRING
   }, 
   {

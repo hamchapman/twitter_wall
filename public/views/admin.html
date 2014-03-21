@@ -1,0 +1,13 @@
+<div class="container" ng-controller="AdminCtrl">
+  <form class="form-inline" name="tweetForm">
+    <input type="text" ng-model="queries">
+    <button ng-click="getTweets()" type="button">Start Streaming</button>
+  </form>
+  <div class="tweet-list">
+    <div class="tweet" ng-repeat="tweet in tweets" ng-class="{ 'swipe-left': $index == activeIndexLeft, 'swipe-right': $index == activeIndexRight }">
+      <div ng-swipe-right="discardTweet(tweet, $index)" ng-swipe-left="verifyTweet(tweet, $index)">{{tweet.text}}</div>
+      <button ng-click="verifyTweet(tweet, $index)" type="button">Show Tweet</button>
+      <button ng-click="discardTweet(tweet, $index)" type="button">Discard Tweet</button>
+    </div>
+  </div>
+</div>
