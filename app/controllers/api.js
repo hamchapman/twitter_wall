@@ -60,7 +60,7 @@ var setupStream = function(queries) {
     pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: tweet });
     tweets.push(tweet);
   });
-}
+};
 
 var setupTwitterClient = function(queries, setupStream) {
   var user_access_token = '';

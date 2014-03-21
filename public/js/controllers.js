@@ -13,13 +13,6 @@ twitterWallControllers.controller('AdminCtrl', [
     $scope.tweets = [];
     $scope.activeIndexLeft = -1;
     $scope.activeIndexRight = -1;
-    // $scope.tweets = [{text: "tester"}, 
-    //                  {text: "tester 2"}, 
-    //                  {text: "tester 3"}, 
-    //                  {text: "tester 4"}, 
-    //                  {text: "tester 5"}, 
-    //                  {text: "tester 6"}
-    // ];
 
     Pusher.subscribe('twitter_wall', 'new_tweet', function (data) {
       $scope.tweets.push(data['tweet']);
@@ -58,5 +51,28 @@ twitterWallControllers.controller('ViewerCtrl', [
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       $scope.cleanTweets.push(data['tweet']);
     });
-  };
+  }
+]);
+
+twitterWallControllers.controller('SettingsCtrl', [
+  '$scope', 
+  '$http', 
+  function ($scope, $http) {
+    $scope.updatePusherConfig = function() {
+      var app_id = $scope.pusher_app_id;
+      var key = $scope.pusher_key;
+      var secret = $scope.pusher_secret;
+      var config = { app_id: app_id, key: key, secret: secret };
+      $http.post('/api/pusher', { config: config });
+    }; 
+  }
+]);
+
+twitterWallControllers.controller('LogoUploadCtrl', [
+  '$scope',
+  function ($scope) {
+    $scope.complete = function(content) {
+      console.log(content);
+    }
+  }
 ]);

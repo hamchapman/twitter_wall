@@ -29,6 +29,10 @@ exports.init = function(app, passport, auth) {
   app.post('/api/remove-clean-tweet', api.removeCleanTweet);
   app.post('/api/remove-tweet', api.removeTweet);
 
+  // Routes for the settings page in the Angular app
+  app.post('/api/pusher', setup.pusherUpdate);
+  app.post('/logo-upload', setup.logo);
+
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {
     successRedirect: '/pusher',
@@ -49,6 +53,6 @@ exports.init = function(app, passport, auth) {
   app.param('userId', users.user);
 
   // Home route
-  app.get('/', index.render);
+  app.get('/', auth.requiresLogin, index.render);
 
 };

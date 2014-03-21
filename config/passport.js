@@ -55,7 +55,7 @@ function(token, tokenSecret, profile, done) {
       });
     } else {
       console.log('Oauth data already exists');
-      done(null, user);
+      done(null, oauthData);
     }
     
   }).error(function(err){

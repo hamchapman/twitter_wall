@@ -35,7 +35,7 @@ Object.keys(db).forEach(function(modelName) {
 // Synchronizing any model changes with database. 
 // WARNING: this will DROP your database everytime you re-run your application
 sequelize
-  .sync({force: true})
+  .sync()
   .complete(function(err){
     if(err) console.log("An error occured %j",err);
     else console.log("Database dropped and synchronized");

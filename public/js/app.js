@@ -1,7 +1,8 @@
 angular.module('twitterWall', [
   'twitterWallControllers',
   'twitterWallServices',
-  'doowb.angular-pusher', 
+  'doowb.angular-pusher',
+  'ngUpload',
   'ngAnimate',
   'ngTouch', 
   'ngRoute'
@@ -25,6 +26,10 @@ angular.module('twitterWall', [
         .when('/', {
           templateUrl: '/views/admin.html',
           controller: 'AdminCtrl'
+        })
+        .when('/settings', {
+          templateUrl: '/views/settings.html',
+          controller: 'SettingsCtrl'
         })
         .otherwise({
           redirectTo: '/'
