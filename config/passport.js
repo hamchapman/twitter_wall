@@ -27,7 +27,6 @@ passport.use(new LocalStrategy(
       } else if (!user.authenticate(password)) {
         done(null, false, { message: 'Invalid password'});
       } else {
-        console.log('Login (local) : { id: ' + user.id + ', username: ' + user.username + ' }');
         done(null, user);
       }
     }).error(function(err){
@@ -44,7 +43,7 @@ passport.use(new TwitterStrategy({
   callbackURL: config.twitter.callbackURL
 },
 function(token, tokenSecret, profile, done) {
-  
+
   db.TwitterOAuth.find({where: {oauth_token: token}}).success(function(oauthData){
     if(!oauthData){
       db.TwitterOAuth.create({
@@ -66,4 +65,3 @@ function(token, tokenSecret, profile, done) {
 ));
 
 module.exports = passport;
-

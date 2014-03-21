@@ -31,18 +31,18 @@ exports.init = function(app, passport, auth) {
 
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {
-      successRedirect: '/pusher',
-      failureRedirect: '/signin',
-      failureFlash: true
+    successRedirect: '/pusher',
+    failureRedirect: '/signin',
+    failureFlash: true
   }), users.session);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
-      failureRedirect: '/twitter'
+    failureRedirect: '/twitter'
   }), users.signin);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
-      failureRedirect: '/twitter'
+    failureRedirect: '/twitter'
   }), users.authCallback);
 
   // Finish with setting up the userId param
