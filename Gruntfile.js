@@ -47,8 +47,35 @@ module.exports = function (grunt) {
           livereload: reloadPort
         }
       }
+    },
+    concurrent: {
+        tasks: ['nodemon', 'watch'],
+        options: {
+            logConcurrentOutput: true
+        }
+    },
+    mochaTest: {
+        options: {
+            reporter: 'spec'
+        },
+        src: ['test/mocha/**/*.js']
+    },
+    env: {
+        test: {
+            NODE_ENV: 'test'
+        }
+    },
+    karma: {
+        unit: {
+            configFile: 'test/karma/karma.conf.js'
+        }
     }
   });
+  
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-concurrent');
+  grunt.loadNpmTasks('grunt-env');
 
   grunt.config.requires('watch.server.files');
   files = grunt.config('watch.server.files');
@@ -70,4 +97,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('default', ['develop', 'watch']);
+
+  // For tests
+  grunt.registerTask('test', ['env:test', 'mochaTest', 'karma:unit']);
 };

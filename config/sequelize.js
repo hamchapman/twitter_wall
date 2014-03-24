@@ -8,9 +8,9 @@ var db        = {};
 console.log('Initializing Sequelize');
 
 // create your instance of sequelize
-var sequelize = new Sequelize('database', 'username', null, {
+var sequelize = new Sequelize(config.db.name, config.db.username, config.db.password, {
   dialect: 'sqlite',
-  storage: 'test.sqlite'
+  storage: config.db.storage
 });
 
 // loop through all files in models directory ignoring hidden files and this file
@@ -20,7 +20,6 @@ fs.readdirSync(config.modelsDir)
   })
   // import model files and save model names
   .forEach(function(file) {
-    console.log('Loading model file ' + file);
     var model = sequelize.import(path.join(config.modelsDir, file));
     db[model.name] = model;
   })
@@ -38,7 +37,7 @@ sequelize
   .sync()
   .complete(function(err){
     if(err) console.log("An error occured %j",err);
-    else console.log("Database dropped and synchronized");
+    else console.log("Database synchronized");
 });
  
 // assign the sequelize variables to the db object and returning the db. 

@@ -8,11 +8,9 @@ exports.signin = function(req, res) {
 };
 
 exports.signup = function(req, res) {
-  // Check if an admin has already been created
-  // If it has then send on to next stage of setup
   db.User.findAll().success(function(users) {
-    if(users.length > 0) { 
-      res.redirect('/pusher');
+    if(users.length > 0) {          // Check if an admin has already been created
+      res.redirect('/pusher');      // If it has then send on to next stage of setup
     } else {
       res.render('users/signup', {
         title: 'Sign up',
@@ -39,24 +37,31 @@ exports.create = function(req, res) {
   user.salt = user.makeSalt();
   user.hashedPassword = user.encryptPassword(req.body.password, user.salt);
 
-  user.save().success(function(){
-    req.login(user, function(err){
-      if(err) return next(err);
-      res.redirect('/pusher');
-    });
-  }).error(function(err){
-    res.render('users/signup', {
-      user: user
-    });
+  user.save()
+    .success(function(){
+      req.login(user, function(err){
+        if (err) { 
+          res.status(422).send(err.message);
+          return next(err);
+        }
+        res.status(200).redirect('/pusher');
+      });
+    })
+    .error(function(err){
+      res.status(422).render('users/signup', {
+        user: user
+      });
   });
 };
 
 exports.user = function(req, res, next, id) {
-  User.find({where : { id: id }}).success(function(user){
-    if (!user) return next(new Error('Failed to load User ' + id));
-    req.profile = user;
-    next();
-  }).error(function(err){
-    next(err);
-  });
+  User.find({where : { id: id }})
+    .success(function(user){
+      if (!user) return next(new Error('Failed to load User ' + id));
+      req.profile = user;
+      next();
+    })
+    .error(function(err){
+      next(err);
+    });
 };

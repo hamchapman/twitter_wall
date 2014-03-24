@@ -1,8 +1,9 @@
 module.exports = {
   db: {
-    name: "twitter_wall",
+    name: "twitter_wall_dev",
+    username: "dev",
     password: "",
-    username: "root",
+    storage: "development.sqlite"
   },
   app: {
     name: "Twitter Wall"

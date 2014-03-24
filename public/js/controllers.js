@@ -40,7 +40,8 @@ twitterWallControllers.controller('AdminCtrl', [
       }
       $http.post('/api/remove-tweet', { tweet: tweet });
     };
-  }]);
+  }
+]);
 
 twitterWallControllers.controller('ViewerCtrl', [
   '$scope', 

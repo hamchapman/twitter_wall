@@ -28,8 +28,15 @@ exports.pusherCreate = function(req, res) {
 };
 
 exports.twitter = function(req, res) {
-  res.render('setup/twitter', {
-    title: 'Twitter Setup'
+  db.TwitterOAuth.findAll()
+  .success(function(oauths) {
+    if(oauths.length > 0) {     // Check if Tiwtter OAuth has already been added
+      res.redirect('/');        // If it has then send on to admin panel
+    } else {
+      res.render('setup/twitter', {
+        title: 'Twitter Setup'
+      });
+    }
   });
 }
 
