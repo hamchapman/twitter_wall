@@ -7,18 +7,18 @@ var tweets = [];
 var cleanTweets = [];
 var pusherClient = 0;
 var twitterClient = 0;
-
 var streamList = [];
+
+exports.startClients = function(req, res) {
+  if (pusherClient === 0) { setupPusherClient(); }
+  if (twitterClient === 0) { setupTwitterClient(); } 
+  res.send();
+};
 
 exports.tweets = function(req, res) {
   var query = req.params.query;
   db.Query.create({text: query});
-  if (pusherClient === 0) { setupPusherClient(); }
-  if (twitterClient === 0) { 
-    setupTwitterClient(query, setupStream);
-  } else {
-    setupStream(query);
-  }
+  setupStream(query);
   res.json({tweets: tweets, status: true});
 };
 
@@ -83,12 +83,19 @@ exports.removeQuery = function(req, res) {
   res.send();
 };
 
+exports.streamExistingQueries = function(req, res) {
+  db.Query.findAll().success(function(queries) {
+    queries.forEach(function(query) {
+      setupStream(query.text);
+    })
+  })
+  res.send();
+}
+
 var setupStream = function(query) {
   var stream = twitterClient.stream('statuses/filter', { track: query });
   tweetStream = stream;
   streamList.push(stream);
-  console.log("StreamList length is: " + streamList.length);
-  console.log(streamList);
   pusherClient.trigger('twitter_wall', 'new_query', { query: query });
   stream.on('tweet', function (tweet) {
     pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: tweet });
@@ -96,7 +103,7 @@ var setupStream = function(query) {
   });
 };
 
-var setupTwitterClient = function(query, setupStream) {
+var setupTwitterClient = function() {
   var user_access_token = '';
   var user_access_token_secret = '';
   db.TwitterOAuth.findAll().success(function(oauths) {
@@ -108,7 +115,6 @@ var setupTwitterClient = function(query, setupStream) {
       , access_token:        user_access_token
       , access_token_secret: user_access_token_secret
     });
-    setupStream(query);
   }).error(function(err) {
     console.log(err);
   });

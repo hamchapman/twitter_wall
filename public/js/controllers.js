@@ -18,13 +18,14 @@ twitterWallControllers.controller('AdminCtrl', [
       $scope.tweets.push(data['tweet']);
     });
 
-    $http.get('/api/queries')
+    $http.get('/api/client-setups')
       .success(function(res) {
-        if (res.queries != []) {
-          $scope.queries = res.queries;
-          // $http.get('/api/tweets/' + query)
-        }
-      })
+        $http.get('/api/stream-restart')
+          .success(function(res) {
+            console.log(res);
+            console.log("Pre-existing streams restarted");
+          });
+      });
     
     $scope.getTweets = function() {
       var query = $scope.query;

@@ -4,7 +4,6 @@ var setup = require('../app/controllers/setup');
 var api = require('../app/controllers/api');
 
 exports.init = function(app, passport, auth) {
-
   console.log('Initializing Routes');
 
   // User Routes
@@ -35,6 +34,12 @@ exports.init = function(app, passport, auth) {
   app.post('/logo-upload', setup.logo);
   app.post('/api/remove-query', api.removeQuery);
 
+  // Route to start up the Twitter and Pusher clients
+  app.get('/api/client-setups', api.startClients);
+
+  // Route to restart streaming pre-existing queries on restart
+  app.get('/api/stream-restart', api.streamExistingQueries);
+
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {
     successRedirect: '/pusher',
@@ -56,5 +61,4 @@ exports.init = function(app, passport, auth) {
 
   // Home route
   app.get('/', auth.requiresLogin, index.render);
-
 };
