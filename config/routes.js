@@ -23,15 +23,17 @@ exports.init = function(app, passport, auth) {
   app.get('/twitter', setup.twitter);
 
   // Routes for the tweets api
-  app.get('/api/tweets/:queries', api.tweets);
+  app.get('/api/tweets/:query', api.tweets);
   app.get('/api/clean-tweets', api.cleanTweets);
   app.post('/api/add-clean-tweet', api.addCleanTweet);
   app.post('/api/remove-clean-tweet', api.removeCleanTweet);
   app.post('/api/remove-tweet', api.removeTweet);
 
   // Routes for the settings page in the Angular app
+  app.get('/api/queries', api.queries);
   app.post('/api/pusher', setup.pusherUpdate);
   app.post('/logo-upload', setup.logo);
+  app.post('/api/remove-query', api.removeQuery);
 
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {

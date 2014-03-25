@@ -1,0 +1,22 @@
+<div class="container" ng-controller="SettingsCtrl">
+  <header>Pusher Config</header>
+  <label>App ID</label>
+  <input type="text" ng-model="pusher_app_id">
+  <label>Key</label>
+  <input type="text" ng-model="pusher_key">
+  <label>Secret</label>
+  <input type="text" ng-model="pusher_secret">
+  <button type="submit" ng-click="updatePusherConfig()">Update</button>
+
+  <form action="/logo-upload" ng-upload="complete(content)">
+    <input type="file" name="logo"></input>
+    <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+  </form>
+
+  <div class="query" ng-repeat="query in queries">
+    <div class="query-text">{{query}}</div>
+    <button ng-click="removeQuery(query, $index)" type="button">Remove Query</button>
+  </div>
+
+
+</div>

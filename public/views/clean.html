@@ -3,6 +3,9 @@
 <div ng-controller="AdminCtrl">
   <div ng-click="logCleanTweets()">Clean Tweets</div>
   <ul>
-    <li class="tweet" ng-repeat="tweet in cleanTweets">{{tweet.text}}</li>
+    <li class="tweet" ng-repeat="tweet in cleanTweets">
+      <img src="{{tweet.profile_image_url}}">
+      {{tweet.text}}
+    </li>
   </ul>
 </div>
