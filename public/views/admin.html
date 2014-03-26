@@ -1,14 +1,8 @@
 <div class="container" ng-controller="AdminCtrl">
-  <a ui-sref="settings">Settings</a>
-  <form class="form-inline" name="tweetForm">
-    <input type="text" ng-model="query">
-    <button ng-click="getTweets()" type="button">Add keyword</button>
-  </form>
-  <div class="tweet-list">
-    <div class="tweet" ng-repeat="tweet in tweets" ng-class="{ 'swipe-left': $index == activeIndexLeft, 'swipe-right': $index == activeIndexRight }">
-      <div ng-swipe-right="discardTweet(tweet, $index)" ng-swipe-left="verifyTweet(tweet, $index)">{{tweet.text}}</div>
-      <button ng-click="verifyTweet(tweet, $index)" type="button">Show Tweet</button>
-      <button ng-click="discardTweet(tweet, $index)" type="button">Discard Tweet</button>
-    </div>
-  </div>
+  <a ui-sref="admin.moderate">Moderate</a>
+  <a ui-sref="admin.queries">Queries</a>
+  <a ui-sref="admin.config">Config</a>
+  <a ui-sref="admin.style">Style</a>
+
+  <div ui-view></div>
 </div>

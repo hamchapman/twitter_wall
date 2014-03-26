@@ -1,0 +1,6 @@
+<div ng-controller="StyleCtrl">
+  <form action="/logo-upload" ng-upload="complete(content)">
+    <input type="file" name="logo"></input>
+    <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+  </form>
+</div>

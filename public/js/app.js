@@ -18,19 +18,33 @@ angular.module('twitterWall', [
         .state('home', {
           url: '/',
           templateUrl: '/views/clean.html',
-          controller: 'AdminCtrl'
+          controller: 'ViewerCtrl'
         })
         .state('admin', {
           url: '/admin',
           templateUrl: '/views/admin.html',
-          controller: 'ViewerCtrl'
+          controller: 'AdminCtrl'
         })
-        .state('settings', {
-          url: '/settings',
-          templateUrl: '/views/settings.html',
-          controller: 'SettingsCtrl'
+        .state('admin.config', {
+          url: '/config',
+          templateUrl: '/views/partials/config.html',
+          controller: 'ConfigCtrl'
+        })
+        .state('admin.style', {
+          url: '/style',
+          templateUrl: '/views/partials/style.html',
+          controller: 'StyleCtrl'
+        })
+        .state('admin.moderate', {
+          url: '/moderate',
+          templateUrl: '/views/partials/moderate.html',
+          controller: 'ModerateCtrl'
+        })
+        .state('admin.queries', {
+          url: '/queries',
+          templateUrl: '/views/partials/queries.html',
+          controller: 'QueryCtrl'
         });
-
       $urlRouterProvider.otherwise('/');
     }
   ])

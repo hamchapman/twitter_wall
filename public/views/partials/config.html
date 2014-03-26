@@ -1,0 +1,10 @@
+<div ng-controller="ConfigCtrl">
+  <header>Pusher Config</header>
+  <label>App ID</label>
+  <input type="text" ng-model="pusher_app_id">
+  <label>Key</label>
+  <input type="text" ng-model="pusher_key">
+  <label>Secret</label>
+  <input type="text" ng-model="pusher_secret">
+  <button type="submit" ng-click="updatePusherConfig()">Update</button>
+</div>

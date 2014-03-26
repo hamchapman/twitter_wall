@@ -1,0 +1,11 @@
+<div ng-controller="QueryCtrl">
+  <form class="form-inline" name="tweetForm">
+    <input type="text" ng-model="query">
+    <button ng-click="getTweets()" type="button">Add keyword</button>
+  </form>
+
+  <div class="query" ng-repeat="query in queries">
+    <div class="query-text">{{query}}</div>
+    <button ng-click="removeQuery(query, $index)" type="button">Remove Query</button>
+  </div>
+</div>
