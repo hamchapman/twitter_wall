@@ -6,12 +6,11 @@ twitterWallControllers.controller('AdminCtrl', [
   '$scope', 
   '$http', 
   function ($scope, $http) {
-    console.log("I'm reaching the AdminCtrl");
     $http.get('/api/client-setups')
       .success(function(res) {
         $http.get('/api/stream-restart')
           .success(function(res) {
-            console.log("Streams restarted for existing queries");
+            // console.log("Streams restarted for existing queries");
           });
       });
   }
@@ -28,8 +27,17 @@ twitterWallControllers.controller('ViewerCtrl', [
       .success(function(res) {
         $scope.cleanTweets = res.tweets;
       })
+
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       $scope.cleanTweets.push(data['tweet']);
+    });
+
+    Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
+      console.log("Receiving the pusher message");
+      var tweetIndex = data['index'];
+      if(tweetIndex != -1) {
+        $scope.cleanTweets.splice(tweetIndex, 1);
+      }
     });
   }
 ]);
@@ -132,5 +140,35 @@ twitterWallControllers.controller('StyleCtrl', [
   '$http',
   function ($scope, $http) {
     
+  }
+]);
+
+twitterWallControllers.controller('MirrorCtrl', [
+  '$scope', 
+  '$http',
+  'Pusher',
+  'CleanTweets',
+  function ($scope, $http, Pusher, CleanTweets) {
+    $scope.cleanTweets = [];
+    $http.get('/api/clean-tweets')
+      .success(function(res) {
+        $scope.cleanTweets = res.tweets;
+      })
+
+    Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
+      $scope.cleanTweets.push(data['tweet']);
+    });
+
+    Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
+      console.log("Receiving the pusher message");
+      var tweetIndex = data['index'];
+      if(tweetIndex != -1) {
+        $scope.cleanTweets.splice(tweetIndex, 1);
+      }
+    });
+
+    $scope.removeCleanTweet = function(tweet, index) {
+      $http.post('/api/remove-clean-tweet', { tweet: tweet, index: index });
+    };
   }
 ]);

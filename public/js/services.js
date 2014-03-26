@@ -41,11 +41,11 @@ twitterWallServices.factory('Mode', function($http) {
     },
     swap: function() {
       isAutomatic = !isAutomatic;
-      $http.post('/api/swap-mode')
+      $http.post('/api/swap-mode');
       return isAutomatic;
     },
     getFromServer: function () {
-      return $http.get('/api/mode')
+      return $http.get('/api/mode');
     }
   };
 });

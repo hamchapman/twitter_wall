@@ -37,9 +37,17 @@ exports.addCleanTweet = function(req, res) {
 
 exports.removeCleanTweet = function(req, res) {
   var tweet = req.body.tweet;
-  var i = cleanTweets.indexOf(tweet);
-  if(i != -1) {
-    cleanTweets.splice(i, 1);
+  var tweetIndex = req.body.index;
+  db.Tweet.find({ where: { text: tweet.text }})
+    .success(function(tweet) {
+      tweet.destroy().success(function() {
+        console.log("Tweet removed from DB");
+      })
+  })
+  console.log(tweetIndex);
+  pusherClient.trigger('twitter_wall', 'remove_clean_tweet', { index: tweetIndex }); 
+  if(tweetIndex != -1) {
+    cleanTweets.splice(tweetIndex, 1);
   }
   res.send();
 };
@@ -74,9 +82,11 @@ exports.removeQuery = function(req, res) {
 
 exports.streamExistingQueries = function(req, res) {
   db.Query.findAll().success(function(queries) {
-    queries.forEach(function(query) {
-      setupStream(query.text);
-    })
+    if (streamList.length === 0) {
+      queries.forEach(function(query) {
+        setupStream(query.text);
+      })
+    }
   })
   res.send();
 };
