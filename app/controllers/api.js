@@ -8,6 +8,7 @@ var cleanTweets = [];
 var pusherClient = 0;
 var twitterClient = 0;
 var streamList = [];
+var isAutomatic = false;
 
 exports.startClients = function(req, res) {
   if (pusherClient === 0) { setupPusherClient(); }
@@ -30,19 +31,7 @@ exports.cleanTweets = function(req, res) {
 };
 
 exports.addCleanTweet = function(req, res) {
-  var tweet = req.body.tweet;
-  var formattedTweet = {};
-  formattedTweet.text = tweet.text;
-  formattedTweet.tweeter = tweet.user.screen_name;
-  formattedTweet.profile_image_url = tweet.user.profile_image_url;
-  cleanTweets.push(formattedTweet);
-  pusherClient.trigger('twitter_wall', 'new_clean_tweet', { tweet: formattedTweet });
-  var newTweet = db.Tweet.build(formattedTweet);
-  newTweet.save().success(function() {
-    console.log("Saved moderated tweet");
-  }).error(function(err) {
-    console.log(err);
-  })
+  pushCleanTweet(req.body.tweet);
   res.send();
 };
 
@@ -90,7 +79,31 @@ exports.streamExistingQueries = function(req, res) {
     })
   })
   res.send();
-}
+};
+
+exports.mode = function(req, res) {
+  res.json({ automatic: isAutomatic });
+};
+
+exports.swapMode = function(req, res) {
+  isAutomatic = !isAutomatic;
+  res.send();
+};
+
+var pushCleanTweet = function(tweet) {
+  var formattedTweet = {};
+  formattedTweet.text = tweet.text;
+  formattedTweet.tweeter = tweet.user.screen_name;
+  formattedTweet.profile_image_url = tweet.user.profile_image_url;
+  cleanTweets.push(formattedTweet);
+  pusherClient.trigger('twitter_wall', 'new_clean_tweet', { tweet: formattedTweet });
+  var newTweet = db.Tweet.build(formattedTweet);
+  newTweet.save().success(function() {
+    console.log("Saved moderated tweet");
+  }).error(function(err) {
+    console.log(err);
+  });
+};
 
 var setupStream = function(query) {
   var stream = twitterClient.stream('statuses/filter', { track: query });
@@ -98,6 +111,7 @@ var setupStream = function(query) {
   streamList.push(stream);
   pusherClient.trigger('twitter_wall', 'new_query', { query: query });
   stream.on('tweet', function (tweet) {
+    if (isAutomatic) { pushCleanTweet(tweet); }
     pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: tweet });
     tweets.push(tweet);
   });

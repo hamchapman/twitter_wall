@@ -6,11 +6,12 @@ twitterWallControllers.controller('AdminCtrl', [
   '$scope', 
   '$http', 
   function ($scope, $http) {
+    console.log("I'm reaching the AdminCtrl");
     $http.get('/api/client-setups')
       .success(function(res) {
         $http.get('/api/stream-restart')
           .success(function(res) {
-            console.log("Pre-existing streams restarted");
+            console.log("Streams restarted for existing queries");
           });
       });
   }
@@ -50,6 +51,12 @@ twitterWallControllers.controller('QueryCtrl', [
       $scope.queries.push(data['query']);
     });
 
+    $scope.getTweets = function() {
+      var query = $scope.query;
+      $scope.query = '';
+      $http.get('/api/tweets/' + query)
+    };
+
     $scope.removeQuery = function(query, index) {
       console.log("The query is: " + query);
       $http.post('/api/remove-query', { index: index, query: query });
@@ -75,12 +82,6 @@ twitterWallControllers.controller('ModerateCtrl', [
     Pusher.subscribe('twitter_wall', 'new_tweet', function (data) {
       $scope.tweets.push(data['tweet']);
     });
-    
-    $scope.getTweets = function() {
-      var query = $scope.query;
-      $scope.query = '';
-      $http.get('/api/tweets/' + query)
-    };
 
     $scope.verifyTweet = function (tweet, $index) {
       $scope.activeIndexLeft = $index;
@@ -106,6 +107,8 @@ twitterWallControllers.controller('ConfigCtrl', [
   '$scope', 
   '$http',
   function ($scope, $http) {
+    $scope.isAutomatic = false;
+
     $scope.updatePusherConfig = function() {
       var app_id = $scope.pusher_app_id;
       var key = $scope.pusher_key;
@@ -113,6 +116,14 @@ twitterWallControllers.controller('ConfigCtrl', [
       var config = { app_id: app_id, key: key, secret: secret };
       $http.post('/api/pusher', { config: config });
     };
+
+    $scope.swapMode = function() {
+      $scope.isAutomatic = !$scope.isAutomatic;
+      $http.get('/api/swap-mode')
+        .success(function() {
+          console.log("Mode has been swapped");
+        });
+    }
   }
 ]);
 

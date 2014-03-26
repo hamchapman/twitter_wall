@@ -40,6 +40,10 @@ exports.init = function(app, passport, auth) {
   // Route to restart streaming pre-existing queries on restart
   app.get('/api/stream-restart', api.streamExistingQueries);
 
+  // Routes for getting and setting the current mode of operation 
+  app.get('/api/mode', api.mode);
+  app.get('/api/swap-mode', api.swapMode);
+
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {
     successRedirect: '/pusher',

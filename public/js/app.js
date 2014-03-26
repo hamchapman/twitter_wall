@@ -8,9 +8,14 @@ angular.module('twitterWall', [
   'ngTouch', 
   ])
   .config(['PusherServiceProvider', 
+    '$locationProvider',
     '$stateProvider',
     '$urlRouterProvider',
-    function(PusherServiceProvider, $stateProvider, $urlRouterProvider) {
+    function(PusherServiceProvider, 
+             $locationProvider, 
+             $stateProvider, 
+             $urlRouterProvider) 
+    {
       PusherServiceProvider
         .setToken('15d9668cc510aed91e23')
         .setOptions({});
@@ -39,6 +44,11 @@ angular.module('twitterWall', [
           url: '/moderate',
           templateUrl: '/views/partials/moderate.html',
           controller: 'ModerateCtrl'
+        })
+        .state('admin.mirror', {
+          url: '/mirror',
+          templateUrl: '/views/partials/mirror.html',
+          controller: 'MirrorCtrl'
         })
         .state('admin.queries', {
           url: '/queries',

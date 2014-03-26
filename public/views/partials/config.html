@@ -7,4 +7,7 @@
   <label>Secret</label>
   <input type="text" ng-model="pusher_secret">
   <button type="submit" ng-click="updatePusherConfig()">Update</button>
+
+  <button ng-click="swapMode()" ng-show="!isAutomatic">Change to Automatic mode (all tweets accepted by default)</button>
+  <button ng-click="swapMode()" ng-show="isAutomatic">Change to Moderated mode (all tweets must be moderated)</button>
 </div>

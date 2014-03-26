@@ -1,7 +1,6 @@
 <img src="/img/logo.png" width="200" height="200">
 
-<div ng-controller="AdminCtrl">
-  <div ng-click="logCleanTweets()">Clean Tweets</div>
+<div ng-controller="ViewerCtrl">
   <ul>
     <li class="tweet" ng-repeat="tweet in cleanTweets">
       <img src="{{tweet.profile_image_url}}">

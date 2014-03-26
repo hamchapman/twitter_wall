@@ -7,13 +7,13 @@ twitterWallServices.factory('CleanTweets', function($http) {
 
   return {
     get: function () {
-      return $http.get('/api/clean-tweets/')
+      return $http.get('/api/clean-tweets')
     },
     add: function(tweet) {
-      return $http.post('/api/add-clean-tweet/', { tweet: tweet })
+      return $http.post('/api/add-clean-tweet', { tweet: tweet })
     },
     remove: function(tweet) {
-      return $http.post('/api/remove-clean-tweet/', { tweet: tweet })
+      return $http.post('/api/remove-clean-tweet', { tweet: tweet })
     }
   };
 });
@@ -24,10 +24,28 @@ twitterWallServices.factory('Tweets', function($http) {
 
   return {
     get: function () {
-      return $http.get('/api/tweets/')
+      return $http.get('/api/tweets')
     },
     remove: function(tweet) {
-      return $http.post('/api/remove-tweet/', { tweet: tweet })
+      return $http.post('/api/remove-tweet', { tweet: tweet })
+    }
+  };
+});
+
+twitterWallServices.factory('Mode', function($http) {
+  var isAutomatic = false;
+
+  return {
+    get: function() {
+      return isAutomatic;
+    },
+    swap: function() {
+      isAutomatic = !isAutomatic;
+      $http.post('/api/swap-mode')
+      return isAutomatic;
+    },
+    getFromServer: function () {
+      return $http.get('/api/mode')
     }
   };
 });
