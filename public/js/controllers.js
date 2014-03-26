@@ -29,6 +29,7 @@ twitterWallControllers.controller('AdminCtrl', [
     
     $scope.getTweets = function() {
       var query = $scope.query;
+      $scope.query = '';
       $http.get('/api/tweets/' + query)
     };
 
