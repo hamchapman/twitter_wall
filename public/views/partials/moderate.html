@@ -1,9 +1,5 @@
 <div class="container" ng-controller="ModerateCtrl">
   <div class="tweet-list">
-    <div class="tweet" ng-repeat="tweet in tweets | limitTo:'30'" ng-class="{ 'swipe-left': $index == activeIndexLeft, 'swipe-right': $index == activeIndexRight }">
-      <div ng-swipe-right="discardTweet(tweet, $index)" ng-swipe-left="verifyTweet(tweet, $index)">{{tweet.text}}</div>
-      <button ng-click="verifyTweet(tweet, $index)" type="button">Show Tweet</button>
-      <button ng-click="discardTweet(tweet, $index)" type="button">Discard Tweet</button>
-    </div>
+    <unmoderated-card class="tweet" ng-repeat="tweet in tweets | limitTo:'30'" ng-class="{ 'swipe-left': $index == activeIndexLeft, 'swipe-right': $index == activeIndexRight }"></unmoderated-card>
   </div>
 </div>

@@ -1,19 +1,21 @@
-// 'use strict';
+'use strict';
 
-// var twitterWallDirectives = angular.module('twitterWallDirectives', []);
+var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
-// twitterWallServices.factory('tweet', function() {
-//   return {
-//     restrict: "A",
-//     link: function () {
+twitterWallServices.directive('unmoderatedCard', function() {
+  return {
+    restrict: "E",
+    templateUrl: '/views/partials/unmoderatedCard.html',
+    // link: function () {
+    // }
+  }
+});
 
-//     }
-//   }
-// });
-
-
-// twitterWallServices.factory('tweet', function() {
-//   return function (scope, element) {
-//     element.bind
-//   }
-// });
+twitterWallServices.directive('card', function() {
+  return {
+    restrict: "E",
+    templateUrl: '/views/partials/card.html',
+    // link: function () {
+    // }
+  }
+});

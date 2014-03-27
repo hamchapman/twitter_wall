@@ -135,6 +135,9 @@ var formatTweetForDB = function(tweet) {
   formattedTweet.text = tweet.text;
   formattedTweet.tweeter = tweet.user.screen_name;
   formattedTweet.profile_image_url = tweet.user.profile_image_url;
+  if (tweet.entities.media) {
+    formattedTweet.media_url = tweet.entities.media[0].media_url;
+  }
   return formattedTweet;
 }
 

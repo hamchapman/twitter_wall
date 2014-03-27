@@ -1,10 +1,5 @@
 <img src="/img/logo.png" width="200" height="200">
 
-<div ng-controller="ViewerCtrl">
-  <ul>
-    <li class="tweet" ng-repeat="tweet in cleanTweets | limitTo:'-30'">
-      <img src="{{tweet.profile_image_url}}">
-      {{tweet.text}}
-    </li>
-  </ul>
+<div ng-controller="ViewerCtrl" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".tile"}'>
+  <card class="tweet tile" masonry-tile ng-repeat="tweet in cleanTweets | limitTo:'-30'"></card>
 </div>
