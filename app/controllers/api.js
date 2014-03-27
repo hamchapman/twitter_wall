@@ -10,11 +10,6 @@ var twitterClient = 0;
 var streamList = [];
 var isAutomatic = false;
 
-// exports.startClients = function(req, res) {
-//   setupClients();
-//   res.send();
-// };
-
 exports.setupClients = function() {
   if (pusherClient === 0) { setupPusherClient(); }
   if (twitterClient === 0) { setupTwitterClient(); } 
@@ -82,11 +77,6 @@ exports.removeQuery = function(req, res) {
   })
   res.send();
 };
-
-// exports.streamExistingQueries = function(req, res) {
-//   startStreams();
-//   res.send();
-// };
 
 exports.startStreams = function() {
   db.Query.findAll().success(function(queries) {
