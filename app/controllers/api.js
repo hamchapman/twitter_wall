@@ -10,10 +10,14 @@ var twitterClient = 0;
 var streamList = [];
 var isAutomatic = false;
 
-exports.startClients = function(req, res) {
+// exports.startClients = function(req, res) {
+//   setupClients();
+//   res.send();
+// };
+
+exports.setupClients = function() {
   if (pusherClient === 0) { setupPusherClient(); }
   if (twitterClient === 0) { setupTwitterClient(); } 
-  res.send();
 };
 
 exports.tweets = function(req, res) {
@@ -24,7 +28,7 @@ exports.tweets = function(req, res) {
 };
 
 exports.cleanTweets = function(req, res) { 
-  db.Tweet.findAll().success(function(tweets) {
+  db.CleanTweet.findAll().success(function(tweets) {
     cleanTweets = tweets;
     res.json({tweets: cleanTweets, status: true});
   });
@@ -38,13 +42,12 @@ exports.addCleanTweet = function(req, res) {
 exports.removeCleanTweet = function(req, res) {
   var tweet = req.body.tweet;
   var tweetIndex = req.body.index;
-  db.Tweet.find({ where: { text: tweet.text }})
+  db.CleanTweet.find({ where: { text: tweet.text }})
     .success(function(tweet) {
       tweet.destroy().success(function() {
         console.log("Tweet removed from DB");
       })
   })
-  console.log(tweetIndex);
   pusherClient.trigger('twitter_wall', 'remove_clean_tweet', { index: tweetIndex }); 
   if(tweetIndex != -1) {
     cleanTweets.splice(tweetIndex, 1);
@@ -80,15 +83,17 @@ exports.removeQuery = function(req, res) {
   res.send();
 };
 
-exports.streamExistingQueries = function(req, res) {
+// exports.streamExistingQueries = function(req, res) {
+//   startStreams();
+//   res.send();
+// };
+
+exports.startStreams = function() {
   db.Query.findAll().success(function(queries) {
-    if (streamList.length === 0) {
-      queries.forEach(function(query) {
-        setupStream(query.text);
-      })
-    }
+    queries.forEach(function(query) {
+      setupStream(query.text);
+    })
   })
-  res.send();
 };
 
 exports.mode = function(req, res) {
@@ -101,13 +106,10 @@ exports.swapMode = function(req, res) {
 };
 
 var pushCleanTweet = function(tweet) {
-  var formattedTweet = {};
-  formattedTweet.text = tweet.text;
-  formattedTweet.tweeter = tweet.user.screen_name;
-  formattedTweet.profile_image_url = tweet.user.profile_image_url;
+  var formattedTweet = formatTweetForDB(tweet);
   cleanTweets.push(formattedTweet);
   pusherClient.trigger('twitter_wall', 'new_clean_tweet', { tweet: formattedTweet });
-  var newTweet = db.Tweet.build(formattedTweet);
+  var newTweet = db.CleanTweet.build(formattedTweet);
   newTweet.save().success(function() {
     console.log("Saved moderated tweet");
   }).error(function(err) {
@@ -115,13 +117,27 @@ var pushCleanTweet = function(tweet) {
   });
 };
 
+var formatTweetForDB = function(tweet) {
+  var formattedTweet = {};
+  formattedTweet.text = tweet.text;
+  formattedTweet.tweeter = tweet.user.screen_name;
+  formattedTweet.profile_image_url = tweet.user.profile_image_url;
+  return formattedTweet;
+}
+
 var setupStream = function(query) {
   var stream = twitterClient.stream('statuses/filter', { track: query });
   tweetStream = stream;
   streamList.push(stream);
   pusherClient.trigger('twitter_wall', 'new_query', { query: query });
   stream.on('tweet', function (tweet) {
-    if (isAutomatic) { pushCleanTweet(tweet); }
+    if (isAutomatic) { 
+      pushCleanTweet(tweet);
+    } else {
+      var formattedTweet = formatTweetForDB(tweet);
+      db.Tweet.create(formattedTweet);
+    }
+
     pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: tweet });
     tweets.push(tweet);
   });
@@ -131,14 +147,16 @@ var setupTwitterClient = function() {
   var user_access_token = '';
   var user_access_token_secret = '';
   db.TwitterOAuth.findAll().success(function(oauths) {
-    user_access_token = oauths[0].oauth_token;
-    user_access_token_secret = oauths[0].oauth_secret;
-    twitterClient = new Twit({
-        consumer_key:        config.twitter.clientID
-      , consumer_secret:     config.twitter.clientSecret
-      , access_token:        user_access_token
-      , access_token_secret: user_access_token_secret
-    });
+    if (oauths != []) {
+      user_access_token = oauths[0].oauth_token;
+      user_access_token_secret = oauths[0].oauth_secret;
+      twitterClient = new Twit({
+          consumer_key:        config.twitter.clientID
+        , consumer_secret:     config.twitter.clientSecret
+        , access_token:        user_access_token
+        , access_token_secret: user_access_token_secret
+      });
+    }
   }).error(function(err) {
     console.log(err);
   });
@@ -149,14 +167,16 @@ var setupPusherClient = function() {
   var user_pusher_key = '';
   var user_pusher_secret = '';
   db.PusherConfig.findAll().success(function(configs) {
-    user_pusher_app_id = configs[0].app_id;
-    user_pusher_key = configs[0].key;
-    user_pusher_secret = configs[0].secret;
-    pusherClient = new Pusher({
-        appId:  user_pusher_app_id
-      , key:    user_pusher_key
-      , secret: user_pusher_secret
-    });  
+    if (configs != []) {
+      user_pusher_app_id = configs[0].app_id;
+      user_pusher_key = configs[0].key;
+      user_pusher_secret = configs[0].secret;
+      pusherClient = new Pusher({
+          appId:  user_pusher_app_id
+        , key:    user_pusher_key
+        , secret: user_pusher_secret
+      });  
+    }
   }).error(function(err) {
     console.log(err);
   });

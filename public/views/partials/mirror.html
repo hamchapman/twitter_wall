@@ -2,7 +2,7 @@
 
 <div ng-controller="MirrorCtrl">
   <ul>
-    <li class="tweet" ng-repeat="tweet in cleanTweets" ng-click="removeCleanTweet(tweet, $index)">
+    <li class="tweet" ng-repeat="tweet in cleanTweets | limitTo:'-30'" ng-click="removeCleanTweet(tweet, $index)">
       <img src="{{tweet.profile_image_url}}">
       {{tweet.text}}
     </li>

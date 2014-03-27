@@ -6,13 +6,7 @@ twitterWallControllers.controller('AdminCtrl', [
   '$scope', 
   '$http', 
   function ($scope, $http) {
-    $http.get('/api/client-setups')
-      .success(function(res) {
-        $http.get('/api/stream-restart')
-          .success(function(res) {
-            // console.log("Streams restarted for existing queries");
-          });
-      });
+    
   }
 ]);
 

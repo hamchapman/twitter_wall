@@ -2,7 +2,7 @@
 
 <div ng-controller="ViewerCtrl">
   <ul>
-    <li class="tweet" ng-repeat="tweet in cleanTweets">
+    <li class="tweet" ng-repeat="tweet in cleanTweets | limitTo:'-30'">
       <img src="{{tweet.profile_image_url}}">
       {{tweet.text}}
     </li>
