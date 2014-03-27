@@ -24,6 +24,7 @@ exports.init = function(app, passport, auth) {
   // Routes for the tweets api
   app.get('/api/tweets/:query', api.tweets);
   app.get('/api/clean-tweets', api.cleanTweets);
+  app.get('/api/tweets-to-moderate', api.uncleanTweets);
   app.post('/api/add-clean-tweet', api.addCleanTweet);
   app.post('/api/remove-clean-tweet', api.removeCleanTweet);
   app.post('/api/remove-tweet', api.removeTweet);
@@ -33,12 +34,6 @@ exports.init = function(app, passport, auth) {
   app.post('/api/pusher', setup.pusherUpdate);
   app.post('/logo-upload', setup.logo);
   app.post('/api/remove-query', api.removeQuery);
-
-  // Route to start up the Twitter and Pusher clients
-  app.get('/api/client-setups', api.startClients);
-
-  // Route to restart streaming pre-existing queries on restart
-  app.get('/api/stream-restart', api.streamExistingQueries);
 
   // Routes for getting and setting the current mode of operation 
   app.get('/api/mode', api.mode);

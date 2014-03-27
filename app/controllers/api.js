@@ -22,15 +22,31 @@ exports.tweets = function(req, res) {
   res.json({tweets: tweets, status: true});
 };
 
+exports.uncleanTweets = function(req, res) { 
+  db.Tweet.findAll().success(function(tweets) {
+    var uncleanTweets = tweets;
+    res.json({tweets: uncleanTweets, status: true});
+  });
+};
+
 exports.cleanTweets = function(req, res) { 
   db.CleanTweet.findAll().success(function(tweets) {
-    cleanTweets = tweets;
+    var cleanTweets = tweets;
     res.json({tweets: cleanTweets, status: true});
   });
 };
 
 exports.addCleanTweet = function(req, res) {
-  pushCleanTweet(req.body.tweet);
+  var tweet = req.body.tweet;
+  pushCleanTweet(tweet);
+  if (!isAutomatic) {
+    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter }})
+      .success(function(tweet) {
+        tweet.destroy().success(function() {
+          console.log("Tweet removed from DB");
+        })
+    })
+  }
   res.send();
 };
 
@@ -52,6 +68,14 @@ exports.removeCleanTweet = function(req, res) {
 
 exports.removeTweet = function(req, res) {
   var tweet = req.body.tweet;
+  if (!isAutomatic) {
+    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter }})
+      .success(function(tweet) {
+        tweet.destroy().success(function() {
+          console.log("Tweet removed from DB");
+        })
+    })
+  }
   var i = tweets.indexOf(tweet);
   if(i != -1) {
     tweets.splice(i, 1);
@@ -95,8 +119,7 @@ exports.swapMode = function(req, res) {
   res.send();
 };
 
-var pushCleanTweet = function(tweet) {
-  var formattedTweet = formatTweetForDB(tweet);
+var pushCleanTweet = function(formattedTweet) {
   cleanTweets.push(formattedTweet);
   pusherClient.trigger('twitter_wall', 'new_clean_tweet', { tweet: formattedTweet });
   var newTweet = db.CleanTweet.build(formattedTweet);
@@ -121,14 +144,14 @@ var setupStream = function(query) {
   streamList.push(stream);
   pusherClient.trigger('twitter_wall', 'new_query', { query: query });
   stream.on('tweet', function (tweet) {
+    var formattedTweet = formatTweetForDB(tweet);
     if (isAutomatic) { 
-      pushCleanTweet(tweet);
+      pushCleanTweet(formattedTweet);
     } else {
-      var formattedTweet = formatTweetForDB(tweet);
       db.Tweet.create(formattedTweet);
     }
 
-    pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: tweet });
+    pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: formattedTweet });
     tweets.push(tweet);
   });
 };

@@ -6,7 +6,7 @@ twitterWallControllers.controller('AdminCtrl', [
   '$scope', 
   '$http', 
   function ($scope, $http) {
-    
+
   }
 ]);
 
@@ -80,6 +80,10 @@ twitterWallControllers.controller('ModerateCtrl', [
     $scope.tweets = [];
     $scope.activeIndexLeft = -1;
     $scope.activeIndexRight = -1;
+    $http.get('/api/tweets-to-moderate')
+      .success(function(res) {
+        $scope.tweets = res.tweets;
+      })
 
     Pusher.subscribe('twitter_wall', 'new_tweet', function (data) {
       $scope.tweets.push(data['tweet']);
