@@ -1,6 +1,3 @@
-<div ng-controller="ViewerCtrl" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".tile"}'>
-  <card class="tweet tile" masonry-tile ng-repeat="tweet in cleanTweets | limitTo:'-30'"></card>
+<div class="masonry-container" masonry='{ "transitionDuration" : "0.4s" , "itemSelector" : ".tile"  }'>
+  <card class="tweet tile"  ng-repeat="tweet in cleanTweets | limitTo:'-30'"></card>
 </div>
-<script> 
-  setTimeout(function() { masonary.reloadItems(); }, 5000);
-</script>

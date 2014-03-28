@@ -2,12 +2,13 @@ angular.module('twitterWall', [
   'twitterWallControllers',
   'twitterWallServices',
   'twitterWallDirectives',
+  'ngResource',
   'doowb.angular-pusher',
   'ui.router',
   'ngUpload',
   'ngAnimate',
-  'ngTouch', 
-  'masonry',
+  'ngTouch',
+  'masonry'
   ])
   .config(['PusherServiceProvider', 
     '$locationProvider',

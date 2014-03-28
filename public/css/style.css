@@ -3,7 +3,8 @@ body {
 }
 
 a {
-  color: #00B7FF;
+  color: #bd0100;
+  text-decoration: none;
 }
 
 .tweet-card {
