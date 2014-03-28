@@ -1,3 +1,8 @@
-<img src="{{tweet.profile_image_url}}">
-{{tweet.text}}
-<img src="{{tweet.media_url}}">
+<div class ="tweet-card">
+  <img class="tweet-avatar-container" src="{{tweet.profile_image_url}}">
+  <div class="tweet-text-container">
+    {{tweet.text}}
+  </div>
+  <div class="tweet-photo-container" style="background-image:url({{tweet.media_url}});">
+  </div>
+</div>
