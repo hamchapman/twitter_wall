@@ -2,7 +2,7 @@
 
 var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
-twitterWallServices.directive('unmoderatedCard', function() {
+twitterWallDirectives.directive('unmoderatedCard', function() {
   return {
     restrict: "E",
     templateUrl: '/views/partials/unmoderatedCard.html',
@@ -10,7 +10,8 @@ twitterWallServices.directive('unmoderatedCard', function() {
     // }
   }
 });
-twitterWallServices.directive('card', ['$timeout', '$compile', '$http', function($timeout, $compile, $http) {
+
+twitterWallDirectives.directive('card', ['$timeout', '$compile', '$http', function($timeout, $compile, $http) {
   var getTemplate = function(tweetType) {
     var templateLoader,
     baseUrl = '/views/partials/',
@@ -26,28 +27,27 @@ twitterWallServices.directive('card', ['$timeout', '$compile', '$http', function
   }
 
   var linker = function(scope, elem, attrs) {
+    var randomNum = Math.floor(Math.random()*3);
     var tweetType = '';
     if (scope.tweet.media_url) {
       tweetType = 'photo';
     } else {
-      
-      tweetType = 'text';
-    }
-
-    var master = elem.parent('*[masonry]:first').scope();
-    var masonry = master.obj;
-    // var masonry = new Masonry(document.querySelector(".masonry-container"), { "transitionDuration" : "0s" , "itemSelector" : ".tile"  });
-    elem.ready(function() {
-      masonry.addItems([elem]);
-      masonry.reloadItems();
-      if(scope.$last) {
-        $timeout(function() { masonry.layout(); }, 500);
-        // masonry.layout();
+      switch(randomNum)
+      {
+      case 1:
+        tweetType = 'textTall';
+        // elem.addClass("light-green");
+        break;
+      case 2:
+        tweetType = 'textWide';
+        // elem.addClass("dark-green");
+        break;
+      default:
+        tweetType = 'textSquare';
+        // elem.addClass("pale-green");
       }
-    });
-
+    }
     var loader = getTemplate(tweetType);
-
     var promise = loader.success(function(html) {
       elem.html(html);
     }).then(function (response) {
@@ -56,6 +56,92 @@ twitterWallServices.directive('card', ['$timeout', '$compile', '$http', function
   }
   return {
     restrict: "E",
+    link: linker
+  }
+}]);
+
+twitterWallDirectives.directive('photo-card', ['$compile', function($compile) {
+  var linker = function(scope, elem, attrs) {
+    console.log("Photo card bitches");
+    var randomNum = Math.floor(Math.random()*3);
+    switch(randomNum)
+    {
+    case 1:
+      elem.addClass("light-green");
+      break;
+    case 2:
+      elem.addClass("dark-green");
+      break;
+    default:
+      elem.addClass("pale-green");
+    }
+  }
+  return {
+    restrict: "AC",
+    link: linker
+  }
+}]);
+
+twitterWallDirectives.directive('text-card-square', ['$compile', function($compile) {
+  var linker = function(scope, elem, attrs) {
+    var randomNum = Math.floor(Math.random()*3);
+    switch(randomNum)
+    {
+    case 1:
+      elem.addClass("light-green");
+      break;
+    case 2:
+      elem.addClass("dark-green");
+      break;
+    default:
+      elem.addClass("pale-green");
+    }
+  }
+  return {
+    restrict: "C",
+    link: linker
+  }
+}]);
+
+twitterWallDirectives.directive('text-card-wide', ['$compile', function($compile) {
+  var linker = function(scope, elem, attrs) {
+    var randomNum = Math.floor(Math.random()*3);
+    switch(randomNum)
+    {
+    case 1:
+      elem.addClass("light-green");
+      break;
+    case 2:
+      elem.addClass("dark-green");
+      break;
+    default:
+      elem.addClass("pale-green");
+    }
+  }
+  return {
+    restrict: "C",
+    link: linker
+  }
+}]);
+
+twitterWallDirectives.directive('text-card-tall', ['$compile', function($compile) {
+  var linker = function(scope, elem, attrs) {
+    var randomNum = Math.floor(Math.random()*3);
+    console.log("Here's a tall one and the random num was: " + randomNum);
+    switch(randomNum)
+    {
+    case 1:
+      elem.addClass("light-green");
+      break;
+    case 2:
+      elem.addClass("dark-green");
+      break;
+    default:
+      elem.addClass("pale-green");
+    }
+  }
+  return {
+    restrict: "C",
     link: linker
   }
 }]);

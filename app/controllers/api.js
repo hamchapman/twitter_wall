@@ -31,7 +31,7 @@ exports.uncleanTweets = function(req, res) {
 
 exports.cleanTweets = function(req, res) { 
   db.CleanTweet.findAll().success(function(tweets) {
-    var cleanTweets = tweets;
+    var cleanTweets = tweets.reverse();
     res.json({tweets: cleanTweets, status: true});
   });
 };

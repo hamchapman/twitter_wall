@@ -7,23 +7,27 @@ a {
   text-decoration: none;
 }
 
-.tweet-card {
+/*.tweet-card {
   text-align: center;
   margin: 10px;
   width: 300px;
-}
+}*/
 
-.tweet-photo-container {
+/*.tweet-photo-container {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 300px;
+  height: 200px;
+  width: 200px;
   overflow: hidden;
-}
+}*/
 
-.tweet-text-container {
+/*.tweet-text-container {
   height: 80px;
-}
+}*/
+
+
+
 
 .user-logo {
   margin-bottom: 10px;
@@ -36,4 +40,76 @@ a {
   height:90px;
   width: 100%;
   border-bottom: 1px black solid;
+}
+
+.photo-card {
+/*  border: 1px solid black;*/
+  text-align: center;
+  width: 400px;
+  height: 200px;
+}
+
+.masonry-container {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.photo-card .tweet-photo-container {
+  float: left;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+  overflow: hidden; 
+}
+
+.photo-card .tweet-avatar-container {
+  z-index: 1px;
+}
+
+.photo-card .tweet-text-container {
+  float: left;
+  height: 200px;
+  width: 200px;
+}
+
+.text-card-wide {
+  text-align: center;
+/*  border: 1px solid black;*/
+  width: 400px;
+  height: 200px;
+}
+
+.text-card-tall {
+  text-align: center;
+/*  border: 1px solid black;*/
+  height: 400px;
+  width: 200px;
+}
+
+.text-card-tall .tweet-text-container {
+  margin-top: 50px;
+  height: 200px;
+  width: 200px;
+}
+
+.text-card-square {
+  text-align: center;
+/*  border: 1px solid black;*/
+  height: 200px;
+  width: 200px;
+}
+
+.pale-green {
+  background-color: #b8dee5;
+}
+
+.light-green {
+  background-color: #B7D1D2;
+}
+
+.dark-green {
+  background-color: #8BA7AD;
 }

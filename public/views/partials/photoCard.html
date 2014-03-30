@@ -1,9 +1,7 @@
-<div class ="tweet-card">
-  I'm a photo card
+<div class="photo-card tile">
   <img class="tweet-avatar-container" src="{{tweet.profile_image_url}}">
+  <div class="tweet-photo-container" style="background-image:url({{tweet.media_url}});"></div>
   <div class="tweet-text-container">
     {{tweet.text}}
-  </div>
-  <div class="tweet-photo-container" style="background-image:url({{tweet.media_url}});">
   </div>
 </div>
