@@ -2,8 +2,24 @@
 
 var twitterWallServices = angular.module('twitterWallServices', []);
 
+twitterWallServices.factory('Packery', function($http) {
+  var packery = "";
+
+  return {
+    get: function () {
+      return packery;
+    },
+    set: function(elem) {
+      packery = new Packery(elem[0], {
+        itemSelector: '.packery-tile'
+      });
+      return packery;
+    }
+  };
+});
+
 twitterWallServices.factory('CleanTweets', function($http) {
-  var cleanTweets = [];
+  // var cleanTweets = [];
 
   return {
     get: function () {
@@ -20,7 +36,7 @@ twitterWallServices.factory('CleanTweets', function($http) {
 
 
 twitterWallServices.factory('Tweets', function($http) {
-  var cleanTweets = [];
+  // var Tweets = [];
 
   return {
     get: function () {

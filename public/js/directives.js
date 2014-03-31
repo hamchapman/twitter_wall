@@ -2,6 +2,26 @@
 
 var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
+// twitterWallDirectives.directive('packery', ['$rootScope', function($rootScope) {
+//   return {
+//     constrain: 'A',
+//     link: function(scope, element, attrs) {
+//       element.ready(function() {
+//         var packery = new Packery(element[0], {
+//           // rowHeight: '.module-sizer',
+//           itemSelector: '.packery',
+//           // columnWidth: '.module-sizer'
+//         });
+//         // angular.forEach(packery.getItemElements(), function(item) {
+//         //   var draggable = new Draggabilly(item);
+//         //   packery.bindDraggabillyEvents(draggable);
+//         // });
+//         packery.layout();
+//       });
+//     }
+//   };
+// }]);
+
 twitterWallDirectives.directive('unmoderatedCard', function() {
   return {
     restrict: "E",
@@ -36,15 +56,12 @@ twitterWallDirectives.directive('card', ['$timeout', '$compile', '$http', functi
       {
       case 1:
         tweetType = 'textTall';
-        // elem.addClass("light-green");
         break;
       case 2:
         tweetType = 'textWide';
-        // elem.addClass("dark-green");
         break;
       default:
         tweetType = 'textSquare';
-        // elem.addClass("pale-green");
       }
     }
     var loader = getTemplate(tweetType);
@@ -60,42 +77,9 @@ twitterWallDirectives.directive('card', ['$timeout', '$compile', '$http', functi
   }
 }]);
 
-twitterWallDirectives.directive('photo-card', ['$compile', function($compile) {
+twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    console.log("Photo card bitches");
-    var randomNum = Math.floor(Math.random()*3);
-    switch(randomNum)
-    {
-    case 1:
-      elem.addClass("light-green");
-      break;
-    case 2:
-      elem.addClass("dark-green");
-      break;
-    default:
-      elem.addClass("pale-green");
-    }
-  }
-  return {
-    restrict: "AC",
-    link: linker
-  }
-}]);
-
-twitterWallDirectives.directive('text-card-square', ['$compile', function($compile) {
-  var linker = function(scope, elem, attrs) {
-    var randomNum = Math.floor(Math.random()*3);
-    switch(randomNum)
-    {
-    case 1:
-      elem.addClass("light-green");
-      break;
-    case 2:
-      elem.addClass("dark-green");
-      break;
-    default:
-      elem.addClass("pale-green");
-    }
+    elem.addClass(randomColor());
   }
   return {
     restrict: "C",
@@ -103,20 +87,9 @@ twitterWallDirectives.directive('text-card-square', ['$compile', function($compi
   }
 }]);
 
-twitterWallDirectives.directive('text-card-wide', ['$compile', function($compile) {
+twitterWallDirectives.directive('textCardSquare', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    var randomNum = Math.floor(Math.random()*3);
-    switch(randomNum)
-    {
-    case 1:
-      elem.addClass("light-green");
-      break;
-    case 2:
-      elem.addClass("dark-green");
-      break;
-    default:
-      elem.addClass("pale-green");
-    }
+    elem.addClass(randomColor());
   }
   return {
     restrict: "C",
@@ -124,24 +97,37 @@ twitterWallDirectives.directive('text-card-wide', ['$compile', function($compile
   }
 }]);
 
-twitterWallDirectives.directive('text-card-tall', ['$compile', function($compile) {
+twitterWallDirectives.directive('textCardWide', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    var randomNum = Math.floor(Math.random()*3);
-    console.log("Here's a tall one and the random num was: " + randomNum);
-    switch(randomNum)
-    {
-    case 1:
-      elem.addClass("light-green");
-      break;
-    case 2:
-      elem.addClass("dark-green");
-      break;
-    default:
-      elem.addClass("pale-green");
-    }
+    elem.addClass(randomColor());
   }
   return {
     restrict: "C",
     link: linker
   }
 }]);
+
+twitterWallDirectives.directive('textCardTall', ['$compile', function($compile) {
+  var linker = function(scope, elem, attrs) {
+    elem.addClass(randomColor());
+  }
+  return {
+    restrict: "C",
+    link: linker
+  }
+}]);
+
+var randomColor = function() {
+  var randomNum = Math.floor(Math.random()*4);
+  switch(randomNum)
+  {
+  case 1:
+    return "light-green";
+  case 2:
+    return "dark-green";
+  case 3:
+    return "pale-green";
+  default:
+    return "light-grey";
+  }
+}
