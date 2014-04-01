@@ -11,7 +11,11 @@ twitterWallServices.factory('Packery', function($http) {
     },
     set: function(elem) {
       packery = new Packery(elem[0], {
-        itemSelector: '.packery-tile'
+        itemSelector: '.packery-tile',
+        isHorizontal: true,
+        gutter: 0,
+        columnWidth: 100,
+        rowHeight: 100
       });
       return packery;
     }
@@ -19,17 +23,28 @@ twitterWallServices.factory('Packery', function($http) {
 });
 
 twitterWallServices.factory('CleanTweets', function($http) {
-  // var cleanTweets = [];
+  var cleanTweets = [];
 
   return {
     get: function () {
-      return $http.get('/api/clean-tweets')
+      $http.get('/api/clean-tweets')
+        .success(function(res) {
+          cleanTweets = res.tweets;
+        })
+      return cleanTweets;
     },
     add: function(tweet) {
       return $http.post('/api/add-clean-tweet', { tweet: tweet })
     },
     remove: function(tweet) {
       return $http.post('/api/remove-clean-tweet', { tweet: tweet })
+    },
+    templateList: function() {
+      return cleanTweets;
+    },
+    updateTemplateList: function(index, template) {
+      cleanTweets[index].templateType = template;
+      return;
     }
   };
 });
@@ -89,3 +104,101 @@ twitterWallServices.factory('authInterceptor', [
       }
     };
 }]);
+
+twitterWallServices.factory('CleanLayout', function () {
+  // No need to distinguish between wide and photo because of same dimensions
+  var numTall = 0;
+  var numWide = 0;
+  var numSquare = 0;
+  var numSponsor = 0;
+  return {
+    numTall: function () {
+      return numTall;
+    },
+    incrNumTall: function () {
+      return numTall += 1;
+    },
+    decrNumTall: function() {
+      return numTall -= 1;
+    },
+    numWide: function () {
+      return numWide;
+    },
+    incrNumWide: function () {
+      return numWide += 1;
+    },
+    decrNumWide: function() {
+      return numWide -= 1;
+    },
+    numSquare: function() {
+      return numSquare;
+    },
+    incrNumSquare: function () {
+      return numSquare += 1;
+    },
+    decrNumSquare: function() {
+      return numSquare -= 1;
+    },
+    numSponsor: function() {
+      return numSponsor;
+    },
+    incrNumSponsor: function () {
+      return numSponsor += 1;
+    },
+    decrNumSponsor: function() {
+      return numSponsor -= 1;
+    },
+    getTotalArea: function() {
+      return numSquare + numSponsor + (2 * (numWide + numTall));
+    }
+  };
+});
+
+twitterWallServices.factory('LayoutCounter', function () {
+  // No need to distinguish between wide and photo because of same dimensions
+  var numTall = 0;
+  var numWide = 0;
+  var numSquare = 0;
+  var numSponsor = 0;
+  return {
+    numTall: function () {
+      return numTall;
+    },
+    incrNumTall: function () {
+      return numTall += 1;
+    },
+    decrNumTall: function() {
+      return numTall -= 1;
+    },
+    numWide: function () {
+      return numWide;
+    },
+    incrNumWide: function () {
+      return numWide += 1;
+    },
+    decrNumWide: function() {
+      return numWide -= 1;
+    },
+    numSquare: function() {
+      return numSquare;
+    },
+    incrNumSquare: function () {
+      return numSquare += 1;
+    },
+    decrNumSquare: function() {
+      return numSquare -= 1;
+    },
+    numSponsor: function() {
+      return numSponsor;
+    },
+    incrNumSponsor: function () {
+      return numSponsor += 1;
+    },
+    decrNumSponsor: function() {
+      return numSponsor -= 1;
+    },
+    getTotalArea: function() {
+      return numSquare + numSponsor + (2 * (numWide + numTall));
+    }
+  };
+});

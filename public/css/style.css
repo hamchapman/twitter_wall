@@ -71,9 +71,10 @@ a {
 }
 
 .packery-container {
-  width: 85%;
+  width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  height: 800px;
 }
 
 .photo-card .tweet-photo-container {
@@ -123,6 +124,35 @@ a {
   height: 200px;
 }
 
+.tweet-avatar-container {
+  width: 50px;
+  height: 50px;
+  margin: 15px;
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  overflow: hidden;
+}
+
+.tweet-avatar {
+  width: 80px;
+  height: 80px;
+  margin: -15px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.sponsor {
+  text-align: center;
+  width: 200px;
+  height: 200px;
+  background-color: yellow;
+}
+
 .pale-green {
   background-color: #b8dee5;
 }
@@ -137,4 +167,13 @@ a {
 
 .light-grey {
   background-color: #eceae2;
+}
+
+.diamond {
+  -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  clip-path: url(#diamond);
+}
+.hexagon {
+  -webkit-clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+  clip-path: url(#hexagon);
 }

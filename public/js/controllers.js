@@ -15,37 +15,52 @@ twitterWallControllers.controller('ViewerCtrl', [
   '$http',
   'Pusher',
   'CleanTweets',
-  function ($scope, $http, Pusher, CleanTweets) { 
+  'Packery',
+  function ($scope, $http, Pusher, CleanTweets, Packery) { 
     $scope.cleanTweets = [];
-    // $http.get('/api/clean-tweets')
-    //   .success(function(res) {
-    //     $scope.cleanTweets = res.tweets;
-    //     // console.log($scope.cleanTweets);
-    //   })
-      $scope.cleanTweets = [{media_url: "http://pbs.twimg.com/media/BjvzBseCYAAa6b1.jpg",
-profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
-text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
-tweeter: "daowinkies"}, {media_url: "http://pbs.twimg.com/media/BjvrMcWCcAAB3Zb.jpg",
-profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
-text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
-tweeter: "Ananda21Kiki"}, {media_url: "http://pbs.twimg.com/media/Bjvzk5vIEAAq63M.jpg",
-profile_image_url: "http://pbs.twimg.com/profile_images/447778417266528256/R_5bLHp1_normal.jpeg",
-text: "RT @Jamjamisme: 140322 Sungmin Donghae SWING Press Conference [cr.Venlyn消失] http://t.co/RhGonYo7wS",
-tweeter: "hanchulonly32"}, {profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
-text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
-tweeter: "daowinkies"}, {profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
-text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
-tweeter: "Ananda21Kiki"}, {profile_image_url: "http://pbs.twimg.com/profile_images/447778417266528256/R_5bLHp1_normal.jpeg",
-text: "RT @Jamjamisme: 140322 Sungmin Donghae SWING Press Conference [cr.Venlyn消失] http://t.co/RhGonYo7wS",
-tweeter: "hanchulonly32"}, {media_url: "http://pbs.twimg.com/media/BjvzBseCYAAa6b1.jpg",
-profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
-text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
-tweeter: "daowinkies"}, {media_url: "http://pbs.twimg.com/media/BjvrMcWCcAAB3Zb.jpg",
-profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
-text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
-tweeter: "Ananda21Kiki"}, {profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
-text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
-tweeter: "daowinkies"}]
+    CleanTweets.get();
+    $http.get('/api/clean-tweets')
+      .success(function(res) {
+        $scope.cleanTweets = res.tweets;
+        // console.log($scope.cleanTweets);
+      })
+//       $scope.cleanTweets = [{media_url: "http://pbs.twimg.com/media/BjvzBseCYAAa6b1.jpg",
+// profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
+// text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
+// tweeter: "daowinkies"}, {media_url: "http://pbs.twimg.com/media/BjvrMcWCcAAB3Zb.jpg",
+// profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
+// text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
+// tweeter: "Ananda21Kiki"}, {media_url: "http://pbs.twimg.com/media/Bjvzk5vIEAAq63M.jpg",
+// profile_image_url: "http://pbs.twimg.com/profile_images/447778417266528256/R_5bLHp1_normal.jpeg",
+// text: "RT @Jamjamisme: 140322 Sungmin Donghae SWING Press Conference [cr.Venlyn消失] http://t.co/RhGonYo7wS",
+// tweeter: "hanchulonly32"}, {profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
+// text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
+// tweeter: "daowinkies"}, {profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
+// text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
+// tweeter: "Ananda21Kiki"}, {profile_image_url: "http://pbs.twimg.com/profile_images/447778417266528256/R_5bLHp1_normal.jpeg",
+// text: "RT @Jamjamisme: 140322 Sungmin Donghae SWING Press Conference [cr.Venlyn消失] http://t.co/RhGonYo7wS",
+// tweeter: "hanchulonly32"}, {media_url: "http://pbs.twimg.com/media/BjvzBseCYAAa6b1.jpg",
+// profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
+// text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
+// tweeter: "daowinkies"}, {media_url: "http://pbs.twimg.com/media/BjvrMcWCcAAB3Zb.jpg",
+// profile_image_url: "http://pbs.twimg.com/profile_images/435006143060918273/Zg5Tv7vP_normal.jpeg",
+// text: "\"@SparkyuINA: 140322 Super Junior M Press Conference - Kyuhyun {1} (cr : Rice) http://t.co/uda3VA6gTz\"",
+// tweeter: "Ananda21Kiki"}, {profile_image_url: "http://pbs.twimg.com/profile_images/448513116280590336/h4DMsaZW_normal.jpeg",
+// text: "RT @PoOoY: 140322 2PM Press Conference HEC 2014 KOREA FESTIVAL IN VIETNAM  http://t.co/CLgNjVYPVI http://t.co/9SskI0Alvt",
+// tweeter: "daowinkies"}]
+
+    $scope.shuffle = function() {
+      var packery = Packery.get();
+      packery.items = shuffle(packery.items);
+      packery.layout();
+      console.log(packery);
+    };
+
+    // $scope.layout = function() {
+    //   var packery = Packery.get();
+    //   packery.items = shuffle(packery.items);
+    //   packery.layout();
+    // };
 
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       $scope.cleanTweets.push(data['tweet']);
@@ -60,6 +75,11 @@ tweeter: "daowinkies"}]
     });
   }
 ]);
+
+var shuffle = function(a){
+  for (var j, x, i = a.length; i; j = Math.floor( Math.random() * i ), x = a[--i], a[i] = a[j], a[j] = x );
+  return a;
+};
 
 twitterWallControllers.controller('QueryCtrl', [
   '$scope', 
@@ -85,7 +105,6 @@ twitterWallControllers.controller('QueryCtrl', [
     };
 
     $scope.removeQuery = function(query, index) {
-      console.log("The query is: " + query);
       $http.post('/api/remove-query', { index: index, query: query });
       var i = $scope.queries.indexOf(query);
       if(i != -1) {
