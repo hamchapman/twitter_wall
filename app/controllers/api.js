@@ -30,7 +30,7 @@ exports.uncleanTweets = function(req, res) {
 };
 
 exports.cleanTweets = function(req, res) { 
-  db.CleanTweet.findAll({order: 'createdAt DESC', limit: 12}).success(function(tweets) {
+  db.CleanTweet.findAll({order: 'createdAt DESC', limit: 100}).success(function(tweets) {
     var cleanTweets = tweets.reverse();
     res.json({tweets: cleanTweets, status: true});
   });

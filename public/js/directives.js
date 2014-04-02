@@ -165,7 +165,7 @@ twitterWallDirectives.directive('card', [
     //     // packery.reloadItems();
     //     // packery.layout();
     //   }
-    // }
+    // }s
 
   }
   return {
@@ -174,9 +174,27 @@ twitterWallDirectives.directive('card', [
   }
 }]);
 
-twitterWallDirectives.directive('grid', ['Blocks', function(Blocks) {
+twitterWallDirectives.directive('grid', ['Blocks', '$q', function(Blocks, $q) {
   var linker = function(scope, elem, attrs) {
+    var getTemplate = function(tweetType) {
+      var templateLoader,
+      baseUrl = '/views/partials/',
+      templateMap = {
+        textSquare: 'textCardSquare.html',
+        textWide: 'textCardWide.html',
+        textTall: 'textCardTall.html',
+        photo: 'photoCard.html',
+        sponsor: 'sponsorCard.html'
+      };
+      var templateUrl = baseUrl + templateMap[tweetType];
+      templateLoader = $http.get(templateUrl);
+      console.log(templateLoader);
+      return templateLoader;
+    }
+
     var Packer = function(w, h) {
+      this.w = w;
+      this.h = h;
       this.init(w, h);
     };
     Packer.prototype = {
@@ -210,39 +228,41 @@ twitterWallDirectives.directive('grid', ['Blocks', function(Blocks) {
         return node;
       }
     }
-
-    var blocks = Blocks.get();
-
     var packer = new Packer(1200, 800);
-    packer.fit(blocks);
+    var dimensions = { w: packer.w, h: packer.h };
+    Blocks.get(dimensions).then(function(blocks) {
+      packer.fit(blocks);
 
-    var fit = 0
-    var fitArea = 0
-    for(var n = 0 ; n < blocks.length ; n++) {
-      var block = blocks[n];
-      if (block.fit) {
-        fit ++;
-        fitArea = fitArea + block.w * block.h;
-        var card = document.createElement('div')
-        var colors = [ 'green', 'red', 'black', 'blue']
+      var fit = 0
+      var fitArea = 0
+      for(var n = 0 ; n < blocks.length ; n++) {
+        var block = blocks[n];
+        if (block.fit) {
+          fit ++;
+          fitArea = fitArea + block.w * block.h;
+          var card = document.createElement('div')
+          var colors = [ 'green', 'red', 'black', 'blue']
 
-        card.style.position='absolute'
-        card.style.left=block.fit.x+'px'
-        card.style.top=block.fit.y+'px'
-        card.style.width=block.w+'px'
-        card.style.height=block.h+'px'
-        
-        card.style.backgroundColor=colors[Math.floor(Math.random() * colors.length)]
-        card.style.color = 'white'
-        card.innerHTML = block.style
-        elem.append(card)
+          card.style.position='absolute'
+          card.style.left=block.fit.x+'px'
+          card.style.top=block.fit.y+'px'
+          card.style.width=block.w+'px'
+          card.style.height=block.h+'px'
+          
+          card.style.backgroundColor=colors[Math.floor(Math.random() * colors.length)]
+          card.style.color = 'white'
+          // card.innerHTML = getTemplate(block.style);
+          card.innerHTML = block.style;
+          elem.append(card)
 
-        // Draw(block.fit.x, block.fit.y, block.w, block.h);
-      }
-    }
-    // console.log('Could fit '+fit+' elements in the grid. total array is '+ blocks.length )
-    // console.log(Math.round(100 * fitArea / (1200 * 800)))
+          // Draw(block.fit.x, block.fit.y, block.w, block.h);
+        }
+      }  
+      console.log(Math.round(100 * fitArea / (1200 * 800)));
+    });
+    
   }
+
   return {
     restrict: "A",
     link: linker
