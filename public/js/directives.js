@@ -174,6 +174,81 @@ twitterWallDirectives.directive('card', [
   }
 }]);
 
+twitterWallDirectives.directive('grid', ['Blocks', function(Blocks) {
+  var linker = function(scope, elem, attrs) {
+    var Packer = function(w, h) {
+      this.init(w, h);
+    };
+    Packer.prototype = {
+
+      init: function(w, h) {
+        this.root = { x: 0, y: 0, w: w, h: h };
+      },
+
+      fit: function(blocks) {
+        var n, node, block;
+        for (n = 0; n < blocks.length; n++) {
+          block = blocks[n];
+          if (node = this.findNode(this.root, block.w, block.h))
+            block.fit = this.splitNode(node, block.w, block.h);
+        }
+      },
+
+      findNode: function(root, w, h) {
+        if (root.used)
+          return this.findNode(root.right, w, h) || this.findNode(root.down, w, h);
+        else if ((w <= root.w) && (h <= root.h))
+          return root;
+        else
+          return null;
+      },
+
+      splitNode: function(node, w, h) {
+        node.used = true;
+        node.down  = { x: node.x,     y: node.y + h, w: node.w,     h: node.h - h };
+        node.right = { x: node.x + w, y: node.y,     w: node.w - w, h: h          };
+        return node;
+      }
+    }
+
+    var blocks = Blocks.get();
+
+    var packer = new Packer(1200, 800);
+    packer.fit(blocks);
+
+    var fit = 0
+    var fitArea = 0
+    for(var n = 0 ; n < blocks.length ; n++) {
+      var block = blocks[n];
+      if (block.fit) {
+        fit ++;
+        fitArea = fitArea + block.w * block.h;
+        var card = document.createElement('div')
+        var colors = [ 'green', 'red', 'black', 'blue']
+
+        card.style.position='absolute'
+        card.style.left=block.fit.x+'px'
+        card.style.top=block.fit.y+'px'
+        card.style.width=block.w+'px'
+        card.style.height=block.h+'px'
+        
+        card.style.backgroundColor=colors[Math.floor(Math.random() * colors.length)]
+        card.style.color = 'white'
+        card.innerHTML = block.style
+        elem.append(card)
+
+        // Draw(block.fit.x, block.fit.y, block.w, block.h);
+      }
+    }
+    // console.log('Could fit '+fit+' elements in the grid. total array is '+ blocks.length )
+    // console.log(Math.round(100 * fitArea / (1200 * 800)))
+  }
+  return {
+    restrict: "A",
+    link: linker
+  }
+}]);
+
 twitterWallDirectives.directive('photoCard', ['$compile', 'CleanLayout', function($compile, CleanLayout) {
   var linker = function(scope, elem, attrs) {
     elem.addClass(randomColor());

@@ -2,7 +2,7 @@
 
 var twitterWallServices = angular.module('twitterWallServices', []);
 
-twitterWallServices.factory('Packery', function($http) {
+twitterWallServices.factory('Packery', function() {
   var packery = "";
 
   return {
@@ -18,6 +18,58 @@ twitterWallServices.factory('Packery', function($http) {
         rowHeight: 100
       });
       return packery;
+    }
+  };
+});
+
+// twitterWallServices.factory('Packery', function($http) {
+//   var packery = "";
+
+//   return {
+//     get: function () {
+//       return packery;
+//     },
+//     set: function(elem) {
+//       packery = new Packery(elem[0], {
+//         itemSelector: '.packery-tile',
+//         isHorizontal: true,
+//         gutter: 0,
+//         columnWidth: 100,
+//         rowHeight: 100
+//       });
+//       return packery;
+//     }
+//   };
+// });
+
+twitterWallServices.factory('Blocks', function($http) {
+  // var blocks = [];
+  var blocks = [
+      { w: 200, h: 200, style: 'small' },
+      { w: 200, h: 400, style: 'tall' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 200, h: 400, style: 'tall' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 200, h: 200, style: 'small' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 200, h: 400, style: 'tall' },
+      { w: 200, h: 200, style: 'small' },
+      { w: 200, h: 400, style: 'tall' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 400, h: 200, style: 'wide' },
+      { w: 200, h: 200, style: 'small' }
+  ];
+
+  return {
+    get: function () {
+      return blocks;
+    },
+    addBlock: function(block) {
+      blocks.push(block);
+      return blocks;
     }
   };
 });

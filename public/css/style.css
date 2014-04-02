@@ -177,3 +177,11 @@ a {
   -webkit-clip-path: polygon(50% 0, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
   clip-path: url(#hexagon);
 }
+
+.grid {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 800px;
+  position: relative;
+}
