@@ -7,7 +7,6 @@
     "components"
   ],
   "dependencies": {
-    "angular-ui-router": "~0.2.10",
-    "masonry": "~3.1.5"
+    "angular-ui-router": "~0.2.10"
   }
 }

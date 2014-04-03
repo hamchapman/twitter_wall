@@ -7,8 +7,7 @@ angular.module('twitterWall', [
   'ui.router',
   'ngUpload',
   'ngAnimate',
-  'ngTouch',
-  'packery'
+  'ngTouch'
   ])
   .config(['PusherServiceProvider', 
     '$locationProvider',
