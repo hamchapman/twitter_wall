@@ -52,24 +52,49 @@ twitterWallControllers.controller('ViewerCtrl', [
       var unitHeight = dimensions.h / 4.0;
       if (tweet.media_url) {
         var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
-        _.extend(tweet,block);
+        _.extend(tweet, block);
+      } else if (tweet.sponsor) {
+        var block = { w: unitWidth, h: unitHeight, style: 'sponsor'};
+        _.extend(tweet, block);
       } else { 
         var randomNum = Math.random()*9;
         var block = {};
         if (randomNum <= 3) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
         if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
         { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
-        _.extend(tweet,block);
+        _.extend(tweet, block);
       }
       return tweet;
     }
 
     var addBlockInfoToCleanTweets = function(dimensions, tweets) {
       var deferred = $q.defer();
-      tweets.forEach(function(tweet) {
-        addBlockInfoToTweet(dimensions, tweet);
-      })
-      deferred.resolve(tweets);
+      addSponsorLogosToCleanTweets(tweets).then(function() {
+        console.log("Now adding block info to tweets in cleanTweets");
+        tweets.forEach(function(tweet) {
+          addBlockInfoToTweet(dimensions, tweet);
+        })
+        deferred.resolve(tweets);
+      });
+      return deferred.promise;
+    }
+
+    var addSponsorLogosToCleanTweets = function(tweets) {
+      var deferred = $q.defer();
+      console.log("I'm getting some logos");
+      $http.get('/sponsor-logos')
+        .success(function(res) {
+          var logos = res.logos;
+          console.log("logos are: ");
+          console.log(logos);
+          for(var i = 0; i < ($scope.cleanTweets.length / 6); i++) {
+            var randomNum = Math.floor(Math.random()*(logos.length));
+            var sponsorTweet = { sponsor: true, path: logos[randomNum].path };
+            $scope.cleanTweets.splice(((i * 6) + 6), 0, sponsorTweet);
+          }
+          console.log($scope.cleanTweets);
+          deferred.resolve();
+        });
       return deferred.promise;
     }
   }

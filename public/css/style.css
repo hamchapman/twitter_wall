@@ -87,6 +87,15 @@ a {
   overflow: hidden; 
 }
 
+.sponsor-logo-image-container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+  overflow: hidden; 
+}
+
 .photo-card .tweet-avatar-container {
   z-index: 1px;
 }
