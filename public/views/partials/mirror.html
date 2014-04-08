@@ -1,5 +1,3 @@
-<img src="/img/logo.png" width="200" height="200">
-
 <div ng-controller="MirrorCtrl">
   <ul>
     <li class="tweet" ng-repeat="tweet in cleanTweets | limitTo:'-30'" ng-click="removeCleanTweet(tweet, $index)">

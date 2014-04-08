@@ -9,6 +9,7 @@ twitterWallControllers.controller('AdminCtrl', [
 
   }
 ]);
+
 twitterWallControllers.controller('ViewerCtrl', [
   '$scope', 
   '$http',
@@ -16,57 +17,61 @@ twitterWallControllers.controller('ViewerCtrl', [
   'Pusher',
   'CleanTweets',
   function ($scope, $http, $q, Pusher, CleanTweets) { 
-    var packer = new Packer(1200, 800);
-    var dimensions = { w: packer.w, h: packer.h };
+    // var dimensions = { w: packer.w, h: packer.h };
+    var dimensions = { w: 1200, h: 800 };
 
     $scope.cleanTweets = [];
-    $scope.fittedTweets = [];
-    // CleanTweets.get().then(function(tweets) {
-
-    // });
-    $http.get('/api/clean-tweets')
-      .success(function(res) {
-        $scope.cleanTweets = res.tweets;
-        addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
-          packer.fit(tweets);
-          tweets.forEach(function(tweet) {
-            if (tweet.fit) { $scope.fittedTweets.push(tweet); }
-          })
-        })
+    CleanTweets.get().then(function(tweets) {
+      $scope.cleanTweets = tweets;
+      addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
+        var packer = new Packer(1200, 800);
+        packer.fit($scope.cleanTweets);
       })
+    });
 
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
-      $scope.cleanTweets.push(data['tweet']);
+      var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
+      $scope.cleanTweets.unshift(tweet);
+      var packer = new Packer(1200, 800);
+      packer.fit($scope.cleanTweets);
     });
 
     Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
       var tweetIndex = data['index'];
       if(tweetIndex != -1) {
         $scope.cleanTweets.splice(tweetIndex, 1);
+        $scope.$apply(function () { 
+          var packer = new Packer(1200, 800);
+          packer.fit($scope.cleanTweets);
+        })
       }
     });
 
-    var addBlockInfoToCleanTweets = function(dimensions, tweets) {
+    var addBlockInfoToTweet = function(dimensions, tweet) {
       var unitWidth = dimensions.w / 6.0;
       var unitHeight = dimensions.h / 4.0;
-      var deferred = $q.defer();
-        tweets.forEach(function(tweet) {
-          if (tweet.media_url) {
-            var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
-            _.extend(tweet,block);
-          } else { 
-            var randomNum = Math.random()*9;
-            var block = {};
-            if (randomNum <= 3) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
-            if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
-            { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
-            _.extend(tweet,block);
-          }
-        deferred.resolve(tweets);
-        })
-      return deferred.promise;
-    };
+      if (tweet.media_url) {
+        var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
+        _.extend(tweet,block);
+      } else { 
+        var randomNum = Math.random()*9;
+        var block = {};
+        if (randomNum <= 3) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
+        if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
+        { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
+        _.extend(tweet,block);
+      }
+      return tweet;
+    }
 
+    var addBlockInfoToCleanTweets = function(dimensions, tweets) {
+      var deferred = $q.defer();
+      tweets.forEach(function(tweet) {
+        addBlockInfoToTweet(dimensions, tweet);
+      })
+      deferred.resolve(tweets);
+      return deferred.promise;
+    }
   }
 ]);
 
@@ -90,7 +95,7 @@ twitterWallControllers.controller('QueryCtrl', [
     $scope.getTweets = function() {
       var query = $scope.query;
       $scope.query = '';
-      $http.get('/api/tweets/' + query)
+      $http.get('/api/tweets/' + query);
     };
 
     $scope.removeQuery = function(query, index) {
@@ -170,7 +175,19 @@ twitterWallControllers.controller('StyleCtrl', [
   '$scope', 
   '$http',
   function ($scope, $http) {
-    
+    $scope.sponsorLogos = [];
+    $http.get('/sponsor-logos')
+      .success(function(res) {
+        $scope.sponsorLogos = res.logos;
+      });
+
+    $scope.removeSponsorLogo = function(logo, index) {
+      var i = $scope.sponsorLogos.indexOf(logo);
+      if (1 != -1) {
+        $scope.sponsorLogos.splice(i, 1)
+      }
+      $http.post('/remove-sponsor-logo', { logo: logo });
+    }
   }
 ]);
 

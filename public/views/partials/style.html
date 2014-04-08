@@ -3,4 +3,12 @@
     <input type="file" name="logo"></input>
     <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
   </form>
+  <form action="/sponsor-logo-upload" ng-upload="complete(content)">
+    <input type="file" name="sponsorLogo"></input>
+    <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+  </form>
+  <div ng-repeat="logo in sponsorLogos">
+    <div class="logo-photo-container" style="background-image:url({{logo.path}});"></div>
+    <div ng-click="removeSponsorLogo(logo, $index)"> Remove Logo </div>
+  </div>
 </div>

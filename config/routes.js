@@ -31,8 +31,11 @@ exports.init = function(app, passport, auth) {
 
   // Routes for the settings page in the Angular app
   app.get('/api/queries', api.queries);
+  app.get('/sponsor-logos', setup.sponsorLogos);
   app.post('/api/pusher', setup.pusherUpdate);
-  app.post('/logo-upload', setup.logo);
+  app.post('/logo-upload', setup.logoUpload);
+  app.post('/sponsor-logo-upload', setup.sponsorLogoUpload);
+  app.post('/remove-sponsor-logo', setup.removeSponsorLogo);
   app.post('/api/remove-query', api.removeQuery);
 
   // Routes for getting and setting the current mode of operation 

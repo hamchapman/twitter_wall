@@ -1,1 +1,1 @@
-<card ng-repeat="tweet in fittedTweets" style="top:{{tweet.fit.y}}px; left:{{tweet.fit.x}}px; height:{{tweet.fit.h}}px; width:{{tweet.fit.w}}px; position: absolute;"></card>
+<card ng-repeat="tweet in cleanTweets | filter:{fit:true}" style="top:{{tweet.fit.y}}px; left:{{tweet.fit.x}}px; height:{{tweet.h}}px; width:{{tweet.w}}px; position: absolute;"></card>

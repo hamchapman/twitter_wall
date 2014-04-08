@@ -47,15 +47,15 @@ exports.pusherUpdate = function(req, res) {
   .success(function(configs) {
     oldConfig = configs[0];
     oldConfig.updateAttributes(newConfig)
-    .success(function(){
-      res.send({ success: true});
-    }).error(function(err){
-      res.send({ success: false});
-    });
+      .success(function(){
+        res.send({ success: true});
+      }).error(function(err){
+        res.send({ success: false});
+      });
   })
 };
 
-exports.logo = function(req, res) {
+exports.logoUpload = function(req, res) {
   fs.rename(
     req.files.logo.path, 
     path.normalize(__dirname + '/../../public/img/logo.png'), 
@@ -65,4 +65,52 @@ exports.logo = function(req, res) {
       };
     });
   res.send();
+};
+
+exports.sponsorLogos = function(req, res) {
+  db.SponsorLogo.findAll()
+    .success(function(logos) {
+      console.log(logos);
+      res.send({ success: true, logos: logos });
+    }).error(function(err){
+      res.send({ success: false });
+    });
+};
+
+exports.removeSponsorLogo = function(req, res) {
+  db.SponsorLogo.find({ where: { name: req.body.logo.name }})
+    .success(function(logo) {
+      console.log("Found logo")
+      logo.destroy().success(function() {
+        console.log("Sponsor logo removed from DB");
+      })
+  })
+  // pusherClient.trigger('twitter_wall', 'remove_sponsor_logo', { index: logoIndex }); 
+  res.send();
+};
+
+exports.sponsorLogoUpload = function(req, res) {
+  var numOfSponsorLogos = 0;
+  fs.readdir(__dirname + '/../../public/img/sponsors', function(err, files) {
+    numOfSponsorLogos = files.length;
+    fs.rename(
+      req.files.sponsorLogo.path,
+      path.normalize(__dirname + '/../../public/img/sponsors/sponsor' + (numOfSponsorLogos + 1) + '.png' ),
+      function(err) {
+        if (err) { 
+          throw err; 
+        };
+      });
+    var sponsorLogo = db.SponsorLogo.build({ 
+      name: "sponsor" + (numOfSponsorLogos + 1) + '.png', 
+      path: '/img/sponsors/sponsor' + (numOfSponsorLogos + 1) + '.png'
+    });
+    sponsorLogo.save()
+      .success(function(){
+        console.log("Sponsor logo saved");
+      }).error(function(err){
+        console.log("Failed to save sponsor logo");
+      });
+    res.send();
+  })
 };

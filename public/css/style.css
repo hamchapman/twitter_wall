@@ -165,8 +165,8 @@ a {
   background-color: #8BA7AD;
 }
 
-.light-grey {
-  background-color: #eceae2;
+.white {
+  background-color: #fffdf4;
 }
 
 .diamond {
@@ -184,4 +184,13 @@ a {
   margin-right: auto;
   height: 800px;
   position: relative;
+}
+
+.logo-photo-container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 200px;
+  width: 200px;
+  overflow: hidden; 
 }

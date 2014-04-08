@@ -2,8 +2,6 @@
 
 var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
-// NEED TO ASK ABOUT THIS AND GENERALLY HOW THE TWEETS GET SHOWN WHEN IN MODERATION
-
 twitterWallDirectives.directive('unmoderatedCard', function() {
   return {
     restrict: "E",
@@ -13,7 +11,7 @@ twitterWallDirectives.directive('unmoderatedCard', function() {
   }
 });
 
-twitterWallDirectives.directive('grid', ['Blocks', '$q', '$http', '$timeout', function(Blocks, $q, $http, $timeout) {
+twitterWallDirectives.directive('grid', ['$q', '$http', function($q, $http) {
   var linker = function(scope, elem, attrs) {
     
   }
@@ -89,6 +87,7 @@ twitterWallDirectives.directive('textCardWide', ['$compile', function($compile) 
 twitterWallDirectives.directive('textCardTall', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
     elem.addClass(randomColor());
+    // console.log(elem);
   }
   return {
     restrict: "C",
@@ -109,7 +108,7 @@ twitterWallDirectives.directive('sponsorCard', ['$compile', function($compile) {
 }]);
 
 var randomColor = function() {
-  var randomNum = Math.floor(Math.random()*4);
+  var randomNum = Math.floor(Math.random()*10);
   switch(randomNum)
   {
   case 1:
@@ -119,6 +118,6 @@ var randomColor = function() {
   case 3:
     return "pale-green";
   default:
-    return "light-grey";
+    return "white";
   }
 }
