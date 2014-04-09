@@ -1,8 +1,16 @@
 <div class="text-card-square">
-  SQUARE
-  <img class="hexagon" src="{{tweet.profile_image_url}}">
+  <img class="diamond" src="{{tweet.profile_image_url}}">
+  <div class="user-container">
+    <div class="twitter-logo"></div>
+    <div class="tweet-tweeter-container">
+      {{tweet.tweeter}}
+    </div>
+  </div>
+  <div class="little-bar"></div>
   <div class="tweet-text-container">
     {{tweet.text}}
-    {{$index}}
+  </div>
+  <div class="time-ago-container">
+    2 hours ago
   </div>
 </div>

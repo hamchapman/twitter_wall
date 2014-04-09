@@ -1,7 +1,19 @@
 <div class="photo-card">
   <img class="diamond" src="{{tweet.profile_image_url}}">
   <div class="tweet-photo-container" style="background-image:url({{tweet.media_url}});"></div>
-  <div class="tweet-text-container">
-    {{tweet.text}}
+  <div class="tweet-details-container">
+    <div class="user-container">
+      <div class="twitter-logo"></div>
+      <div class="tweet-tweeter-container">
+        {{tweet.tweeter}}
+      </div>
+    </div>
+    <div class="little-bar"></div>
+    <div class="tweet-text-container">
+      {{tweet.text}}
+    </div>
+    <div class="time-ago-container">
+      2 hours ago
+    </div>
   </div>
 </div>

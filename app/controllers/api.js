@@ -40,7 +40,7 @@ exports.addCleanTweet = function(req, res) {
   var tweet = req.body.tweet;
   pushCleanTweet(tweet);
   if (!isAutomatic) {
-    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter }})
+    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter, date: new Date() }})
       .success(function(tweet) {
         tweet.destroy().success(function() {
           console.log("Tweet removed from DB");
@@ -135,6 +135,7 @@ var formatTweetForDB = function(tweet) {
   formattedTweet.text = tweet.text;
   formattedTweet.tweeter = tweet.user.screen_name;
   formattedTweet.profile_image_url = tweet.user.profile_image_url;
+  formattedTweet.date = new Date();
   if (tweet.entities.media) {
     formattedTweet.media_url = tweet.entities.media[0].media_url;
   }

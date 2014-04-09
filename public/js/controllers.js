@@ -18,13 +18,13 @@ twitterWallControllers.controller('ViewerCtrl', [
   'CleanTweets',
   function ($scope, $http, $q, Pusher, CleanTweets) { 
     // var dimensions = { w: packer.w, h: packer.h };
-    var dimensions = { w: 1200, h: 800 };
+    var dimensions = { w: 1250, h: 750 };
 
     $scope.cleanTweets = [];
     CleanTweets.get().then(function(tweets) {
       $scope.cleanTweets = tweets;
       addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
-        var packer = new Packer(1200, 800);
+        var packer = new Packer(1250, 750);
         packer.fit($scope.cleanTweets);
       })
     });
@@ -32,7 +32,7 @@ twitterWallControllers.controller('ViewerCtrl', [
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
       $scope.cleanTweets.unshift(tweet);
-      var packer = new Packer(1200, 800);
+      var packer = new Packer(1250, 750);
       packer.fit($scope.cleanTweets);
     });
 
@@ -41,15 +41,15 @@ twitterWallControllers.controller('ViewerCtrl', [
       if(tweetIndex != -1) {
         $scope.cleanTweets.splice(tweetIndex, 1);
         $scope.$apply(function () { 
-          var packer = new Packer(1200, 800);
+          var packer = new Packer(1250, 750);
           packer.fit($scope.cleanTweets);
         })
       }
     });
 
     var addBlockInfoToTweet = function(dimensions, tweet) {
-      var unitWidth = dimensions.w / 6.0;
-      var unitHeight = dimensions.h / 4.0;
+      var unitWidth = dimensions.w / 5.0;
+      var unitHeight = dimensions.h / 3.0;
       if (tweet.media_url) {
         var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
         _.extend(tweet, block);
@@ -70,7 +70,6 @@ twitterWallControllers.controller('ViewerCtrl', [
     var addBlockInfoToCleanTweets = function(dimensions, tweets) {
       var deferred = $q.defer();
       addSponsorLogosToCleanTweets(tweets).then(function() {
-        console.log("Now adding block info to tweets in cleanTweets");
         tweets.forEach(function(tweet) {
           addBlockInfoToTweet(dimensions, tweet);
         })
@@ -81,18 +80,14 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     var addSponsorLogosToCleanTweets = function(tweets) {
       var deferred = $q.defer();
-      console.log("I'm getting some logos");
       $http.get('/sponsor-logos')
         .success(function(res) {
           var logos = res.logos;
-          console.log("logos are: ");
-          console.log(logos);
           for(var i = 0; i < ($scope.cleanTweets.length / 6); i++) {
             var randomNum = Math.floor(Math.random()*(logos.length));
             var sponsorTweet = { sponsor: true, path: logos[randomNum].path };
             $scope.cleanTweets.splice(((i * 6) + 6), 0, sponsorTweet);
           }
-          console.log($scope.cleanTweets);
           deferred.resolve();
         });
       return deferred.promise;

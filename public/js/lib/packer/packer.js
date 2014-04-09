@@ -12,10 +12,8 @@ Packer.prototype = {
     // var fitArea = 0;
     // console.log('should be zero '+fitArea)
     // var fit = 0;
-    console.log("Im fitting");
     blocks.forEach(function(block) {  
       if (block.fit) {
-        // console.log(block);
         block.fit.used = false;
       }
     })

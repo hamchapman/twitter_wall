@@ -56,7 +56,7 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
 
 twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    elem.addClass(randomColor());
+    elem.addClass(randomStyle());
   }
   return {
     restrict: "C",
@@ -66,7 +66,7 @@ twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
 
 twitterWallDirectives.directive('textCardSquare', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    elem.addClass(randomColor());
+    elem.addClass(randomStyle());
   }
   return {
     restrict: "C",
@@ -76,7 +76,7 @@ twitterWallDirectives.directive('textCardSquare', ['$compile', function($compile
 
 twitterWallDirectives.directive('textCardWide', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    elem.addClass(randomColor());
+    elem.addClass(randomStyle());
   }
   return {
     restrict: "C",
@@ -86,8 +86,7 @@ twitterWallDirectives.directive('textCardWide', ['$compile', function($compile) 
 
 twitterWallDirectives.directive('textCardTall', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    elem.addClass(randomColor());
-    // console.log(elem);
+    elem.addClass(randomStyle());
   }
   return {
     restrict: "C",
@@ -97,9 +96,7 @@ twitterWallDirectives.directive('textCardTall', ['$compile', function($compile) 
 
 twitterWallDirectives.directive('sponsorCard', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
-    elem.on("$destroy", function() {
-      CleanLayout.decrNumSponsor();
-    });
+
   }
   return {
     restrict: "C",
@@ -107,17 +104,10 @@ twitterWallDirectives.directive('sponsorCard', ['$compile', function($compile) {
   }
 }]);
 
-var randomColor = function() {
+var randomStyle = function() {
   var randomNum = Math.floor(Math.random()*10);
-  switch(randomNum)
-  {
-  case 1:
-    return "light-green";
-  case 2:
-    return "dark-green";
-  case 3:
-    return "pale-green";
-  default:
-    return "white";
-  }
+  if (randomNum < 2) { return "light-green-bg"; }
+  if (randomNum < 4) { return "dark-green-bg"; }
+  if (randomNum < 7) { return "white-bg"; }
+  return "diagonal-stripes orange-text bebas-neue";
 }
