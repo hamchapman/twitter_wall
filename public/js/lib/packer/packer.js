@@ -9,9 +9,6 @@ Packer.prototype = {
     this.root = { x: 0, y: 0, w: w, h: h };
   },
   fit: function(blocks) {
-    // var fitArea = 0;
-    // console.log('should be zero '+fitArea)
-    // var fit = 0;
     blocks.forEach(function(block) {  
       if (block.fit) {
         block.fit.used = false;
@@ -24,8 +21,6 @@ Packer.prototype = {
         block.fit = this.splitNode(node, block.w, block.h);
       }
     }
-    // console.log('receved '+blocks.length+" elem ( fitted "+fit+" elems)");
-    // console.log("fited "+ 100 * fitArea / (1200 * 800) +"%");
   },
   findNode: function(root, w, h) {
     if (root.used)

@@ -32,16 +32,6 @@ angular.module('twitterWall', [
           templateUrl: '/views/admin.html',
           controller: 'AdminCtrl'
         })
-        .state('admin.config', {
-          url: '/config',
-          templateUrl: '/views/partials/config.html',
-          controller: 'ConfigCtrl'
-        })
-        .state('admin.style', {
-          url: '/style',
-          templateUrl: '/views/partials/style.html',
-          controller: 'StyleCtrl'
-        })
         .state('admin.moderate', {
           url: '/moderate',
           templateUrl: '/views/partials/moderate.html',
@@ -52,10 +42,10 @@ angular.module('twitterWall', [
           templateUrl: '/views/partials/mirror.html',
           controller: 'MirrorCtrl'
         })
-        .state('admin.queries', {
-          url: '/queries',
-          templateUrl: '/views/partials/queries.html',
-          controller: 'QueryCtrl'
+        .state('admin.setup', {
+          url: '/seutp',
+          templateUrl: '/views/partials/setup.html',
+          controller: 'SetupCtrl'
         });
       $urlRouterProvider.otherwise('/');
     }

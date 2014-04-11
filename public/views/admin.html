@@ -1,8 +1,38 @@
-<div class="container" ng-controller="AdminCtrl">
-  <a ui-sref="admin.moderate">Moderate</a>
-  <a ui-sref="admin.queries">Queries</a>
-  <a ui-sref="admin.config">Config</a>
-  <a ui-sref="admin.style">Style</a>
-  <a ui-sref="admin.mirror">Mirror</a>
-  <div ui-view></div>
+<div class="admin" ng-controller="AdminCtrl">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 admin-nav">
+        <div class="sidebar-nav">
+          <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <span class="visible-sm visible-xs navbar-brand">Menu</span>
+            </div>
+            <div class="navbar-collapse collapse sidebar-navbar-collapse">
+              <div class="yaq-logo">YAQ</div>
+              <ul class="nav navbar-nav">
+                <li class="setup-nav-box"><a ui-sref="admin.setup">Setup</a></li>
+                <li class="moderate-nav-box"><a ui-sref="admin.moderate">Moderate</a></li>
+                <li class="mirror-nav-box"><a ui-sref="admin.mirror">Mirror</a></a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 col-md-offset-2">
+        <div class="top-admin-bar row">
+          <div class="nav-username top-bar-item col-md-offset-10 col-md-1">
+            Admin <div class="little-vertical-bar"></div>
+          </div>
+          <div class="nav-logout-button top-bar-item col-md-1">Logout</div>
+        </div>
+        <div ui-view></div>
+      </div>
+    </div> 
+  </div>
 </div>

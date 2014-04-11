@@ -1,0 +1,83 @@
+<div ng-controller="SetupCtrl" class="setup-container">
+
+  <div ng-controller="LogoCtrl" class="logo-container">
+    <div class="inner-logo-container">
+      <h4 class="add-logo-heading">Add Logo</h4>
+
+      <div class="company-logo">
+        <h4>Company Logo</h4>
+        <form action="/logo-upload" ng-upload="complete(content)">
+          <input type="file" name="logo"></input>
+          <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+        </form>      
+      </div>
+      
+      <div class="sponsor-logos">
+        <h4>Sponsor Logos</h4>
+        <form action="/sponsor-logo-upload" ng-upload="complete(content)">
+          <input type="file" name="sponsorLogo"></input>
+          <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+        </form>
+        <div class="sponsor-logo-section">
+          <div class="sponsor-logo-box" ng-repeat="logo in sponsorLogos">
+            <div class="logo-photo-container" style="background-image:url({{logo.path}});"></div>
+            <div class="sponsor-logo-remove-button">
+              <i class='glyphicon glyphicon-remove remove-button' ng-click="removeSponsorLogo(logo, $index)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-controller="StyleCtrl" class="style-container">
+    <div class="inner-style-container">
+      <h4>Colour Scheme</h4>
+    </div>
+  </div> 
+  
+
+  <div class="container">
+    <div class="row">
+      <div ng-controller="QueryCtrl" class="col-md-6 query-container">
+        <div class="inner-query-container">
+          <h4>Keywords</h4>
+
+          <form class="form-inline" name="tweetForm">
+            <input type="text" ng-model="query" placeholder="Keyword">
+            <button class="add-keyword-button" ng-click="getTweets()" type="button">Add</button>
+          </form>
+
+          <div class="query-box">
+            <div class="query" ng-repeat="query in queries">
+              <div class="query-text">{{query}}</div>
+              <i class='glyphicon glyphicon-remove remove-button' ng-click="removeQuery(query, $index)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div ng-controller="ConfigCtrl" class="col-md-6 config-container">
+        <div class="inner-config-container">
+          <h4>Config</h4>
+          <input type="text" ng-model="pusher_app_id" placeholder="App ID" class="pusher-app-id pusher-input">
+          <input type="text" ng-model="pusher_key" placeholder="Key" class="pusher-key pusher-input">
+          <input type="text" ng-model="pusher_secret" placeholder="Secret" class="pusher-secret pusher-input">
+          <div class="config-buttons-container">
+            <button type="submit" ng-click="updatePusherConfig()" class="config-update-button">Update</button>
+
+            <p class="mode-swap-button" ng-click="swapMode()" ng-show="!isAutomatic">Change to automatic mode</p>
+            <p class="mode-swap-button" ng-click="swapMode()" ng-show="isAutomatic">Change to moderated mode</p>
+          </div>
+        </div>
+      </div>  
+    </div>    
+  </div>
+
+</div>
+ 
+
+
+ <!-- <span class="btn btn-default btn-file">
+  Browse <input type="file">
+</span> -->

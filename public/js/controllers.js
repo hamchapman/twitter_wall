@@ -16,15 +16,26 @@ twitterWallControllers.controller('ViewerCtrl', [
   '$q',
   'Pusher',
   'CleanTweets',
-  function ($scope, $http, $q, Pusher, CleanTweets) { 
-    // var dimensions = { w: packer.w, h: packer.h };
-    var dimensions = { w: 1250, h: 750 };
+  '$window',
+  function ($scope, $http, $q, Pusher, CleanTweets, $window) { 
+    $scope.windowWidth = $window.innerWidth;
+    $scope.windowHeight = $window.innerHeight;
+    var dimensions = { w: $scope.windowWidth, h: $scope.windowHeight - 140 };
+
+    var w = angular.element($window); 
+    w.bind('resize', function () {
+      $scope.$apply(function () { 
+        // Need to re-add block info to tweets here to make sure they scale in size with the grid
+        var packer = new Packer(w[0].innerWidth, w[0].innerHeight);
+        packer.fit($scope.cleanTweets);
+      }
+    )});
 
     $scope.cleanTweets = [];
     CleanTweets.get().then(function(tweets) {
       $scope.cleanTweets = tweets;
       addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
-        var packer = new Packer(1250, 750);
+        var packer = new Packer($scope.windowWidth, $scope.windowHeight);
         packer.fit($scope.cleanTweets);
       })
     });
@@ -32,7 +43,7 @@ twitterWallControllers.controller('ViewerCtrl', [
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
       $scope.cleanTweets.unshift(tweet);
-      var packer = new Packer(1250, 750);
+      var packer = new Packer($scope.windowWidth, $scope.windowHeight);
       packer.fit($scope.cleanTweets);
     });
 
@@ -41,7 +52,7 @@ twitterWallControllers.controller('ViewerCtrl', [
       if(tweetIndex != -1) {
         $scope.cleanTweets.splice(tweetIndex, 1);
         $scope.$apply(function () { 
-          var packer = new Packer(1250, 750);
+          var packer = new Packer($scope.windowWidth, $scope.windowHeight);
           packer.fit($scope.cleanTweets);
         })
       }
@@ -57,9 +68,9 @@ twitterWallControllers.controller('ViewerCtrl', [
         var block = { w: unitWidth, h: unitHeight, style: 'sponsor'};
         _.extend(tweet, block);
       } else { 
-        var randomNum = Math.random()*9;
+        var randomNum = Math.random()*10;
         var block = {};
-        if (randomNum <= 3) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
+        if (randomNum <= 2) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
         if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
         { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
         _.extend(tweet, block);
@@ -191,7 +202,7 @@ twitterWallControllers.controller('ConfigCtrl', [
   }
 ]);
 
-twitterWallControllers.controller('StyleCtrl', [
+twitterWallControllers.controller('LogoCtrl', [
   '$scope', 
   '$http',
   function ($scope, $http) {
@@ -208,6 +219,14 @@ twitterWallControllers.controller('StyleCtrl', [
       }
       $http.post('/remove-sponsor-logo', { logo: logo });
     }
+  }
+]);
+
+twitterWallControllers.controller('StyleCtrl', [
+  '$scope', 
+  '$http',
+  function ($scope, $http) {
+    
   }
 ]);
 
@@ -238,5 +257,15 @@ twitterWallControllers.controller('MirrorCtrl', [
     $scope.removeCleanTweet = function(tweet, index) {
       $http.post('/api/remove-clean-tweet', { tweet: tweet, index: index });
     };
+  }
+]);
+
+twitterWallControllers.controller('SetupCtrl', [
+  '$scope', 
+  '$http',
+  'Pusher',
+  'CleanTweets',
+  function ($scope, $http, Pusher, CleanTweets) {
+
   }
 ]);

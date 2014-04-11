@@ -14,9 +14,9 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
   vertical-align: baseline;
+  /*font-size: 100%;
+  font: inherit;*/
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -42,7 +42,8 @@ table {
 }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
@@ -74,36 +75,28 @@ a {
   width: 50px;
   height: 50px
 }
-
-.top-navbar {
-  height:70px;
-  width: 100%;
-  /*border-bottom: 1px black solid;*/
-  background-color: #152023;
-  overflow: auto;
-}
-
-.navbar {
-  border: none;
-  height: 70px;
-  background-color: #152023;
-  color: #cbc9c9;
-}
-
 .pusher-logo {
-  float: right;
+  margin-top: 18px;
+  display: inline-block;
+}
+
+.powered-by-text {
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
 .tweet-text-container {
-  /*font-family: "Bebas-Neue", "Lucida Grande", Helvetica;*/
   font-size: 18px;
   font-weight: 500;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .photo-card {
+  border: 1px solid lightgrey;
   text-align: center;
-  width: 500px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
 }
 
 .photo-card .tweet-photo-container {
@@ -111,18 +104,25 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 250px;
-  width: 250px;
+  height: 100%;
+  width: 50%;
   overflow: hidden; 
 }
 
-.sponsor-logo-image-container {
+.sponsor-logo-image {
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-  height: 250px;
-  width: 250px;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
   overflow: hidden; 
+  margin-top: 8%;
+}
+
+.sponsor-logo-image-container {
+  height: 80%;
+  width: 80%;
+  margin: 0px auto;
 }
 
 .photo-card .tweet-avatar-container {
@@ -131,14 +131,15 @@ a {
 
 .photo-card .tweet-details-container {
   float: left;
-  height: 250px;
-  width: 250px;
+  height: 100%;
+  width: 50%;
 }
 
 .text-card-wide {
   text-align: center;
-  width: 500px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
+  border: 1px solid lightgrey;
 }
 
 .text-card-wide .tweet-text-container {
@@ -148,13 +149,14 @@ a {
 }
 
 .text-card-tall {
+  border: 1px solid lightgrey;
   text-align: center;
-  width: 250px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
 }
 
 .text-card-tall .tall-card-body {
-  margin-top: 50%;
+  padding-top: 50%;
 }
 
 .text-card-tall .tweet-text-container {
@@ -162,9 +164,17 @@ a {
 }
 
 .text-card-square {
+  border: 1px solid lightgrey;
   text-align: center;
-  width: 250px;
-  height: 250px;
+  width: 100%;
+  height: 100%;
+}
+
+.sponsor-card {
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  border: 1px solid lightgrey;
 }
 
 .light-green-bg {
@@ -258,7 +268,9 @@ a {
 
 .time-ago-container {
   text-align: center;
-  width: 100%;
+  width: inherit;
+  position: absolute;
+  bottom: 5px;
 }
 
 .little-bar {
@@ -274,18 +286,280 @@ a {
 }
 
 .grid {
-  width: 1250px;
+  background-color: #f1f1f1;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-  height: 750px;
-  position: relative;
+  height: 100%;
+  margin-top: 70px;
+  position: fixed;
 }
 
 .logo-photo-container {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 200px;
-  width: 200px;
+  height: 120px;
+  width: 120px;
   overflow: hidden; 
+}
+
+card {
+  padding: 5px;
+}
+
+
+/* ----- Bootstrap Overrides ----- */
+
+.navbar {
+  border: none;
+  border-radius: 0px;
+  height: 100%;
+}
+
+.admin-nav .navbar {
+  background-color: #252525;
+  color: #898989;
+  height: 100%;
+}
+
+.tweet-wall .navbar {
+  border: none;
+  border-radius: 0;
+  height: 70px;
+  background-color: #152023;
+  color: #cbc9c9;
+  margin-bottom: 0px;
+}
+
+.admin .container {
+  width: 100%;
+  padding: 0px;
+}
+
+.col-md-10, .col-md-2, .col-md-6 {
+  padding: 0px;
+}
+
+.row {
+  margin: 0px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/* ------------------------------- */
+
+
+
+/* ----- Admin Page ----- */
+
+
+@media (min-width: 768px) {
+  .sidebar-nav .navbar .navbar-collapse {
+    padding: 0;
+    max-height: none;
+  }
+  .sidebar-nav .navbar ul {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li {
+    float: none;
+    display: block;
+  }
+  .sidebar-nav .navbar li a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+
+.yaq-logo {
+  margin-top: 8%;
+  text-align: center;
+  color: white;
+  font-size: 250%;
+  width: 100%;
+  height: 20%;
+}
+
+.top-admin-bar {
+  width: 100%;
+  background-color: #90d3d7;
+  height: 70px;
+  color: white;
+}
+
+.admin-nav {
+  position: fixed; 
+  height: 100%;
+}
+
+.sidebar-nav {
+  height: 100%;
+}
+
+.logout-button {
+  float: right;
+}
+
+.setup-nav-box {
+  width: 100%;
+  height: 15%;
+}
+
+.moderate-nav-box {
+  width: 100%;
+  height: 15%; 
+}
+
+.mirror-nav-box {
+  width: 100%;
+  height: 15%;
+}
+
+.config-container {
+  background-color: #f3f3f3;
+  height: 33%;
+}
+
+.query-container {
+  background-color: #ebebeb;
+  height: 33%;
+}
+
+.logo-container {
+  background-color: #f1f1f1;
+  height: 33%;
+}
+
+.setup-container {
+  height: 100%;
+  color: #656565;
+}
+
+.mode-swap-button {
+  color: #90d3d7;
+}
+
+.setup-container button {
+  background-color: #90d3d7;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  padding: 5px;
+}
+
+.query-box {
+  background-color: #b6d1d2;
+  color: white;
+}
+
+.query {
+  margin-top: 4%;
+}
+
+.query-text {
+  background-color: #b6d1d2; 
+  float: left;
+  padding: 6px;
+}
+
+.remove-button {
+  background-color: #b6d1d2;
+  border-left: 1px solid white;
+  float: left;
+  padding: 6px;
+  top: 0px;
+  color: white;
+}
+
+.add-keyword-button {
+  margin-left: 1%;
+}
+
+/*h4 {
+  padding: 2%;
+}*/
+
+.little-vertical-bar {
+  border-left: 1px solid white;
+  height: 20%;
+}
+
+.top-bar-item {
+  top: 40%;
+}
+
+.sponsor-logo-box {
+  float: left;
+  padding: 5%;
+}
+
+.company-logo, .sponsor-logos {
+  float: left;
+}
+
+.sponsor-logo-remove-button {
+  width: 50%;
+  margin-left: 40%;
+  margin-top: 10%;
+}
+
+.inner-logo-container, .inner-style-container {
+  padding: 2%;
+}
+
+.inner-config-container, .inner-query-container {
+  padding: 4%;
+}
+
+.inner-query-container form {
+  margin-top: 3%;
+}
+
+.pusher-input {
+  margin-top: 3%;
+}
+
+.pusher-app-id {
+  width: 49.5%;
+}
+
+.pusher-key {
+  width: 49.5%;
+}
+
+.pusher-secret {
+  width: 100%;
+}
+
+.config-buttons-container {
+  margin-top: 2%;
+  width: 100%; 
+}
+
+.mode-swap-button {
+  float: right;
+}
+
+.config-update-button {
+  float: left; 
 }
