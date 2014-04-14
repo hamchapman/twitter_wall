@@ -1,0 +1,33 @@
+<div class="unmoderated-photo-card packery-tile shadow">
+
+  <div class="unmoderated-tweet-photo-container" style="background-image:url({{tweet.media_url}});"></div>
+
+  <div class="unmoderated-tweet-details-container">
+    <img class="unmoderated-tweet-avatar" src="{{tweet.profile_image_url}}">
+    <div class="unmoderated-tweet-details">
+      <div class="tweeter-details">
+        <div class="unmoderated-tweet-name">
+          {{tweet.name}}
+        </div>
+        <div class="unmoderated-tweet-tweeter">
+          {{tweet.tweeter}}
+        </div>
+      </div>
+      <div class="unmoderated-tweet-date">{{tweet.formattedDate}}</div>
+    </div>
+  </div>
+
+  <div class="unmoderated-tweet-text" ng-swipe-right="discardTweet(tweet, $index)" ng-swipe-left="verifyTweet(tweet, $index)">
+    {{tweet.text}}
+  </div>
+
+  <div class="unmoderated-tweet-buttons">
+    <div class="mirror-remove-button">
+      <button ng-click="removeCleanTweet(tweet, $index)" type="button">
+        <div class="cross">×</div>
+        <div class="remove">REMOVE</div>
+      </button>
+    </div>
+  </div>
+
+</div>

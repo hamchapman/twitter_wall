@@ -280,6 +280,7 @@ a {
 }
 
 .diamond {
+  width: 65px;
   margin-top: 10px;
   -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
   clip-path: url(#diamond);
@@ -337,7 +338,7 @@ card {
   padding: 0px;
 }
 
-.col-md-10, .col-md-2, .col-md-6 {
+.col-md-10, .col-md-2, .col-md-6, .col-md-3 {
   padding: 0px;
 }
 
@@ -437,12 +438,16 @@ card {
 
 .config-container {
   background-color: #f3f3f3;
-  height: 33%;
+  height: 200px;
 }
 
 .query-container {
   background-color: #ebebeb;
-  height: 33%;
+  height: 200px;
+}
+
+.query-container input {
+  width: 50%;
 }
 
 .logo-container {
@@ -464,7 +469,7 @@ card {
   color: white;
   border: none;
   border-radius: 0px;
-  padding: 5px;
+  padding: 10px;
 }
 
 .query-box {
@@ -473,7 +478,13 @@ card {
 }
 
 .query {
+  margin-left: 2%;
   margin-top: 4%;
+  float: left;
+}
+
+.query:first-of-type {
+  margin-left: 0%;
 }
 
 .query-text {
@@ -510,12 +521,12 @@ card {
 
 .sponsor-logo-box {
   float: left;
-  padding: 5%;
+  margin: 25px;
 }
 
-.company-logo, .sponsor-logos {
+/*.company-logo, .sponsor-logos {
   float: left;
-}
+}*/
 
 .sponsor-logo-remove-button {
   width: 50%;
@@ -523,12 +534,16 @@ card {
   margin-top: 10%;
 }
 
+.inner-logo-container {
+  height: 100%;
+}
+
 .inner-logo-container, .inner-style-container {
-  padding: 2%;
+  padding: 3%;
 }
 
 .inner-config-container, .inner-query-container {
-  padding: 4%;
+  padding: 6%;
 }
 
 .inner-query-container form {
@@ -540,11 +555,12 @@ card {
 }
 
 .pusher-app-id {
-  width: 49.5%;
+  width: 49%;
 }
 
 .pusher-key {
-  width: 49.5%;
+  float: right;
+  width: 49%;
 }
 
 .pusher-secret {
@@ -563,3 +579,197 @@ card {
 .config-update-button {
   float: left; 
 }
+
+.outer-style-container {
+  height: 400px;
+  background-color: white;
+}
+
+.outer-logo-container {
+  height: 500px; 
+  background-color: #f1f1f1;
+}
+
+.outer-config-container {
+  height: 200px;
+}
+
+.company-logo-upload-form {
+  width: 250px;
+  bottom: 2%;
+}
+
+.sponsor-logo-upload-form {
+  width: 250px;
+  bottom: 2%;
+}
+
+.company-logo {
+  height: 100%;
+}
+
+/* ------------------------------- */
+
+
+
+
+
+/* ----- Unmoderated Tweets ----- */
+
+.tweet-list {
+  background-color: #f1f1f1;
+}
+
+.unmoderated-tweet-photo-container {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20em;
+  width: 100%;
+  overflow: hidden; 
+}
+
+.unmoderated-text-card, .unmoderated-photo-card {
+  width: 31%;
+  margin: 1%;
+  background-color: white;
+}
+
+.unmoderated-tweet-buttons button {
+  color: #90d3d7;
+  border: none;
+  background-color: #e8e8e8;
+  width: 100%;
+  float: left;
+  text-align: center;
+  height: 100%;
+}
+
+.unmoderated-tweet-buttons {
+  width: 100%;
+  height: 60px;
+}
+
+.unmoderated-tweet-buttons .verify-button, .discard-button {
+  height: 100%;
+  width: 50%;
+  float: left;
+}
+
+.unmoderated-tweet-avatar {
+  width: 15%;
+  float: left;
+  margin-left: 5%;
+}
+
+.unmoderated-tweet-tweeter {
+
+}
+
+.tweeter-details {
+  padding-left: 5%; 
+  float: left;
+  font-size: 0.8em;
+  width: 55%;
+}
+
+.unmoderated-tweet-date {
+  float: right;
+  font-size: 0.8em;
+  color: #f2b654;
+  text-align: right;
+}
+
+.unmoderated-tweet-details-container {
+  width: 100%;
+  margin-top: 5%;
+  background-color: white;
+}
+
+.unmoderated-tweet-text {
+  width: 100%;
+  padding: 4%;
+  float: left;
+}
+
+.unmoderated-tweet-tweeter {
+  color: #f2b654;
+}
+
+.unmoderated-tweet-details {
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.tick, .cross {
+  font-size: 1.8em;
+}
+
+.verify-button {
+  border-right: 1px solid white;
+}
+
+.discard-button {
+  border-left: 1px solid lightgray;
+}
+
+.reject, .accept {
+  font-size: 80%;
+}
+
+.shadow {
+  -moz-box-shadow: 1px 1px 1px 1px #c4c4c4;
+  -webkit-box-shadow: 1px 1px 1px 1px #c4c4c4;
+}
+
+.moderate-container {
+  background-color: #f1f1f1;
+}
+
+.mirror-remove-button {
+  color: #90d3d7;
+  border: none;
+  background-color: #e8e8e8;
+  width: 100%;
+  float: left;
+  text-align: center;
+  height: 100%;
+}
+
+body {
+  background-color: white; 
+}
+
+.company-logo-section {
+  margin: 25px;
+}
+
+.upload-sponsor-logo-form {
+  float: left;
+}
+
+.sponsor-logo-box:first-of-type {
+  margin-left: 0px;
+}
+
+.reset-container {
+  width: 100%;
+  height: 200px;
+}
+
+.reset-button {
+  background-color: #90d3d7;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  width: 100px;
+  margin: 0px auto 10px;
+}
+
+.reset-section {
+  text-align: center;
+  width: 200px;
+  margin: 100px auto;
+}
+
+/* ------------------------------ */

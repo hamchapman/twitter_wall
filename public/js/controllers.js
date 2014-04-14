@@ -94,10 +94,12 @@ twitterWallControllers.controller('ViewerCtrl', [
       $http.get('/sponsor-logos')
         .success(function(res) {
           var logos = res.logos;
-          for(var i = 0; i < ($scope.cleanTweets.length / 6); i++) {
-            var randomNum = Math.floor(Math.random()*(logos.length));
-            var sponsorTweet = { sponsor: true, path: logos[randomNum].path };
-            $scope.cleanTweets.splice(((i * 6) + 6), 0, sponsorTweet);
+          if (logos.length > 0) {
+            for(var i = 0; i < ($scope.cleanTweets.length / 6); i++) {
+              var randomNum = Math.floor(Math.random()*(logos.length));
+              var sponsorTweet = { sponsor: true, path: logos[randomNum].path };
+              $scope.cleanTweets.splice(((i * 6) + 6), 0, sponsorTweet);
+            }
           }
           deferred.resolve();
         });
@@ -207,10 +209,21 @@ twitterWallControllers.controller('LogoCtrl', [
   '$http',
   function ($scope, $http) {
     $scope.sponsorLogos = [];
+    $scope.companyLogo = [];
+    $scope.companyLogo.path = "/img/logo.png";
+
     $http.get('/sponsor-logos')
       .success(function(res) {
         $scope.sponsorLogos = res.logos;
       });
+
+    $scope.sponsorComplete = function(content) {
+      $scope.sponsorLogos.push({path: content.path});
+    } 
+
+    // $scope.companyComplete = function(content) {
+    //   $scope.comapnyLogo = {path: content.path};
+    // }
 
     $scope.removeSponsorLogo = function(logo, index) {
       var i = $scope.sponsorLogos.indexOf(logo);
@@ -227,6 +240,16 @@ twitterWallControllers.controller('StyleCtrl', [
   '$http',
   function ($scope, $http) {
     
+  }
+]);
+
+twitterWallControllers.controller('ResetCtrl', [
+  '$scope', 
+  '$http',
+  function ($scope, $http) {
+    $scope.fullReset = function() {
+      $http.post('/api/full-reset', { reset: true });
+    }
   }
 ]);
 
@@ -247,7 +270,6 @@ twitterWallControllers.controller('MirrorCtrl', [
     });
 
     Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
-      console.log("Receiving the pusher message");
       var tweetIndex = data['index'];
       if(tweetIndex != -1) {
         $scope.cleanTweets.splice(tweetIndex, 1);

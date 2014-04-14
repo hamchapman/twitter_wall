@@ -42,6 +42,9 @@ exports.init = function(app, passport, auth) {
   app.get('/api/mode', api.mode);
   app.get('/api/swap-mode', api.swapMode);
 
+  // Route for doing a full reset of the app, deletes all data
+  app.post('/api/full-reset', api.fullReset);
+
   // Setting the local strategy route
   app.post('/users/session', passport.authenticate('local', {
     successRedirect: '/pusher',

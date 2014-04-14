@@ -14,7 +14,6 @@ twitterWallServices.factory('CleanTweets', ['$http', '$q', function($http, $q) {
           deferred.resolve(cleanTweets);
         })
       return deferred.promise;
-      // return cleanTweets;
     },
     add: function(tweet) {
       return $http.post('/api/add-clean-tweet', { tweet: tweet })
@@ -77,4 +76,20 @@ twitterWallServices.factory('authInterceptor', [
         return $q.reject(rejection);
       }
     };
+}]);
+
+twitterWallServices.factory('Packery', [function() {
+  var packery = "";
+
+  return {
+    get: function () {
+      return packery;
+    },
+    set: function(elem) {
+      packery = new Packery(elem[0], {
+        itemSelector: '.packery-tile'
+      });
+      return packery;
+    }
+  };
 }]);

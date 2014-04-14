@@ -1,3 +1,5 @@
+var fs = require('fs');
+var path = require('path');
 var db = require('../../config/sequelize');
 var config = require('../../config/config');
 var Twit = require('twit');
@@ -38,9 +40,11 @@ exports.cleanTweets = function(req, res) {
 
 exports.addCleanTweet = function(req, res) {
   var tweet = req.body.tweet;
+  console.log("*****************************");
+  console.log(tweet);
   pushCleanTweet(tweet);
   if (!isAutomatic) {
-    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter, date: new Date() }})
+    db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter}})
       .success(function(tweet) {
         tweet.destroy().success(function() {
           console.log("Tweet removed from DB");
@@ -119,6 +123,73 @@ exports.swapMode = function(req, res) {
   res.send();
 };
 
+exports.fullReset = function(req, res) {
+  fs.readdir(__dirname + '/../../public/img/sponsors', function(err, files) {
+    files.forEach(function(file) {
+      fs.unlink(__dirname + '/../../public/img/sponsors/' + file, function (err) {
+        if (err) throw err;
+        console.log('successfully deleted ' + file);
+      });
+    })
+  })
+
+  fs.readdir(__dirname + '/../../public/img', function(err, files) {
+    console.log(files);
+    if (files.indexOf("logo.png") != -1) { 
+      fs.unlink(__dirname + '/../../public/img/logo.png', function (err) {
+        if (err) throw err;
+        console.log('successfully deleted logo.png');
+      });
+    }
+  })
+
+  db.CleanTweet.findAll()
+    .success(function(tweets) {
+      tweets.forEach(function(tweet) {
+        tweet.destroy();
+      })
+  })
+  db.Tweet.findAll()
+    .success(function(tweets) {
+      tweets.forEach(function(tweet) {
+        tweet.destroy();
+      })
+  })
+  db.TwitterOAuth.findAll()
+    .success(function(oauths) {
+      oauths.forEach(function(oauth) {
+        oauth.destroy();
+      })
+  })
+  db.PusherConfig.findAll()
+    .success(function(configs) {
+      configs.forEach(function(config) {
+        config.destroy();
+      })
+  })
+  db.Query.findAll()
+    .success(function(queries) {
+      queries.forEach(function(query) {
+        query.destroy();
+      })
+  })
+  db.User.findAll()
+    .success(function(users) {
+      users.forEach(function(user) {
+        user.destroy();
+      })
+  })
+  db.SponsorLogo.findAll()
+    .success(function(logos) {
+      logos.forEach(function(logo) {
+        logo.destroy();
+      })
+  })
+  res.send();
+};
+
+
+
 var pushCleanTweet = function(formattedTweet) {
   cleanTweets.push(formattedTweet);
   pusherClient.trigger('twitter_wall', 'new_clean_tweet', { tweet: formattedTweet });
@@ -136,6 +207,7 @@ var formatTweetForDB = function(tweet) {
   formattedTweet.tweeter = tweet.user.screen_name;
   formattedTweet.profile_image_url = tweet.user.profile_image_url;
   formattedTweet.date = new Date();
+  formattedTweet.name = tweet.user.name;
   if (tweet.entities.media) {
     formattedTweet.media_url = tweet.entities.media[0].media_url;
   }
@@ -154,7 +226,6 @@ var setupStream = function(query) {
     } else {
       db.Tweet.create(formattedTweet);
     }
-
     pusherClient.trigger('twitter_wall', 'new_tweet', { tweet: formattedTweet });
     tweets.push(tweet);
   });

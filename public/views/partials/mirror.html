@@ -1,8 +1,5 @@
-<div ng-controller="MirrorCtrl">
-  <ul>
-    <li class="tweet" ng-repeat="tweet in cleanTweets | limitTo:'-30'" ng-click="removeCleanTweet(tweet, $index)">
-      <img src="{{tweet.profile_image_url}}">
-      {{tweet.text}}
-    </li>
-  </ul>
+<div class="mirror-container" ng-controller="MirrorCtrl">
+  <div class="tweet-list" packery>
+  <mirror-card class="unmoderated-tweet-card" ng-repeat="tweet in cleanTweets | limitTo:'30'"></mirror-card>
+  </div>
 </div>

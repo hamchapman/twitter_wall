@@ -64,7 +64,7 @@ exports.logoUpload = function(req, res) {
         throw err; 
       };
     });
-  res.send();
+  res.send(req.files.logo.path);
 };
 
 exports.sponsorLogos = function(req, res) {
@@ -111,6 +111,6 @@ exports.sponsorLogoUpload = function(req, res) {
       }).error(function(err){
         console.log("Failed to save sponsor logo");
       });
-    res.send();
+    res.json({path: sponsorLogo.path});
   })
 };

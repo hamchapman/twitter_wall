@@ -1,5 +1,5 @@
-<div class="container" ng-controller="ModerateCtrl">
-  <div class="tweet-list">
-    <unmoderated-card class="tweet" ng-repeat="tweet in tweets | limitTo:'30'" ng-class="{ 'swipe-left': $index == activeIndexLeft, 'swipe-right': $index == activeIndexRight }"></unmoderated-card>
+<div class="moderate-container" ng-controller="ModerateCtrl">
+  <div class="tweet-list" packery>
+    <unmoderated-card class="unmoderated-tweet-card" ng-repeat="tweet in tweets | limitTo:'20'"></unmoderated-card>
   </div>
 </div>

@@ -2,14 +2,82 @@
 
 var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
-twitterWallDirectives.directive('unmoderatedCard', function() {
+twitterWallDirectives.directive('ngConfirmClick', [function(){
+  return {
+    link: function (scope, elem, attrs) {
+      var msg = attrs.ngConfirmClick || "Are you sure?";
+      elem.bind('click',function (event) {
+        if ( window.confirm(msg) ) {
+          scope.$apply(attrs.confirmedClick);
+        }
+      });
+    }
+  };
+}])
+
+twitterWallDirectives.directive('unmoderatedCard', ['$http', '$compile', function($http, $compile) {
+  var getTemplate = function(tweetType) {
+    var templateLoader,
+    baseUrl = '/views/partials/',
+    templateMap = {
+      text: 'unmoderatedTextCard.html',
+      photo: 'unmoderatedPhotoCard.html',
+    };
+    var templateUrl = baseUrl + templateMap[tweetType];
+    templateLoader = $http.get(templateUrl);
+    return templateLoader;
+  }
+  
+  var linker = function(scope, elem, attrs) {
+    scope.tweet.formattedDate = moment(scope.tweet.date).fromNow(true);
+
+    var tweetType = '';
+    if (scope.tweet.media_url) { tweetType = 'photo'; }
+    else { tweetType = 'text'; }
+    var loader = getTemplate(tweetType);
+    var promise = loader.success(function(html) {
+      elem.html(html);
+    }).then(function (response) {
+      $compile(elem.contents())(scope)
+    });
+  }
   return {
     restrict: "E",
-    templateUrl: '/views/partials/unmoderatedCard.html',
-    // link: function () {
-    // }
+    link: linker
   }
-});
+}]);
+
+twitterWallDirectives.directive('mirrorCard', ['$http', '$compile', function($http, $compile) {
+  var getTemplate = function(tweetType) {
+    var templateLoader,
+    baseUrl = '/views/partials/',
+    templateMap = {
+      text: 'mirrorTextCard.html',
+      photo: 'mirrorPhotoCard.html',
+    };
+    var templateUrl = baseUrl + templateMap[tweetType];
+    templateLoader = $http.get(templateUrl);
+    return templateLoader;
+  }
+  
+  var linker = function(scope, elem, attrs) {
+    scope.tweet.formattedDate = moment(scope.tweet.date).fromNow(true);
+
+    var tweetType = '';
+    if (scope.tweet.media_url) { tweetType = 'photo'; }
+    else { tweetType = 'text'; }
+    var loader = getTemplate(tweetType);
+    var promise = loader.success(function(html) {
+      elem.html(html);
+    }).then(function (response) {
+      $compile(elem.contents())(scope)
+    });
+  }
+  return {
+    restrict: "E",
+    link: linker
+  }
+}]);
 
 twitterWallDirectives.directive('grid', ['$q', '$http', function($q, $http) {
   var linker = function(scope, elem, attrs) {
@@ -39,6 +107,8 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
   }
 
   var linker = function(scope, elem, attrs) {
+    scope.tweet.formattedDate = moment(scope.tweet.date).fromNow(true);
+    
     var loader = getTemplate(scope.tweet.style);
     var promise = loader.success(function(html) {
       elem.html(html);
@@ -46,10 +116,10 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
       $compile(elem.contents())(scope)
     });  
   }
-    return {
-      restrict: "E",
-      link: linker
-    }
+  return {
+    restrict: "E",
+    link: linker
+  }
 }]);
 
 // CUT DOWN DIRECTIVES BELOW TO A SINGLE ONE

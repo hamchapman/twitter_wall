@@ -1,43 +1,57 @@
 <div ng-controller="SetupCtrl" class="setup-container">
 
-  <div ng-controller="LogoCtrl" class="logo-container">
+  <div ng-controller="LogoCtrl" class="outer-logo-container">
     <div class="inner-logo-container">
-      <h4 class="add-logo-heading">Add Logo</h4>
-
-      <div class="company-logo">
-        <h4>Company Logo</h4>
-        <form action="/logo-upload" ng-upload="complete(content)">
-          <input type="file" name="logo"></input>
-          <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
-        </form>      
-      </div>
+      <h4 class="add-logo-heading">Add Logos</h4>
       
-      <div class="sponsor-logos">
-        <h4>Sponsor Logos</h4>
-        <form action="/sponsor-logo-upload" ng-upload="complete(content)">
-          <input type="file" name="sponsorLogo"></input>
-          <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
-        </form>
-        <div class="sponsor-logo-section">
-          <div class="sponsor-logo-box" ng-repeat="logo in sponsorLogos">
-            <div class="logo-photo-container" style="background-image:url({{logo.path}});"></div>
-            <div class="sponsor-logo-remove-button">
-              <i class='glyphicon glyphicon-remove remove-button' ng-click="removeSponsorLogo(logo, $index)"></i>
+      <div class="container ">
+        <div class="row">
+
+          <div class="company-logo col-md-3">
+            <h4>Company Logo</h4>
+            <div class="company-logo-section">
+              <div class="logo-photo-container" style="background-image:url({{companyLogo.path}});"></div>
+            </div>
+            <div class="company-logo-upload-form">
+              <form action="/logo-upload" ng-upload="companyComplete(content)">
+                <input type="file" name="logo"></input>
+                <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+              </form>      
             </div>
           </div>
+          
+          <div class="sponsor-logos col-md-9">
+            <h4>Sponsor Logos</h4>
+            <div class="sponsor-logo-section">
+              <div class="sponsor-logo-box" ng-repeat="logo in sponsorLogos">
+                <div class="logo-photo-container" style="background-image:url({{logo.path}});"></div>
+                <div class="sponsor-logo-remove-button">
+                  <i class='glyphicon glyphicon-remove remove-button' ng-click="removeSponsorLogo(logo, $index)"></i>
+                </div>
+              </div>
+            </div>
+            <div class="upload-sponsor-logo-form">
+              <form action="/sponsor-logo-upload" ng-upload="sponsorComplete(content)">
+                <input type="file" name="sponsorLogo"></input>
+                <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+              </form>
+            </div>
+          </div>          
+        
         </div>
       </div>
+      
     </div>
   </div>
 
-  <div ng-controller="StyleCtrl" class="style-container">
+  <div ng-controller="StyleCtrl" class="outer-style-container">
     <div class="inner-style-container">
       <h4>Colour Scheme</h4>
     </div>
   </div> 
   
 
-  <div class="container">
+  <div class="container outer-config-container">
     <div class="row">
       <div ng-controller="QueryCtrl" class="col-md-6 query-container">
         <div class="inner-query-container">
@@ -74,10 +88,40 @@
     </div>    
   </div>
 
+  <div class="reset-container" ng-controller="ResetCtrl">
+    <div class="reset-section">
+      <button class="reset-button" confirmed-click="fullReset()" ng-confirm-click="Are you sure you want to do a full reset?">Full Reset</button>
+      <div class="reset-message">Everything will be deleted</div>
+    </div>
+  </div>
+
 </div>
  
 
+<script>
+//   function handleFileSelect(evt) {
+//     var files = evt.target.files;
 
- <!-- <span class="btn btn-default btn-file">
-  Browse <input type="file">
-</span> -->
+//     if (!f.type.match('image.*')) {
+//       continue;
+//     }
+
+//     var reader = new FileReader();
+
+//     // Closure to capture the file information.
+//     reader.onload = (function(theFile) {
+//       return function(e) {
+//         // Render thumbnail.
+//         var span = document.createElement('span');
+//         span.innerHTML = ['<img class="thumb" src="', e.target.result,
+//                           '" title="', escape(theFile.name), '"/>'].join('');
+//         document.getElementById('list').insertBefore(span, null);
+//       };
+//     })(f);
+
+//     // Read in the image file as a data URL.
+//     reader.readAsDataURL(f);
+//   }
+
+//   document.getElementById('files').addEventListener('change', handleFileSelect, false);
+// </script>

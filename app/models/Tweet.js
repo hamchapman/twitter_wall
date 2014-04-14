@@ -6,6 +6,7 @@ module.exports = function(sequelize, DataTypes) {
       tweeter:           DataTypes.STRING,
       profile_image_url: DataTypes.STRING,
       media_url:         DataTypes.STRING,
+      name:              DataTypes.STRING,
       date:              DataTypes.DATE
     }
   );
