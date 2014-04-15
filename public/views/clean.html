@@ -2,8 +2,14 @@
   
   <header>
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class=""></div>
-      <p class="navbar-text navbar-right">JOIN THE CONVERSATION #HASTAG</p>
+      <!-- <div class="nav-logo"></div> -->
+      <div class="navbar-text navbar-right">
+        <div class="join-the-conversation"><div class="twitter-logo"></div>JOIN THE CONVERSATION</div>
+        <div class="hashtag">
+          <input class="hashtag-input" ng-model="hashtag" ng-blur="saveHashtag()" placeholder="{{hashtag}}"></input>
+        </div>
+      </div>
+      
     </nav>
   </header>
   <div class="grid" grid></div>
@@ -13,7 +19,7 @@
       <div class="row">
         <div class="col-md-3 col-md-offset-9">
           <div class="powered-by-pusher">
-            <div class="powered-by-text">POWERED BY <img class="pusher-logo" src="/img/pusher-logo-flat-light.png"></div>
+            <img class="pusher-logo" src="/img/powered_by_pusher.png">
           </div>
         </div>
       </div>

@@ -18,6 +18,18 @@ twitterWallControllers.controller('ViewerCtrl', [
   'CleanTweets',
   '$window',
   function ($scope, $http, $q, Pusher, CleanTweets, $window) { 
+
+    $http.get('/api/hashtag')
+      .success(function(res) {
+        if (res.hashtag) { $scope.hashtag = res.hashtag.text }
+        else { $scope.hashtag = '#changeMe'; }
+      })
+
+    $scope.saveHashtag = function() {
+      // $scope.hashtag = $scope.hashtag;
+      $http.post('/api/update-hashtag', { hashtag: { text: $scope.hashtag } });
+    }
+
     $scope.windowWidth = $window.innerWidth;
     $scope.windowHeight = $window.innerHeight;
     var dimensions = { w: $scope.windowWidth, h: $scope.windowHeight - 140 };

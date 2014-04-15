@@ -37,6 +37,10 @@ exports.init = function(app, passport, auth) {
   app.post('/remove-sponsor-logo', setup.removeSponsorLogo);
   app.post('/api/remove-query', api.removeQuery);
 
+  // Routes for getting and setting the hashtag
+  app.get('/api/hashtag', api.hashtag);
+  app.post('/api/update-hashtag', api.updateHashtag);
+
   // Routes for getting and setting the current mode of operation 
   app.get('/api/mode', api.mode);
   app.get('/api/swap-mode', api.swapMode);

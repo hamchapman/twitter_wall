@@ -100,7 +100,7 @@ exports.removeQuery = function(req, res) {
       query.destroy().success(function() {
         console.log("Query removed from DB");
       })
-  })
+    })
   res.send();
 };
 
@@ -110,6 +110,34 @@ exports.startStreams = function() {
       setupStream(query.text);
     })
   })
+};
+
+exports.hashtag = function(req, res) {
+  db.Hashtag.findAll().success(function(hashtags) {
+    if (hashtags.length == 0) { res.send(); }
+    res.json({hashtag: hashtags[0]});
+  }).error(function() {
+    res.send({success: false});
+  })
+};
+
+exports.updateHashtag = function(req, res) {
+  var oldHashtag;
+  var newHashtag = req.body.hashtag;
+  db.Hashtag.findAll()
+  .success(function(hashtags) {
+    if (hashtags[0]) {
+      oldHashtag = hashtags[0];
+      oldHashtag.updateAttributes(newHashtag)
+        .success(function(){
+          res.send({ success: true});
+        }).error(function(err){
+          res.send({ success: false});
+        });
+    } else {
+      db.Hashtag.create({text: req.body.hashtag.text});
+    }
+  })  
 };
 
 exports.mode = function(req, res) {

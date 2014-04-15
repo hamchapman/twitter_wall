@@ -47,7 +47,6 @@ body {
 }
 
 a {
-  color: #bd0100;
   text-decoration: none;
 }
 
@@ -63,7 +62,6 @@ a {
 }
 
 .nav-logo {
-  position: relative;
   background-image: url("/img/logo.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -76,13 +74,15 @@ a {
   height: 50px
 }
 .pusher-logo {
-  margin-top: 18px;
-  display: inline-block;
+  margin-top: 20px;
+  float: right;
 }
 
-.powered-by-text {
-  padding-bottom: 10px;
-  display: inline-block;
+.hashtag-input {
+  background-color: transparent; 
+  border: none;
+  text-align: center;
+  margin-right: 10%;
 }
 
 .tweet-text-container {
@@ -146,7 +146,11 @@ a {
 .text-card-wide .tweet-text-container {
   text-align: center;
   width: 80%;
-  margin: 0px auto;
+  margin: 2% auto;
+}
+
+.text-card-wide .card-content {
+  margin-top: 5%;
 }
 
 .text-card-tall {
@@ -169,6 +173,10 @@ a {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+.text-card-square .little-bar {
+  margin: -1px auto 5px;
 }
 
 .sponsor-card {
@@ -271,7 +279,8 @@ a {
   text-align: center;
   width: inherit;
   position: absolute;
-  bottom: 15px;
+  bottom: 12px;
+  font-size: 0.9em;
 }
 
 .little-bar {
@@ -295,6 +304,7 @@ a {
   height: 100%;
   margin-top: 70px;
   position: fixed;
+  font-size: 1em;
 }
 
 .logo-photo-container {
@@ -308,6 +318,29 @@ a {
 
 card {
   padding: 5px;
+}
+
+.join-the-conversation {
+  float: right;
+  margin-right: 20px;
+  color: white;
+}
+
+.join-the-conversation .twitter-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden; 
+  background-image: url("/img/twitter-logos/twitter_logo_white.png");
+  margin-right: 10px;
+}
+
+.hashtag {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 1.3em;
+  color: #b6d1d2;
+  margin-right: 10px;
 }
 
 
@@ -366,6 +399,7 @@ card {
     cursor: inherit;
     display: block;
 }
+
 
 /* ------------------------------- */
 
@@ -452,7 +486,6 @@ card {
 }
 
 .logo-container {
-  background-color: #f1f1f1;
   height: 33%;
 }
 
@@ -582,7 +615,8 @@ card {
 
 .outer-logo-container {
   height: 550px; 
-  background-color: #f1f1f1;
+  /*background-color: #f1f1f1;*/
+  background-color: white;
 }
 
 .outer-config-container {
@@ -880,13 +914,17 @@ body {
 .choose-logo-button {
   background-color: #90d3d7;
   color: white;
-  padding: 4%;
+  padding: 8%;
   cursor: pointer;
   font-weight: 100;
 }
 
 .logo-upload-form-buttons-container {
-  width: 200px;
+  width: 100px;
+}
+
+.company-logo .logo-upload-form-buttons-container {
+  margin-left: 16%;
 }
 
 .sponsor-logos .logo-upload-form-buttons-container {
@@ -910,6 +948,11 @@ body {
 
 .inner-logo-container .container {
   margin-top: 2%;
+}
+
+.nav-logout-button a {
+  color: white;
+  text-decoration: none;
 }
 
 /* ------------------------------ */

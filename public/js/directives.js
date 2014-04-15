@@ -131,7 +131,7 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
   }
 
   var linker = function(scope, elem, attrs) {
-    scope.tweet.formattedDate = moment(scope.tweet.date).fromNow(true);
+    scope.tweet.formattedDate = moment(scope.tweet.date).fromNow();
 
     var loader = getTemplate(scope.tweet.style);
     var promise = loader.success(function(html) {
