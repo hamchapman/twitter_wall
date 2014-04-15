@@ -114,15 +114,16 @@ a {
   background-repeat: no-repeat;
   background-size: contain;
   height: 100%;
-  width: 100%;
+  width: 70%;
   overflow: hidden; 
-  margin-top: 8%;
+  margin: auto;
 }
 
 .sponsor-logo-image-container {
-  height: 80%;
-  width: 80%;
+  height: 100%;
+  width: 100%;
   margin: 0px auto;
+  /*background-color: white;*/
 }
 
 .photo-card .tweet-avatar-container {
@@ -270,7 +271,7 @@ a {
   text-align: center;
   width: inherit;
   position: absolute;
-  bottom: 5px;
+  bottom: 15px;
 }
 
 .little-bar {
@@ -438,12 +439,12 @@ card {
 
 .config-container {
   background-color: #f3f3f3;
-  height: 200px;
+  height: 250px;
 }
 
 .query-container {
   background-color: #ebebeb;
-  height: 200px;
+  height: 250px;
 }
 
 .query-container input {
@@ -462,9 +463,10 @@ card {
 
 .mode-swap-button {
   color: #90d3d7;
+  cursor: pointer;
 }
 
-.setup-container button {
+.outer-config-container button {
   background-color: #90d3d7;
   color: white;
   border: none;
@@ -494,21 +496,18 @@ card {
 }
 
 .remove-button {
-  background-color: #b6d1d2;
+  background-color: #90d3d7;
   border-left: 1px solid white;
   float: left;
   padding: 6px;
   top: 0px;
   color: white;
+  margin-top: 25%;
 }
 
 .add-keyword-button {
   margin-left: 1%;
 }
-
-/*h4 {
-  padding: 2%;
-}*/
 
 .little-vertical-bar {
   border-left: 1px solid white;
@@ -523,10 +522,6 @@ card {
   float: left;
   margin: 25px;
 }
-
-/*.company-logo, .sponsor-logos {
-  float: left;
-}*/
 
 .sponsor-logo-remove-button {
   width: 50%;
@@ -586,7 +581,7 @@ card {
 }
 
 .outer-logo-container {
-  height: 500px; 
+  height: 550px; 
   background-color: #f1f1f1;
 }
 
@@ -660,10 +655,6 @@ card {
   width: 15%;
   float: left;
   margin-left: 5%;
-}
-
-.unmoderated-tweet-tweeter {
-
 }
 
 .tweeter-details {
@@ -741,7 +732,7 @@ body {
 }
 
 .company-logo-section {
-  margin: 25px;
+  margin: 25px 15px;
 }
 
 .upload-sponsor-logo-form {
@@ -764,12 +755,161 @@ body {
   border-radius: 0px;
   width: 100px;
   margin: 0px auto 10px;
+  padding: 10px;
 }
 
 .reset-section {
   text-align: center;
   width: 200px;
   margin: 100px auto;
+}
+
+.setup-nav-box, .moderate-nav-box, .mirror-nav-box {
+  height: 90px;
+  width: 100%;
+}
+
+.setup-nav-box {
+  margin-top: 30px;
+}
+
+.setup-nav-box:hover, .moderate-nav-box:hover, .mirror-nav-box:hover {
+  background-color: #1b1b1b;
+}
+
+.sidebar-active {
+  background-color: #1b1b1b; 
+}
+
+.sidebar-active  {
+  background-color: #1b1b1b; 
+}
+
+.sidebar-active .nav-mirror-icon {
+  background-image: url("/img/sidebar/livetweets_hover.png");
+}
+
+.sidebar-active .nav-moderate-icon {
+  background-image: url("/img/sidebar/moderate_hover.png");
+}
+
+.sidebar-active .nav-setup-icon {
+  background-image: url("/img/sidebar/setup_hover.png");
+}
+
+.mirror-nav-box:hover .nav-mirror-icon {
+  background-image: url("/img/sidebar/livetweets_hover.png");
+}
+
+.moderate-nav-box:hover .nav-moderate-icon {
+  background-image: url("/img/sidebar/moderate_hover.png");
+}
+
+.setup-nav-box:hover .nav-setup-icon {
+  background-image: url("/img/sidebar/setup_hover.png");
+}
+
+.setup-nav-box:hover .nav-setup-text {
+  color: #90d3d7;
+}
+
+.mirror-nav-box:hover .nav-mirror-text {
+  color: #90d3d7;
+}
+
+.moderate-nav-box:hover .nav-moderate-text {
+  color: #90d3d7;
+}
+
+.sidebar-active .nav-setup-text {
+  color: #90d3d7;
+}
+
+.sidebar-active .nav-mirror-text {
+  color: #90d3d7;
+}
+
+.sidebar-active .nav-moderate-text {
+  color: #90d3d7;
+}
+
+.nav-mirror-icon {
+  margin: 0px auto;
+  background-image: url("/img/sidebar/livetweets_load.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 45px;
+  width: 45px;
+  overflow: hidden; 
+}
+
+.nav-moderate-icon {
+  margin: 0px auto;
+  background-image: url("/img/sidebar/moderate_load.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 45px;
+  width: 30px;
+  overflow: hidden; 
+}
+
+.nav-setup-icon {
+  margin: 0px auto;
+  background-image: url("/img/sidebar/setup_load.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 37px;
+  width: 51px;
+  overflow: hidden; 
+}
+
+.nav-setup-text, .nav-moderate-text, .nav-mirror-text {
+  text-align: center;
+  width: 100%;
+  margin-top: 10px;
+}
+
+#file-upload-box {
+  position: absolute;
+  left: -9999px;
+}
+
+.choose-logo-button {
+  background-color: #90d3d7;
+  color: white;
+  padding: 4%;
+  cursor: pointer;
+  font-weight: 100;
+}
+
+.logo-upload-form-buttons-container {
+  width: 200px;
+}
+
+.sponsor-logos .logo-upload-form-buttons-container {
+  margin-top: 40%;
+  margin-left: 10%;
+}
+
+.logo-upload-button {
+  background-color: #90d3d7;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  padding: 4%;
+}
+
+.sub-heading-text {
+  color: #939393;
+  font-size: 0.8em;
+  margin-top: 2%;
+}
+
+.inner-logo-container .container {
+  margin-top: 2%;
 }
 
 /* ------------------------------ */

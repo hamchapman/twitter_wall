@@ -40,8 +40,6 @@ exports.cleanTweets = function(req, res) {
 
 exports.addCleanTweet = function(req, res) {
   var tweet = req.body.tweet;
-  console.log("*****************************");
-  console.log(tweet);
   pushCleanTweet(tweet);
   if (!isAutomatic) {
     db.Tweet.find({ where: { text: tweet.text, tweeter: tweet.tweeter}})
@@ -124,71 +122,79 @@ exports.swapMode = function(req, res) {
 };
 
 exports.fullReset = function(req, res) {
+  deleteAllSponsorLogos();
+  deleteCompanyLogo();
+
+  // var tablesToDelete = [db.CleanTweet, db.Tweet, db.TwitterOAuth, db.PusherConfig, db.Query, db.SponsorLogo, db.User];
+
+  // tablesToDelete.forEach(function(table) {
+  //   table.findAll()
+  //     .success(function(tweets) {
+  //       destroyAllElementsInArray(tweets);
+  //   })
+  // })
+
+  // ***** Try ^^this^^ instead of code below *****
+
+  db.CleanTweet.findAll()
+    .success(function(tweets) {
+      destroyAllElementsInArray(tweets);
+  })
+  db.Tweet.findAll()
+    .success(function(tweets) {
+      destroyAllElementsInArray(tweets);
+  })
+  db.TwitterOAuth.findAll()
+    .success(function(oauths) {
+      destroyAllElementsInArray(oauths);
+  })
+  db.PusherConfig.findAll()
+    .success(function(configs) {
+      destroyAllElementsInArray(configs);
+  })
+  db.Query.findAll()
+    .success(function(queries) {
+      destroyAllElementsInArray(queries);
+  })
+  db.User.findAll()
+    .success(function(users) {
+      destroyAllElementsInArray(users);
+  })
+  db.SponsorLogo.findAll()
+    .success(function(logos) {
+      destroyAllElementsInArray(logos);
+  })
+
+  res.send();
+};
+
+var destroyAllElementsInArray = function(array) {
+  array.forEach(function(item) {
+    item.destroy();
+  })
+};
+
+var deleteAllSponsorLogos = function() {
   fs.readdir(__dirname + '/../../public/img/sponsors', function(err, files) {
     files.forEach(function(file) {
       fs.unlink(__dirname + '/../../public/img/sponsors/' + file, function (err) {
-        if (err) throw err;
+        if (err) { throw err; }
         console.log('successfully deleted ' + file);
       });
     })
   })
+};
 
+var deleteCompanyLogo = function() {
   fs.readdir(__dirname + '/../../public/img', function(err, files) {
-    console.log(files);
     if (files.indexOf("logo.png") != -1) { 
       fs.unlink(__dirname + '/../../public/img/logo.png', function (err) {
-        if (err) throw err;
+        if (err) { throw err; }
         console.log('successfully deleted logo.png');
       });
     }
   })
-
-  db.CleanTweet.findAll()
-    .success(function(tweets) {
-      tweets.forEach(function(tweet) {
-        tweet.destroy();
-      })
-  })
-  db.Tweet.findAll()
-    .success(function(tweets) {
-      tweets.forEach(function(tweet) {
-        tweet.destroy();
-      })
-  })
-  db.TwitterOAuth.findAll()
-    .success(function(oauths) {
-      oauths.forEach(function(oauth) {
-        oauth.destroy();
-      })
-  })
-  db.PusherConfig.findAll()
-    .success(function(configs) {
-      configs.forEach(function(config) {
-        config.destroy();
-      })
-  })
-  db.Query.findAll()
-    .success(function(queries) {
-      queries.forEach(function(query) {
-        query.destroy();
-      })
-  })
-  db.User.findAll()
-    .success(function(users) {
-      users.forEach(function(user) {
-        user.destroy();
-      })
-  })
-  db.SponsorLogo.findAll()
-    .success(function(logos) {
-      logos.forEach(function(logo) {
-        logo.destroy();
-      })
-  })
-  res.send();
 };
-
-
 
 var pushCleanTweet = function(formattedTweet) {
   cleanTweets.push(formattedTweet);

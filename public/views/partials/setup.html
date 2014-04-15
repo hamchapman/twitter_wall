@@ -2,7 +2,7 @@
 
   <div ng-controller="LogoCtrl" class="outer-logo-container">
     <div class="inner-logo-container">
-      <h4 class="add-logo-heading">Add Logos</h4>
+      <h3 class="add-logo-heading">Add Logos</h3>
       
       <div class="container ">
         <div class="row">
@@ -14,8 +14,10 @@
             </div>
             <div class="company-logo-upload-form">
               <form action="/logo-upload" ng-upload="companyComplete(content)">
-                <input type="file" name="logo"></input>
-                <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+                <div class="logo-upload-form-buttons-container">
+                  <label class="choose-logo-button">Choose<span><input type="file" name="logo" logo-uploader id="file-upload-box"></input></span></label>
+                  <input type="submit" value="Upload" class="logo-upload-button" ng-disabled="$isLoading"></input>
+                </div>
               </form>      
             </div>
           </div>
@@ -32,8 +34,10 @@
             </div>
             <div class="upload-sponsor-logo-form">
               <form action="/sponsor-logo-upload" ng-upload="sponsorComplete(content)">
-                <input type="file" name="sponsorLogo"></input>
-                <input type="submit" value="Upload" ng-disabled="$isLoading"></input>
+                <div class="logo-upload-form-buttons-container">
+                  <label class="choose-logo-button">Choose<span><input type="file" name="sponsorLogo" logo-uploader id="file-upload-box"></input></span></label>
+                  <input type="submit" value="Upload" class="logo-upload-button" ng-disabled="$isLoading"></input>
+                </div>
               </form>
             </div>
           </div>          
@@ -46,7 +50,7 @@
 
   <div ng-controller="StyleCtrl" class="outer-style-container">
     <div class="inner-style-container">
-      <h4>Colour Scheme</h4>
+      <h3>Colour Scheme</h3>
     </div>
   </div> 
   
@@ -56,7 +60,7 @@
       <div ng-controller="QueryCtrl" class="col-md-6 query-container">
         <div class="inner-query-container">
           <h4>Keywords</h4>
-
+          <div class="sub-heading-text"> Add hashtags, words or phrases individually </div>
           <form class="form-inline" name="tweetForm">
             <input type="text" ng-model="query" placeholder="Keyword">
             <button class="add-keyword-button" ng-click="getTweets()" type="button">Add</button>
@@ -74,6 +78,7 @@
       <div ng-controller="ConfigCtrl" class="col-md-6 config-container">
         <div class="inner-config-container">
           <h4>Config</h4>
+          <div class="sub-heading-text"> Update your Pusher app details or change modes </div>
           <input type="text" ng-model="pusher_app_id" placeholder="App ID" class="pusher-app-id pusher-input">
           <input type="text" ng-model="pusher_key" placeholder="Key" class="pusher-key pusher-input">
           <input type="text" ng-model="pusher_secret" placeholder="Secret" class="pusher-secret pusher-input">

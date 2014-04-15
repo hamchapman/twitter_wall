@@ -4,7 +4,6 @@ var setup = require('../app/controllers/setup');
 var api = require('../app/controllers/api');
 
 exports.init = function(app, passport, auth) {
-  console.log('Initializing Routes');
 
   // User Routes
   app.get('/signin', users.signin);

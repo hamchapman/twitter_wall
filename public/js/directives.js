@@ -2,7 +2,20 @@
 
 var twitterWallDirectives = angular.module('twitterWallDirectives', []);
 
-twitterWallDirectives.directive('ngConfirmClick', [function(){
+twitterWallDirectives.directive('logoUploader', [function() {
+  return {
+    link: function (scope, elem, attrs) {
+      elem.on('change', function(e) {
+        e.target.form.submit();
+        scope.file = (e.srcElement || e.target).files[0];
+        if (e.target.name == 'sponsorLogo') { scope.getFile('sponsor'); } 
+        else { scope.getFile('company'); }
+      })
+    }
+  };
+}]);
+
+twitterWallDirectives.directive('ngConfirmClick', [function() {
   return {
     link: function (scope, elem, attrs) {
       var msg = attrs.ngConfirmClick || "Are you sure?";
@@ -13,7 +26,18 @@ twitterWallDirectives.directive('ngConfirmClick', [function(){
       });
     }
   };
-}])
+}]);
+
+twitterWallDirectives.directive('sidebarOption', [function() {
+  return {
+    link: function (scope, elem, attrs) {
+      elem.bind('click',function (event) {
+        elem.parent().children().removeClass('sidebar-active');
+        elem.addClass('sidebar-active');
+      });
+    }
+  };
+}]);
 
 twitterWallDirectives.directive('unmoderatedCard', ['$http', '$compile', function($http, $compile) {
   var getTemplate = function(tweetType) {
@@ -108,7 +132,7 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
 
   var linker = function(scope, elem, attrs) {
     scope.tweet.formattedDate = moment(scope.tweet.date).fromNow(true);
-    
+
     var loader = getTemplate(scope.tweet.style);
     var promise = loader.success(function(html) {
       elem.html(html);

@@ -25,7 +25,9 @@ twitterWallControllers.controller('ViewerCtrl', [
     var w = angular.element($window); 
     w.bind('resize', function () {
       $scope.$apply(function () { 
+        
         // Need to re-add block info to tweets here to make sure they scale in size with the grid
+        
         var packer = new Packer(w[0].innerWidth, w[0].innerHeight);
         packer.fit($scope.cleanTweets);
       }
@@ -207,10 +209,11 @@ twitterWallControllers.controller('ConfigCtrl', [
 twitterWallControllers.controller('LogoCtrl', [
   '$scope', 
   '$http',
-  function ($scope, $http) {
+  'fileReader',
+  function ($scope, $http, fileReader) {
     $scope.sponsorLogos = [];
-    $scope.companyLogo = [];
-    $scope.companyLogo.path = "/img/logo.png";
+    $scope.companyLogo = {};
+    $scope.companyLogo.path = '/img/logo.png';
 
     $http.get('/sponsor-logos')
       .success(function(res) {
@@ -218,12 +221,13 @@ twitterWallControllers.controller('LogoCtrl', [
       });
 
     $scope.sponsorComplete = function(content) {
+      $scope.sponsorLogos.pop();
       $scope.sponsorLogos.push({path: content.path});
     } 
 
-    // $scope.companyComplete = function(content) {
-    //   $scope.comapnyLogo = {path: content.path};
-    // }
+    $scope.companyComplete = function(content) {
+      $scope.companyLogo.path = content.path;
+    }
 
     $scope.removeSponsorLogo = function(logo, index) {
       var i = $scope.sponsorLogos.indexOf(logo);
@@ -232,6 +236,14 @@ twitterWallControllers.controller('LogoCtrl', [
       }
       $http.post('/remove-sponsor-logo', { logo: logo });
     }
+
+    $scope.getFile = function(type) {
+      fileReader.readAsDataUrl($scope.file, $scope)
+        .then(function(result) {
+          if (type == 'sponsor') { $scope.sponsorLogos.push({path: result}); }
+          else { $scope.companyLogo.path = result; }
+        });
+    };
   }
 ]);
 
@@ -258,7 +270,8 @@ twitterWallControllers.controller('MirrorCtrl', [
   '$http',
   'Pusher',
   'CleanTweets',
-  function ($scope, $http, Pusher, CleanTweets) {
+  'Packery',
+  function ($scope, $http, Pusher, CleanTweets, Packery) {
     $scope.cleanTweets = [];
     $http.get('/api/clean-tweets')
       .success(function(res) {
@@ -274,6 +287,11 @@ twitterWallControllers.controller('MirrorCtrl', [
       if(tweetIndex != -1) {
         $scope.cleanTweets.splice(tweetIndex, 1);
       }
+
+      // *** Need to do something like this to make it relayout when a tweet is removed *** 
+      // var packery = Packery.get();
+      // packery.reloadItems();
+      // packery.layout();
     });
 
     $scope.removeCleanTweet = function(tweet, index) {
