@@ -269,7 +269,7 @@ var setupTwitterClient = function() {
   var user_access_token = '';
   var user_access_token_secret = '';
   db.TwitterOAuth.findAll().success(function(oauths) {
-    if (oauths != []) {
+    if (oauths.length > 0) {
       user_access_token = oauths[0].oauth_token;
       user_access_token_secret = oauths[0].oauth_secret;
       twitterClient = new Twit({
@@ -289,7 +289,7 @@ var setupPusherClient = function() {
   var user_pusher_key = '';
   var user_pusher_secret = '';
   db.PusherConfig.findAll().success(function(configs) {
-    if (configs != []) {
+    if (configs.length > 0) {
       user_pusher_app_id = configs[0].app_id;
       user_pusher_key = configs[0].key;
       user_pusher_secret = configs[0].secret;

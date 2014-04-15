@@ -11,7 +11,8 @@ exports.render = function(req, res) {
         user: req.user ? JSON.stringify(req.user) : "null"
       });
     } else {
-      res.redirect('/signup');
+      // res.redirect('/signup');
+      res.send();
     }
   })
 };

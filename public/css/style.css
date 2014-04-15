@@ -42,7 +42,7 @@ table {
 }
 
 body {
-  font-size: 16px;
+  font-size: 1.4em;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -86,10 +86,14 @@ a {
 }
 
 .tweet-text-container {
-  font-size: 18px;
+  font-size: 1.1em;
   font-weight: 500;
   width: 80%;
   margin: 0 auto;
+}
+
+.text-card-square .tweet-text-container {
+  width: 90%;
 }
 
 .photo-card {
@@ -150,7 +154,7 @@ a {
 }
 
 .text-card-wide .card-content {
-  margin-top: 5%;
+  margin-top: 1%;
 }
 
 .text-card-tall {
@@ -161,7 +165,7 @@ a {
 }
 
 .text-card-tall .tall-card-body {
-  padding-top: 50%;
+  padding-top: 40%;
 }
 
 .text-card-tall .tweet-text-container {
@@ -250,7 +254,7 @@ a {
 
 .bebas-neue .tweet-text-container {
   font-family: "Bebas-Neue", "Lucinda Grande", Helvetica;
-  font-size: 22px;
+  font-size: 1.3em;
 }
 
 .diagonal-stripes {
@@ -285,13 +289,13 @@ a {
 
 .little-bar {
   width: 30px;
-  margin: 3px auto 5px;
+  margin: 2px auto 5px;
   border-bottom: 1px solid black;
 }
 
 .diamond {
-  width: 65px;
-  margin-top: 10px;
+  width: 55px;
+  margin-top: 5px;
   -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
   clip-path: url(#diamond);
 }

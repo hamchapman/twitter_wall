@@ -1,11 +1,67 @@
 <body>
-  <form action='/pusher', method="post">
-    <label>App ID</label>
-    <input type="text" name="app_id">
-    <label>Key</label>
-    <input type="text" name="key">
-    <label>Secret</label>
-    <input type="text" name="secret">
-    <button type="submit">Submit</button>
-  </form>
+  <div class="container">
+    <form  action='/pusher', method="post">
+      <div class="makeshift-table left-col">
+        <label>App ID</label> <br>
+        <label>Key</label>  <br>
+        <label>Secret</label> <br>
+      </div>
+      <div class="makeshift-table">
+        <input type="text" name="app_id">  <br>
+        <input type="text" name="key">  <br>
+        <input type="text" name="secret"> <br>
+      </div>
+      <br>
+      <button id="save-button" type="submit">Save</button>
+    </form>
+  </div>
 </body>
+
+<style>
+
+#save-button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 2em;
+  font-family: Helvetica, 'Lucida Grande';
+  margin: 50px auto;
+  font-weight: 700;
+}
+
+input {
+  height: 45px; 
+  width: 300px; 
+  font-size: 0.8em;
+}
+
+.makeshift-table {
+  display: inline-block;
+}
+
+.left-col {
+  width: 20%; 
+  text-align: left;
+}
+
+form {
+  width: 70%; 
+  margin: 0px auto;
+}
+
+body {
+  background-color: #90d3d7;
+}
+
+.container {
+  width: 100%;
+  margin: 80px auto;
+  text-align: center;
+  color: white;
+  font-family: Helvetica, 'Lucida Grande';
+  font-size: 3em;
+  font-weight: 700;
+}
+
+</style>

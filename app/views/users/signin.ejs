@@ -1,10 +1,67 @@
 <body>
-  <form action='/users/session', method="post">
-    <label> Username</label>
-    <input type="text" name="username">
-    <label> Password</label>
-    <input type="password" name="password">
-    <button type="submit">Submit</button>
-  </form>
-  <a href="/signup">Sign Up</a>
+  <div class="container">
+    <form action='/users/session', method="post">
+      <label> Username</label>
+      <input type="text" name="username">
+      <br>
+      <div id="password-container">
+        <label> Password</label>
+        <input type="password" name="password">
+      </div>
+      <br>
+      <button id="submit-button" type="submit">Sign In</button>
+    </form>
+    <a href="/signup">Sign Up</a>
+  </div>
 </body>
+
+
+
+
+<style>
+
+#submit-button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 2em;
+  font-family: Helvetica, 'Lucida Grande';
+  margin: 50px auto;
+  font-weight: 700;
+}
+
+body {
+  background-color: #90d3d7;
+}
+
+.container {
+  width: 100%;
+  margin: 80px auto;
+  text-align: center;
+  color: white;
+  font-family: Helvetica, 'Lucida Grande';
+  font-size: 2em;
+  font-weight: 700;
+}
+
+input {
+  height: 30px; 
+  width: 200px; 
+  font-size: 0.8em;
+}
+
+a {
+  font-size: 1.2em; 
+  text-decoration: none; 
+  color: white; 
+  width: 80%; 
+  font-family: Helvetica, 'Lucida Grande';
+}
+
+#password-container {
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+</style>
