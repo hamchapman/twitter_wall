@@ -41,9 +41,6 @@ twitterWallControllers.controller('ViewerCtrl', [
         $scope.sponsorLogos = res.logos;
       });
 
-
-    var previousGrid = 1;
-
     var hashtag = Hashtag.get().then(function(hashtag) {
       if (hashtag) { $scope.hashtag = hashtag.text }
       else { $scope.hashtag = '#changeMe'; }
@@ -67,13 +64,14 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     $scope.cleanTweets = [];
     CleanTweets.get().then(function(tweets) {
-      $scope.cleanTweets = tweets;
+      $scope.cleanTweets = tweets.reverse();
       addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
         var packer = new Packer($scope.windowWidth, $scope.windowHeight);
         packer.fit($scope.cleanTweets);
       })
     });
 
+    var previousGrid = 1;
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
       if (previousGrid == 1) {
@@ -120,15 +118,10 @@ twitterWallControllers.controller('ViewerCtrl', [
       if (tweet.media_url) {
         var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
         _.extend(tweet, block);
-      } else if (tweet.sponsor) {
-        var block = { w: unitWidth, h: unitHeight, style: 'sponsor'};
-        _.extend(tweet, block);
       } else { 
         var randomNum = Math.random()*10;
         var block = {};
         if (randomNum <= 10) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } 
-        // if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
-        // { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
         _.extend(tweet, block);
       }
       return tweet;
@@ -136,29 +129,10 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     var addBlockInfoToCleanTweets = function(dimensions, tweets) {
       var deferred = $q.defer();
-      // addSponsorLogosToCleanTweets(tweets).then(function() {
       tweets.forEach(function(tweet) {
         addBlockInfoToTweet(dimensions, tweet);
       })
       deferred.resolve(tweets);
-      // });
-      return deferred.promise;
-    }
-
-    var addSponsorLogosToCleanTweets = function(tweets) {
-      var deferred = $q.defer();
-      $http.get('/sponsor-logos')
-        .success(function(res) {
-          var logos = res.logos;
-          if (logos.length > 0) {
-            for(var i = 0; i < ($scope.cleanTweets.length / 6); i++) {
-              var randomNum = Math.floor(Math.random()*(logos.length));
-              var sponsorTweet = { sponsor: true, path: logos[randomNum].path };
-              $scope.cleanTweets.splice(((i * 6) + 6), 0, sponsorTweet);
-            }
-          }
-          deferred.resolve();
-        });
       return deferred.promise;
     }
   }

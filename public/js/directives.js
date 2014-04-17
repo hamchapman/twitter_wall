@@ -131,10 +131,7 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
     baseUrl = '/views/partials/',
     templateMap = {
       textSquare: 'textCardSquare.html',
-      textWide: 'textCardWide.html',
-      textTall: 'textCardTall.html',
       photo: 'photoCard.html',
-      sponsor: 'sponsorCard.html'
     };
     var templateUrl = baseUrl + templateMap[tweetType];
     templateLoader = $http.get(templateUrl);
@@ -152,10 +149,12 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
     });  
 
     console.log(elem);
+    // console.log(elem.getElementByClassName('square-outer-container'));
+    // console.log(elem[0].children);
+    // console.log(elem[0].children[0]);
+    // console.log(elem[0].children[0]);
+    // console.log(elem.find('.square-outer-container'));
 
-    console.log(elem[0].children[0]);
-
-    console.log(elem.find('.square-outer-container'));
 
 
     // var grid = angular.element($document[0].getElementById('grid'));
@@ -179,7 +178,7 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
   }
 }]);
 
-// CUT DOWN DIRECTIVES BELOW TO A SINGLE ONE
+// MAYBE CUT DOWN DIRECTIVES BELOW TO A SINGLE ONE
 
 twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
@@ -194,36 +193,6 @@ twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
 twitterWallDirectives.directive('textCardSquare', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
     elem.addClass(randomStyle());
-  }
-  return {
-    restrict: "C",
-    link: linker
-  }
-}]);
-
-twitterWallDirectives.directive('textCardWide', ['$compile', function($compile) {
-  var linker = function(scope, elem, attrs) {
-    elem.addClass(randomStyle());
-  }
-  return {
-    restrict: "C",
-    link: linker
-  }
-}]);
-
-twitterWallDirectives.directive('textCardTall', ['$compile', function($compile) {
-  var linker = function(scope, elem, attrs) {
-    elem.addClass(randomStyle());
-  }
-  return {
-    restrict: "C",
-    link: linker
-  }
-}]);
-
-twitterWallDirectives.directive('sponsorCard', ['$compile', function($compile) {
-  var linker = function(scope, elem, attrs) {
-
   }
   return {
     restrict: "C",

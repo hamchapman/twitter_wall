@@ -75,7 +75,26 @@ a {
   }
 
   .bebas-neue .tweet-text-container {
-    font-size: 24px !important;
+    font-size: 22px !important;
+  }
+
+  .tweet-tweeter-container {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1400px) {
+
+  .text-card-square .tweet-text-container {
+    font-size: 17px;
+  }
+
+  .photo-card .tweet-text-container {
+    font-size: 17px;
+  }
+
+  .bebas-neue .tweet-text-container {
+    font-size: 21px !important;
   }
 
   .tweet-tweeter-container {
@@ -173,8 +192,6 @@ a {
 }
 
 .square-outer-container { 
-  bottom: 0;
-  height: 70%;
   left: 0;
   margin: auto;
   position: absolute;
@@ -293,6 +310,17 @@ a {
   background-image: url("/img/twitter-logos/twitter_logo_white.png");
 }
 
+.green-bg-white .photo-card-triangle {
+  position: absolute;
+  right: 50%;
+  top: 45%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right: 20px solid #96e1e2;
+}
+
 .white-bg-green {
   background-color: #ffffff;
   color: #96e1e2;
@@ -304,6 +332,17 @@ a {
   background-size: cover;
   overflow: hidden; 
   background-image: url("/img/twitter-logos/twitter_logo_turqoise.png");
+}
+
+.white-bg-green .photo-card-triangle {
+  position: absolute;
+  right: 50%;
+  top: 45%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right: 20px solid white;
 }
 
 .white-bg-pink {
@@ -319,6 +358,17 @@ a {
   background-image: url("/img/twitter-logos/twitter_logo_salmon.png");
 }
 
+.white-bg-pink .photo-card-triangle {
+  position: absolute;
+  right: 50%;
+  top: 45%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right: 20px solid white;
+}
+
 .white-bg-black {
   background-color: #ffffff;
   color: black;
@@ -332,6 +382,17 @@ a {
   background-image: url("/img/twitter-logos/twitter_logo_turqoise.png");
 }
 
+.white-bg-black .photo-card-triangle {
+  position: absolute;
+  right: 50%;
+  top: 45%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right: 20px solid white;
+}
+
 .pink-bg-white {
   background-color: #f5867b;
   color: white;
@@ -343,6 +404,17 @@ a {
   background-size: cover;
   overflow: hidden; 
   background-image: url("/img/twitter-logos/twitter_logo_white.png");
+}
+
+.pink-bg-white .photo-card-triangle {
+  position: absolute;
+  right: 50%;
+  top: 45%;
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent; 
+  border-right: 20px solid #f5867b;
 }
 
 .bebas-neue .tweet-text-container {
