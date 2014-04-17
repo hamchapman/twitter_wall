@@ -20,8 +20,11 @@
 </head>
 <body>
   <div ui-view></div>
-  
-  <script src="/js/app.js"></script>
+    
+  <script>
+    var pusherKey = "<%= pusherKey %>";
+  </script>
+  <script src="/js/app.js"></script> 
   <script src="/js/controllers.js"></script>
   <script src="/js/services.js"></script>
   <script src="/js/directives.js"></script>

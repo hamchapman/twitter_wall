@@ -37,9 +37,7 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-api.setupClients();
-api.startStreams();
-
-// setTimeout(function() {
-  
-// },1000);
+setTimeout(function() {
+  api.setupClients();
+  api.startStreams();  
+},1000);

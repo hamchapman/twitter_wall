@@ -161,38 +161,7 @@ exports.fullReset = function(req, res) {
         destroyAllElementsInArray(tweets);
     })
   })
-
-  // ***** Try ^^this^^ instead of code below *****
-
-  // db.CleanTweet.findAll()
-  //   .success(function(tweets) {
-  //     destroyAllElementsInArray(tweets);
-  // })
-  // db.Tweet.findAll()
-  //   .success(function(tweets) {
-  //     destroyAllElementsInArray(tweets);
-  // })
-  // db.TwitterOAuth.findAll()
-  //   .success(function(oauths) {
-  //     destroyAllElementsInArray(oauths);
-  // })
-  // db.PusherConfig.findAll()
-  //   .success(function(configs) {
-  //     destroyAllElementsInArray(configs);
-  // })
-  // db.Query.findAll()
-  //   .success(function(queries) {
-  //     destroyAllElementsInArray(queries);
-  // })
-  // db.User.findAll()
-  //   .success(function(users) {
-  //     destroyAllElementsInArray(users);
-  // })
-  // db.SponsorLogo.findAll()
-  //   .success(function(logos) {
-  //     destroyAllElementsInArray(logos);
-  // })
-
+  
   res.send();
 };
 

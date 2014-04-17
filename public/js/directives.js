@@ -148,30 +148,6 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
       $compile(elem.contents())(scope)
     });  
 
-      // console.log(elem);
-    // $(elem).find("square-outer-container");
-    
-    // var items = elem[0];
-    // console.log(elem[0].getElementsByClassName('square-outer-container').length);
-    // console.log(elem[0].children[0]);
-    // console.log(elem.find('.square-outer-container'));
-
-
-
-    // var grid = angular.element($document[0].getElementById('grid'));
-    // console.log(grid);
-    // var children = grid[0].children;
-    // console.log(children);
-    // console.log(collectionToArray(children));
-    var collectionToArray = function(collection) {
-      var ary = [];
-      for(var i=0, len = collection.length; i < len; i++)
-      {
-        ary.push(collection[i]);
-      }
-      return ary;
-    }
-
   }
   return {
     restrict: "E",
@@ -180,7 +156,6 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
 }]);
 
 // MAYBE CUT DOWN DIRECTIVES BELOW TO A SINGLE ONE
-
 twitterWallDirectives.directive('photoCard', ['$compile', function($compile) {
   var linker = function(scope, elem, attrs) {
     elem.addClass(randomStyle());

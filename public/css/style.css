@@ -64,79 +64,39 @@ a {
   font-style: normal;
 }
 
-@media (max-width: 1600px) {
-
+@media (max-width: 1900px) {
   .text-card-square .tweet-text-container {
-    font-size: 17px;
+    font-size: 1.1vw;
   }
 
   .photo-card .tweet-text-container {
-    font-size: 17px;
+    font-size: 1.1vw;
   }
 
   .bebas-neue .tweet-text-container {
-    font-size: 22px !important;
+    font-size: 1.3vw !important;
   }
 
   .tweet-tweeter-container {
-    font-size: 14px;
+    font-size: 1vw;
   }
 }
 
-@media (max-width: 1400px) {
-
+@media (min-width: 1900px) {
   .text-card-square .tweet-text-container {
-    font-size: 17px;
+    font-size: 0.9vw;
   }
 
   .photo-card .tweet-text-container {
-    font-size: 17px;
+    font-size: 0.9vw;
   }
 
   .bebas-neue .tweet-text-container {
-    font-size: 21px !important;
+    font-size: 1.1vw !important;
   }
 
   .tweet-tweeter-container {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 1200px) {
-
-  .text-card-square .tweet-text-container {
-    font-size: 15px;
-  }
-
-  .photo-card .tweet-text-container {
-    font-size: 15px;
-  }
-
-  .bebas-neue .tweet-text-container {
-    font-size: 20px !important;
-  }
-
-  .tweet-tweeter-container {
-    font-size: 13px;
-  }
-
-}
-
-@media (max-width: 900px) {
-  .text-card-square .tweet-text-container {
-    font-size: 13px;
-  }
-
-  .photo-card .tweet-text-container {
-    font-size: 13px;
-  }
-
-  .bebas-neue .tweet-text-container {
-    font-size: 17px !important;
-  }
-
-  .tweet-tweeter-container {
-    font-size: 12px;
+    font-size: 0.8vw;
   }
 }
 
@@ -198,6 +158,8 @@ a {
   top: 0;
   right: 0;
   width: 80%;
+  height: 80%;
+  bottom: 0;
 }
 
 .photo-card {
@@ -205,6 +167,11 @@ a {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+.photo-card .square-outer-container { 
+  position: relative;
+  margin-top: 4%;
 }
 
 .photo-card .tweet-photo-container {
@@ -486,7 +453,7 @@ a {
 
 .grid {
   background-color: #E8E8E8;
-  margin-top: 70px;
+  margin-top: 40px;
   position: absolute;
   font-size: 1em;
   top: 0;
@@ -604,7 +571,7 @@ card {
 .tweet-wall .navbar {
   border: none;
   border-radius: 0;
-  height: 70px;
+  height: 40px;
   background-color: #152023;
   color: #cbc9c9;
   margin-bottom: 0px;

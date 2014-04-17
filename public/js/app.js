@@ -20,7 +20,7 @@ angular.module('twitterWall', [
              $urlRouterProvider) 
     {
       PusherServiceProvider
-        .setToken('15d9668cc510aed91e23')
+        .setToken(pusherKey)
         .setOptions({});
       $stateProvider
         .state('home', {

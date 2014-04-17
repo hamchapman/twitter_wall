@@ -48,14 +48,19 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     $scope.windowWidth = $window.innerWidth;
     $scope.windowHeight = $window.innerHeight;
-    var dimensions = { w: $scope.windowWidth, h: $scope.windowHeight - 140 };
+    $scope.dimensions = { w: $scope.windowWidth, h: $scope.windowHeight - 80 };
 
     var w = angular.element($window); 
     w.bind('resize', function () {
       $scope.$apply(function () { 
-        
-        // Need to re-add block info to tweets here to make sure they scale in
-        // size with the grid, or make grid centered but add more tweets
+        $scope.dimensions = { w: w[0].innerWidth, h: w[0].innerHeight };
+
+        // Set "breakpoints" for changing number of rows/columns of cards here 
+        if (w[0].innerWidth < 900) {
+          addBlockInfoToCleanTweets($scope.dimensions, $scope.cleanTweets, 3.0, 3.0)
+        } else {
+          addBlockInfoToCleanTweets($scope.dimensions, $scope.cleanTweets, 4.0, 3.0)
+        }
         
         var packer = new Packer(w[0].innerWidth, w[0].innerHeight);
         packer.fit($scope.cleanTweets);
@@ -65,15 +70,20 @@ twitterWallControllers.controller('ViewerCtrl', [
     $scope.cleanTweets = [];
     CleanTweets.get().then(function(tweets) {
       $scope.cleanTweets = tweets.reverse();
-      addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
+      if ($scope.dimensions.w < 900) {
+        var numX = 3.0;
+        var numY = 3.0;
+      }
+      addBlockInfoToCleanTweets($scope.dimensions, $scope.cleanTweets, numX, numY).then(function(tweets) {
         var packer = new Packer($scope.windowWidth, $scope.windowHeight);
         packer.fit($scope.cleanTweets);
       });
+      
     });
 
     var previousGrid = 1;   // $scope.cleanTweets is on top when previousGrid == 1
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
-      var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
+      var tweet = addBlockInfoToTweet($scope.dimensions, data['tweet']);
       if (previousGrid == 1) {
         $scope.cleanTweets2 = _.cloneDeep($scope.cleanTweets);
         $scope.cleanTweets2.unshift(tweet);
@@ -99,15 +109,6 @@ twitterWallControllers.controller('ViewerCtrl', [
         });  
         previousGrid = 1;
       }
-      
-
-
-      // var outerContainer = elem[0].getElementsByClassName("square-outer-container")[0];
-
-      // console.log(outerContainer.innerHeight);
-      // var height = outerContainer.clientHeight;
-
-      // outerContainer.style.marginTop = "-"+(height / 2)+"px";
     });
     
     Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
@@ -122,9 +123,9 @@ twitterWallControllers.controller('ViewerCtrl', [
       }
     });
 
-    var addBlockInfoToTweet = function(dimensions, tweet) {
-      var unitWidth = dimensions.w / 5.0;
-      var unitHeight = dimensions.h / 3.0;
+    var addBlockInfoToTweet = function(dimensions, tweet, numX, numY) {
+      var unitWidth = $scope.dimensions.w / numX;
+      var unitHeight = $scope.dimensions.h / numY;
       if (tweet.media_url) {
         var block = { w: 2*unitWidth, h: unitHeight, style: 'photo'};
         _.extend(tweet, block);
@@ -137,10 +138,12 @@ twitterWallControllers.controller('ViewerCtrl', [
       return tweet;
     }
 
-    var addBlockInfoToCleanTweets = function(dimensions, tweets) {
+    var addBlockInfoToCleanTweets = function(dimensions, tweets, numX, numY) {
+      if (!numX) { numX = 3.0; }  // Set the default number of rows
+      if (!numY) { numY = 3.0; }  // Set the default number of columns
       var deferred = $q.defer();
       tweets.forEach(function(tweet) {
-        addBlockInfoToTweet(dimensions, tweet);
+        addBlockInfoToTweet($scope.dimensions, tweet, numX, numY);
       })
       deferred.resolve(tweets);
       return deferred.promise;
@@ -161,10 +164,12 @@ twitterWallControllers.controller('QueryCtrl', [
         }) 
       })
 
+    // Subscribe to Pusher event that new query has been added to DB
     Pusher.subscribe('twitter_wall', 'new_query', function (data) {
       $scope.queries.push(data['query']);
     });
 
+    // Get request to API to setup a new stream based on a query
     $scope.getTweets = function() {
       var query = $scope.query;
       $scope.query = '';
@@ -224,7 +229,11 @@ twitterWallControllers.controller('ConfigCtrl', [
   '$scope', 
   '$http',
   function ($scope, $http) {
-    $scope.isAutomatic = false;
+    $http.get('/api/mode')
+        .success(function(res) {
+          console.log(res);
+          $scope.isAutomatic = res.automatic;
+        });
 
     $scope.updatePusherConfig = function() {
       var app_id = $scope.pusher_app_id;
