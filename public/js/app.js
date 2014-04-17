@@ -30,6 +30,7 @@ angular.module('twitterWall', [
         })
         .state('admin', {
           url: '/admin',
+          abstract: 'true',
           templateUrl: '/views/admin.html',
           controller: 'AdminCtrl'
         })
@@ -44,7 +45,7 @@ angular.module('twitterWall', [
           controller: 'MirrorCtrl'
         })
         .state('admin.setup', {
-          url: '/seutp',
+          url: '',
           templateUrl: '/views/partials/setup.html',
           controller: 'SetupCtrl'
         });

@@ -780,6 +780,11 @@ card {
   padding: 6px;
 }
 
+.query .remove-button {
+  background-color: #b6d1d2;
+  margin-top: 0px;
+}
+
 .remove-button {
   background-color: #90d3d7;
   border-left: 1px solid white;
