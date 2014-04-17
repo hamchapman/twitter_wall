@@ -68,10 +68,10 @@ twitterWallControllers.controller('ViewerCtrl', [
       addBlockInfoToCleanTweets(dimensions, $scope.cleanTweets).then(function(tweets) {
         var packer = new Packer($scope.windowWidth, $scope.windowHeight);
         packer.fit($scope.cleanTweets);
-      })
+      });
     });
 
-    var previousGrid = 1;
+    var previousGrid = 1;   // $scope.cleanTweets is on top when previousGrid == 1
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
       if (previousGrid == 1) {
@@ -85,7 +85,7 @@ twitterWallControllers.controller('ViewerCtrl', [
           grid1.classList.remove("active");
           grid1.classList.add("inactive");
         });  
-        previousGrid = 2;
+        previousGrid = -1;
       } else {
         $scope.cleanTweets = _.cloneDeep($scope.cleanTweets2);
         $scope.cleanTweets.unshift(tweet);
@@ -99,12 +99,22 @@ twitterWallControllers.controller('ViewerCtrl', [
         });  
         previousGrid = 1;
       }
-    });
+      
 
+
+      // var outerContainer = elem[0].getElementsByClassName("square-outer-container")[0];
+
+      // console.log(outerContainer.innerHeight);
+      // var height = outerContainer.clientHeight;
+
+      // outerContainer.style.marginTop = "-"+(height / 2)+"px";
+    });
+    
     Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
       var tweetIndex = data['index'];
       if(tweetIndex != -1) {
-        $scope.cleanTweets.splice(tweetIndex, 1);
+        if (previousGrid == 1) { $scope.cleanTweets.splice(tweetIndex, 1); }
+        else { $scope.cleanTweets2.splice(tweetIndex, 1); }
         $scope.$apply(function () { 
           var packer = new Packer($scope.windowWidth, $scope.windowHeight);
           packer.fit($scope.cleanTweets);
@@ -303,7 +313,7 @@ twitterWallControllers.controller('MirrorCtrl', [
     $scope.cleanTweets = [];
     $http.get('/api/clean-tweets')
       .success(function(res) {
-        $scope.cleanTweets = res.tweets;
+        $scope.cleanTweets = res.tweets.reverse();
       })
 
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {

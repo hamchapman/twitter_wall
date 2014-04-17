@@ -71,7 +71,6 @@ exports.logoUpload = function(req, res) {
 exports.sponsorLogos = function(req, res) {
   db.SponsorLogo.findAll()
     .success(function(logos) {
-      console.log(logos);
       res.send({ success: true, logos: logos });
     }).error(function(err){
       res.send({ success: false });

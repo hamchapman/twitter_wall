@@ -148,10 +148,11 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
       $compile(elem.contents())(scope)
     });  
 
-    console.log(elem);
-    // console.log(elem.getElementByClassName('square-outer-container'));
-    // console.log(elem[0].children);
-    // console.log(elem[0].children[0]);
+      // console.log(elem);
+    // $(elem).find("square-outer-container");
+    
+    // var items = elem[0];
+    // console.log(elem[0].getElementsByClassName('square-outer-container').length);
     // console.log(elem[0].children[0]);
     // console.log(elem.find('.square-outer-container'));
 
