@@ -8,7 +8,7 @@ Packer.prototype = {
   init: function(w, h) {
     this.root = { x: 0, y: 0, w: w, h: h };
   },
-  fit: function(blocks) {
+  fit: function(blocks, callback) {
     blocks.forEach(function(block) {  
       if (block.fit) {
         block.fit.used = false;
@@ -21,6 +21,7 @@ Packer.prototype = {
         block.fit = this.splitNode(node, block.w, block.h);
       }
     }
+    if (callback) { callback(); }
   },
   findNode: function(root, w, h) {
     if (root.used)

@@ -1,6 +1,6 @@
 {
-  "name": "twitter-wall-pusher",
-  "description": "A realtime Twitter Wall",
+  "name": "Yaq",
+  "description": "A realtime Twitter wall",
   "version": "0.0.1",
   "private": true,
   "author": "Pusher",
@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "express": "~3.3.4",
-    "jade": "~0.34.0",
     "ejs": "^0.8.5",
     "passport-local": "^1.0.0",
     "passport": "^0.2.0",

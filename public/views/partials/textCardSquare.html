@@ -1,14 +1,16 @@
 <div class="text-card-square">
-  <img class="diamond" src="{{tweet.profile_image_url}}">
-  <div class="user-container">
-    <div class="twitter-logo"></div>
-    <div class="tweet-tweeter-container">
-      {{tweet.tweeter}}
+  <div class="square-outer-container">
+    <img class="diamond" src="{{tweet.profile_image_url}}">
+    <div class="user-container">
+      <div class="twitter-logo"></div>
+      <div class="tweet-tweeter-container">
+        {{tweet.tweeter}}
+      </div>
     </div>
-  </div>
-  <div class="little-bar"></div>
-  <div class="tweet-text-container">
-    {{tweet.text}}
+    <div class="little-bar"></div>
+    <div class="tweet-text-container">
+      {{tweet.text}}
+    </div>
   </div>
   <div class="time-ago-container">
     {{tweet.formattedDate}}

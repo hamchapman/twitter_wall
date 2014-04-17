@@ -153,45 +153,45 @@ exports.fullReset = function(req, res) {
   deleteAllSponsorLogos();
   deleteCompanyLogo();
 
-  // var tablesToDelete = [db.CleanTweet, db.Tweet, db.TwitterOAuth, db.PusherConfig, db.Query, db.SponsorLogo, db.User];
+  var tablesToDelete = [db.CleanTweet, db.Tweet, db.TwitterOAuth, db.PusherConfig, db.Query, db.SponsorLogo, db.User];
 
-  // tablesToDelete.forEach(function(table) {
-  //   table.findAll()
-  //     .success(function(tweets) {
-  //       destroyAllElementsInArray(tweets);
-  //   })
-  // })
+  tablesToDelete.forEach(function(table) {
+    table.findAll()
+      .success(function(tweets) {
+        destroyAllElementsInArray(tweets);
+    })
+  })
 
   // ***** Try ^^this^^ instead of code below *****
 
-  db.CleanTweet.findAll()
-    .success(function(tweets) {
-      destroyAllElementsInArray(tweets);
-  })
-  db.Tweet.findAll()
-    .success(function(tweets) {
-      destroyAllElementsInArray(tweets);
-  })
-  db.TwitterOAuth.findAll()
-    .success(function(oauths) {
-      destroyAllElementsInArray(oauths);
-  })
-  db.PusherConfig.findAll()
-    .success(function(configs) {
-      destroyAllElementsInArray(configs);
-  })
-  db.Query.findAll()
-    .success(function(queries) {
-      destroyAllElementsInArray(queries);
-  })
-  db.User.findAll()
-    .success(function(users) {
-      destroyAllElementsInArray(users);
-  })
-  db.SponsorLogo.findAll()
-    .success(function(logos) {
-      destroyAllElementsInArray(logos);
-  })
+  // db.CleanTweet.findAll()
+  //   .success(function(tweets) {
+  //     destroyAllElementsInArray(tweets);
+  // })
+  // db.Tweet.findAll()
+  //   .success(function(tweets) {
+  //     destroyAllElementsInArray(tweets);
+  // })
+  // db.TwitterOAuth.findAll()
+  //   .success(function(oauths) {
+  //     destroyAllElementsInArray(oauths);
+  // })
+  // db.PusherConfig.findAll()
+  //   .success(function(configs) {
+  //     destroyAllElementsInArray(configs);
+  // })
+  // db.Query.findAll()
+  //   .success(function(queries) {
+  //     destroyAllElementsInArray(queries);
+  // })
+  // db.User.findAll()
+  //   .success(function(users) {
+  //     destroyAllElementsInArray(users);
+  // })
+  // db.SponsorLogo.findAll()
+  //   .success(function(logos) {
+  //     destroyAllElementsInArray(logos);
+  // })
 
   res.send();
 };

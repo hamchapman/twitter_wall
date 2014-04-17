@@ -1,3 +1,5 @@
+/* ---------------- CSS RESET ----------------- */
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -15,8 +17,6 @@ time, mark, audio, video {
   padding: 0;
   border: 0;
   vertical-align: baseline;
-  /*font-size: 100%;
-  font: inherit;*/
 }
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -41,8 +41,11 @@ table {
   border-spacing: 0;
 }
 
+/* --------------------------------------------- */
+
+
 body {
-  font-size: 1.4em;
+  font-size: 16px;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -61,39 +64,123 @@ a {
   font-style: normal;
 }
 
-.nav-logo {
+@media (max-width: 1600px) {
+
+  .text-card-square .tweet-text-container {
+    font-size: 17px;
+  }
+
+  .photo-card .tweet-text-container {
+    font-size: 17px;
+  }
+
+  .bebas-neue .tweet-text-container {
+    font-size: 24px !important;
+  }
+
+  .tweet-tweeter-container {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1200px) {
+
+  .text-card-square .tweet-text-container {
+    font-size: 15px;
+  }
+
+  .photo-card .tweet-text-container {
+    font-size: 15px;
+  }
+
+  .bebas-neue .tweet-text-container {
+    font-size: 20px !important;
+  }
+
+  .tweet-tweeter-container {
+    font-size: 13px;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .text-card-square .tweet-text-container {
+    font-size: 13px;
+  }
+
+  .photo-card .tweet-text-container {
+    font-size: 13px;
+  }
+
+  .bebas-neue .tweet-text-container {
+    font-size: 17px !important;
+  }
+
+  .tweet-tweeter-container {
+    font-size: 12px;
+  }
+}
+
+.clean-navbar {
+  background-size: auto 75%;
   background-image: url("/img/logo.png");
-  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden; 
+  background-position: center center;
+}
+
+.nav-logo-image {
+  height: 50px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10px;
-  width: 50px;
-  height: 50px
 }
+
 .pusher-logo {
   margin-top: 20px;
   float: right;
 }
 
+.nav-sponsor-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 50px;
+  overflow: hidden; 
+  margin: auto;
+}
+
+.nav-sponsor-logo-container {
+  width: 100px;
+  float: left;
+  margin-top: 2%;
+}
+
 .hashtag-input {
-  background-color: transparent; 
-  border: none;
-  text-align: center;
+  color: #A9A9A9;
   margin-right: 10%;
+  margin-top: 12px;
 }
 
 .tweet-text-container {
-  font-size: 1.1em;
+  font-size: 1.8rem;
   font-weight: 500;
   width: 80%;
   margin: 0 auto;
+  line-height: 120%;
 }
 
 .text-card-square .tweet-text-container {
   width: 90%;
+}
+
+.square-outer-container { 
+  bottom: 0;
+  height: 70%;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80%;
 }
 
 .photo-card {
@@ -127,7 +214,6 @@ a {
   height: 100%;
   width: 100%;
   margin: 0px auto;
-  /*background-color: white;*/
 }
 
 .photo-card .tweet-avatar-container {
@@ -154,7 +240,7 @@ a {
 }
 
 .text-card-wide .card-content {
-  margin-top: 1%;
+  margin-top: 3%;
 }
 
 .text-card-tall {
@@ -162,6 +248,10 @@ a {
   text-align: center;
   width: 100%;
   height: 100%;
+}
+
+.text-card-tall .tweet-text-container {
+  width: 90%;
 }
 
 .text-card-tall .tall-card-body {
@@ -190,12 +280,12 @@ a {
   border: 1px solid lightgrey;
 }
 
-.light-green-bg {
-  background-color: #B7D1D2;
+.green-bg-white {
+  background-color: #96e1e2;
   color: white;
 }
 
-.light-green-bg .twitter-logo {
+.green-bg-white .twitter-logo {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -203,62 +293,73 @@ a {
   background-image: url("/img/twitter-logos/twitter_logo_white.png");
 }
 
-.light-green-bg .little-bar {
-  border-bottom: 1px solid white;
-}
-
-.dark-green-bg {
-  background-color: #8aa7ad;
-  color: white;
-}
-
-.dark-green-bg .twitter-logo {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  overflow: hidden; 
-  background-image: url("/img/twitter-logos/twitter_logo_white.png");
-}
-
-.dark-green-bg .little-bar {
-  border-bottom: 1px solid white;
-}
-
-.white-bg {
+.white-bg-green {
   background-color: #ffffff;
+  color: #96e1e2;
 }
 
-.white-bg .twitter-logo {
+.white-bg-green .twitter-logo {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden; 
-  background-image: url("/img/twitter-logos/twitter_logo_dark_green.png");
+  background-image: url("/img/twitter-logos/twitter_logo_turqoise.png");
 }
 
-.orange-text {
-  color: #f2b654;
+.white-bg-pink {
+  background-color: #ffffff;
+  color: #f5867b;
 }
 
-.orange-text .twitter-logo {
+.white-bg-pink .twitter-logo {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   overflow: hidden; 
-  background-image: url("/img/twitter-logos/twitter_logo_orange.png");
+  background-image: url("/img/twitter-logos/twitter_logo_salmon.png");
 }
 
-.orange-text .tweet-tweeter-container {
+.white-bg-black {
+  background-color: #ffffff;
   color: black;
+}
+
+.white-bg-black .twitter-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden; 
+  background-image: url("/img/twitter-logos/twitter_logo_turqoise.png");
+}
+
+.pink-bg-white {
+  background-color: #f5867b;
+  color: white;
+}
+
+.pink-bg-white .twitter-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden; 
+  background-image: url("/img/twitter-logos/twitter_logo_white.png");
 }
 
 .bebas-neue .tweet-text-container {
   font-family: "Bebas-Neue", "Lucinda Grande", Helvetica;
-  font-size: 1.3em;
+  font-size: 24px;
 }
 
 .diagonal-stripes {
   background-image: url("/img/diagonal-stripes-grey.png");
+}
+
+.diagonal-stripes .twitter-logo {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden; 
+  background-image: url("/img/twitter-logos/twitter_logo_salmon.png");
 }
 
 .twitter-logo {
@@ -270,6 +371,7 @@ a {
 .tweet-tweeter-container {
   display: inline-block;
   margin-left: 8px;
+  color: black;
 }
 
 .user-container {
@@ -285,6 +387,11 @@ a {
   position: absolute;
   bottom: 12px;
   font-size: 0.9em;
+  color: black;
+}
+
+.pink-bg-white .time-ago-container, .green-bg-white .time-ago-container {
+  color: white;
 }
 
 .little-bar {
@@ -300,15 +407,70 @@ a {
   clip-path: url(#diamond);
 }
 
-.grid {
-  background-color: #f1f1f1;
+.tweet-wall {
   width: 100%;
-  margin-left: auto;
-  margin-right: auto;
   height: 100%;
+}
+
+.grid {
+  background-color: #E8E8E8;
   margin-top: 70px;
-  position: fixed;
+  position: absolute;
   font-size: 1em;
+  top: 0;
+  left: 0;
+  -webkit-transition: all 0.6s ease-in-out;
+  -moz-transition: all 0.6s ease-in-out;
+  -o-transition: all 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
+}
+
+#grid.active {
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+}
+
+#grid.inactive {
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+
+#grid2.active {
+  -webkit-transform: rotateY(0deg);
+  transform: rotateY(0deg);
+}
+
+#grid2.inactive {
+  -webkit-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+}
+
+.flip-container, .grid {
+  width: 100%;
+  height: 100%;
+}
+
+.flip-container {
+  -webkit-perspective: 1000;
+  perspective: 1000;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.flipper {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  position: relative;
+  height: 100%;
+}
+
+.grid, .grid2 {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.grid {
+  z-index: 2;
 }
 
 .logo-photo-container {
@@ -321,7 +483,7 @@ a {
 }
 
 card {
-  padding: 5px;
+  padding: 5px; 
 }
 
 .join-the-conversation {
@@ -339,14 +501,19 @@ card {
   margin-right: 10px;
 }
 
-.hashtag {
-  text-align: center;
-  margin-top: 24px;
+.hashtag-container {
   font-size: 1.3em;
-  color: #b6d1d2;
   margin-right: 10px;
+  margin-top: 30px;
 }
 
+.hashtag {
+  text-align: center;
+  font-size: 1.3em;
+  margin-right: 10px;
+  color: #90D3D7;
+  margin-top: 22px;
+}
 
 /* ----- Bootstrap Overrides ----- */
 
@@ -411,6 +578,15 @@ card {
 
 /* ----- Admin Page ----- */
 
+.logo-link {
+  text-decoration: none;
+  color: white;
+}
+
+.logo-link:hover {
+  text-decoration: none;
+  color: white;
+}
 
 @media (min-width: 768px) {
   .sidebar-nav .navbar .navbar-collapse {
@@ -508,7 +684,7 @@ card {
   color: white;
   border: none;
   border-radius: 0px;
-  padding: 10px;
+  padding: 5px;
 }
 
 .query-box {
@@ -766,7 +942,7 @@ card {
 }
 
 body {
-  background-color: white; 
+  background-color: #E8E8E8;
 }
 
 .company-logo-section {
@@ -918,7 +1094,7 @@ body {
 .choose-logo-button {
   background-color: #90d3d7;
   color: white;
-  padding: 8%;
+  padding: 6%;
   cursor: pointer;
   font-weight: 100;
 }
@@ -957,6 +1133,10 @@ body {
 .nav-logout-button a {
   color: white;
   text-decoration: none;
+}
+
+.nav-logout-button {
+  float: right;
 }
 
 /* ------------------------------ */

@@ -114,6 +114,17 @@ twitterWallDirectives.directive('grid', ['$q', '$http', function($q, $http) {
   }
 }]);
 
+twitterWallDirectives.directive('grid2', ['$q', '$http', function($q, $http) {
+  var linker = function(scope, elem, attrs) {
+    
+  }
+  return {
+    restrict: "A",
+    templateUrl: "/views/partials/blocks2.html",
+    link: linker
+  }
+}]);
+
 twitterWallDirectives.directive('card', ['$compile', '$http', function($compile, $http) {
   var getTemplate = function(tweetType) {
     var templateLoader,
@@ -139,6 +150,28 @@ twitterWallDirectives.directive('card', ['$compile', '$http', function($compile,
     }).then(function (response) {
       $compile(elem.contents())(scope)
     });  
+
+    console.log(elem);
+
+    console.log(elem[0].children[0]);
+
+    console.log(elem.find('.square-outer-container'));
+
+
+    // var grid = angular.element($document[0].getElementById('grid'));
+    // console.log(grid);
+    // var children = grid[0].children;
+    // console.log(children);
+    // console.log(collectionToArray(children));
+    var collectionToArray = function(collection) {
+      var ary = [];
+      for(var i=0, len = collection.length; i < len; i++)
+      {
+        ary.push(collection[i]);
+      }
+      return ary;
+    }
+
   }
   return {
     restrict: "E",
@@ -199,9 +232,11 @@ twitterWallDirectives.directive('sponsorCard', ['$compile', function($compile) {
 }]);
 
 var randomStyle = function() {
-  var randomNum = Math.floor(Math.random()*10);
-  if (randomNum < 2) { return "light-green-bg"; }
-  if (randomNum < 4) { return "dark-green-bg"; }
-  if (randomNum < 7) { return "white-bg"; }
-  return "diagonal-stripes orange-text bebas-neue";
+  var randomNum = Math.floor(Math.random()*12);
+  if (randomNum < 2) { return "green-bg-white"; }
+  if (randomNum < 4) { return "pink-bg-white"; } 
+  if (randomNum < 6) { return "white-bg-black"; }
+  if (randomNum < 8) { return "white-bg-green"; }
+  if (randomNum < 10) { return "white-bg-pink"; }
+  return "diagonal-stripes bebas-neue";
 }

@@ -10,6 +10,21 @@ twitterWallControllers.controller('AdminCtrl', [
   }
 ]);
 
+twitterWallControllers.controller('HashtagCtrl', [
+  '$scope', 
+  '$http',
+  'Hashtag',
+  function ($scope, $http, Hashtag) {
+    Hashtag.get().then(function(hashtag) {
+      $scope.hashtag = hashtag.text;
+    });
+
+    $scope.saveHashtag = function() {
+      Hashtag.set($scope.hashtag);
+    }
+  }
+]);
+
 twitterWallControllers.controller('ViewerCtrl', [
   '$scope', 
   '$http',
@@ -17,18 +32,22 @@ twitterWallControllers.controller('ViewerCtrl', [
   'Pusher',
   'CleanTweets',
   '$window',
-  function ($scope, $http, $q, Pusher, CleanTweets, $window) { 
-
-    $http.get('/api/hashtag')
+  'Hashtag',
+  '$document',
+  function ($scope, $http, $q, Pusher, CleanTweets, $window, Hashtag, $document) { 
+    $scope.sponsorLogos = [];
+    $http.get('/sponsor-logos')
       .success(function(res) {
-        if (res.hashtag) { $scope.hashtag = res.hashtag.text }
-        else { $scope.hashtag = '#changeMe'; }
-      })
+        $scope.sponsorLogos = res.logos;
+      });
 
-    $scope.saveHashtag = function() {
-      // $scope.hashtag = $scope.hashtag;
-      $http.post('/api/update-hashtag', { hashtag: { text: $scope.hashtag } });
-    }
+
+    var previousGrid = 1;
+
+    var hashtag = Hashtag.get().then(function(hashtag) {
+      if (hashtag) { $scope.hashtag = hashtag.text }
+      else { $scope.hashtag = '#changeMe'; }
+    });
 
     $scope.windowWidth = $window.innerWidth;
     $scope.windowHeight = $window.innerHeight;
@@ -38,7 +57,8 @@ twitterWallControllers.controller('ViewerCtrl', [
     w.bind('resize', function () {
       $scope.$apply(function () { 
         
-        // Need to re-add block info to tweets here to make sure they scale in size with the grid
+        // Need to re-add block info to tweets here to make sure they scale in
+        // size with the grid, or make grid centered but add more tweets
         
         var packer = new Packer(w[0].innerWidth, w[0].innerHeight);
         packer.fit($scope.cleanTweets);
@@ -56,9 +76,31 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     Pusher.subscribe('twitter_wall', 'new_clean_tweet', function (data) {
       var tweet = addBlockInfoToTweet(dimensions, data['tweet']);
-      $scope.cleanTweets.unshift(tweet);
-      var packer = new Packer($scope.windowWidth, $scope.windowHeight);
-      packer.fit($scope.cleanTweets);
+      if (previousGrid == 1) {
+        $scope.cleanTweets2 = _.cloneDeep($scope.cleanTweets);
+        $scope.cleanTweets2.unshift(tweet);
+        var packer = new Packer($scope.windowWidth, $scope.windowHeight);
+        packer.fit($scope.cleanTweets2, function() {
+          grid2.classList.remove("inactive");
+          grid2.classList.add("active");
+          var grid1 = $document[0].getElementById("grid");
+          grid1.classList.remove("active");
+          grid1.classList.add("inactive");
+        });  
+        previousGrid = 2;
+      } else {
+        $scope.cleanTweets = _.cloneDeep($scope.cleanTweets2);
+        $scope.cleanTweets.unshift(tweet);
+        var packer = new Packer($scope.windowWidth, $scope.windowHeight);
+        packer.fit($scope.cleanTweets, function() {
+          var grid1 = $document[0].getElementById("grid");
+          grid1.classList.remove("inactive");
+          grid1.classList.add("active");
+          grid2.classList.remove("active");
+          grid2.classList.add("inactive");
+        });  
+        previousGrid = 1;
+      }
     });
 
     Pusher.subscribe('twitter_wall', 'remove_clean_tweet', function (data) {
@@ -84,9 +126,9 @@ twitterWallControllers.controller('ViewerCtrl', [
       } else { 
         var randomNum = Math.random()*10;
         var block = {};
-        if (randomNum <= 2) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } else
-        if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
-        { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
+        if (randomNum <= 10) { block = { w: unitWidth, h: unitHeight, style: 'textSquare'}; } 
+        // if (randomNum <= 6) { block = { w: 2*unitWidth, h: unitHeight, style: 'textWide'}; } else
+        // { block = { w: unitWidth, h: 2*unitHeight, style: 'textTall'}; }
         _.extend(tweet, block);
       }
       return tweet;
@@ -94,12 +136,12 @@ twitterWallControllers.controller('ViewerCtrl', [
 
     var addBlockInfoToCleanTweets = function(dimensions, tweets) {
       var deferred = $q.defer();
-      addSponsorLogosToCleanTweets(tweets).then(function() {
-        tweets.forEach(function(tweet) {
-          addBlockInfoToTweet(dimensions, tweet);
-        })
-        deferred.resolve(tweets);
-      });
+      // addSponsorLogosToCleanTweets(tweets).then(function() {
+      tweets.forEach(function(tweet) {
+        addBlockInfoToTweet(dimensions, tweet);
+      })
+      deferred.resolve(tweets);
+      // });
       return deferred.promise;
     }
 
@@ -301,6 +343,7 @@ twitterWallControllers.controller('MirrorCtrl', [
       }
 
       // *** Need to do something like this to make it relayout when a tweet is removed *** 
+
       // var packery = Packery.get();
       // packery.reloadItems();
       // packery.layout();

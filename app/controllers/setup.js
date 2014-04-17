@@ -86,7 +86,6 @@ exports.removeSponsorLogo = function(req, res) {
         console.log("Sponsor logo removed from DB");
       })
   })
-  // pusherClient.trigger('twitter_wall', 'remove_sponsor_logo', { index: logoIndex }); 
   res.send();
 };
 

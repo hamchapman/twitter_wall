@@ -2,7 +2,7 @@
 
   <div ng-controller="LogoCtrl" class="outer-logo-container">
     <div class="inner-logo-container">
-      <h3 class="add-logo-heading">Add Logos</h3>
+      <h3 class="add-logo-heading">Logos & Hashtag</h3>
       
       <div class="container ">
         <div class="row">
@@ -16,9 +16,12 @@
               <form action="/logo-upload" ng-upload="companyComplete(content)">
                 <div class="logo-upload-form-buttons-container">
                   <label class="choose-logo-button">Upload<span><input type="file" name="logo" logo-uploader id="file-upload-box"></input></span></label>
-                  <!-- <input type="submit" value="Upload" class="logo-upload-button" ng-disabled="$isLoading"></input> -->
                 </div>
               </form>      
+            </div>
+            <div ng-controller="HashtagCtrl" class="hashtag-container">
+              <div class="hashtag-text">Choose Hashtag</div>
+              <input class="hashtag-input" ng-model="hashtag" ng-blur="saveHashtag()" placeholder="{{hashtag}}"></input>
             </div>
           </div>
           
@@ -36,7 +39,6 @@
               <form action="/sponsor-logo-upload" ng-upload="sponsorComplete(content)">
                 <div class="logo-upload-form-buttons-container">
                   <label class="choose-logo-button">Upload<span><input type="file" name="sponsorLogo" logo-uploader id="file-upload-box"></input></span></label>
-                  <!-- <input type="submit" value="Upload" class="logo-upload-button" ng-disabled="$isLoading"></input> -->
                 </div>
               </form>
             </div>
@@ -102,31 +104,3 @@
 
 </div>
  
-
-<script>
-//   function handleFileSelect(evt) {
-//     var files = evt.target.files;
-
-//     if (!f.type.match('image.*')) {
-//       continue;
-//     }
-
-//     var reader = new FileReader();
-
-//     // Closure to capture the file information.
-//     reader.onload = (function(theFile) {
-//       return function(e) {
-//         // Render thumbnail.
-//         var span = document.createElement('span');
-//         span.innerHTML = ['<img class="thumb" src="', e.target.result,
-//                           '" title="', escape(theFile.name), '"/>'].join('');
-//         document.getElementById('list').insertBefore(span, null);
-//       };
-//     })(f);
-
-//     // Read in the image file as a data URL.
-//     reader.readAsDataURL(f);
-//   }
-
-//   document.getElementById('files').addEventListener('change', handleFileSelect, false);
-// </script>

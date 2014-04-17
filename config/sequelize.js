@@ -32,7 +32,6 @@ Object.keys(db).forEach(function(modelName) {
 });
 
 // Synchronizing any model changes with database. 
-// WARNING: this will DROP your database everytime you re-run your application
 sequelize
   .sync()
   .complete(function(err){

@@ -3,9 +3,9 @@ var app = express();
 var http = require('http');
 var path = require('path');
 var flash = require('connect-flash');
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var passport = require('./config/passport');
 var db = require('./config/sequelize');
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 var config = require('./config/config');
 var auth = require('./config/middlewares/authorization');
 var api = require('./app/controllers/api');
@@ -33,9 +33,13 @@ app.configure('development', function(){
 
 require('./config/routes').init(app, passport, auth);
 
-api.setupClients();
-api.startStreams();
-
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+api.setupClients();
+api.startStreams();
+
+// setTimeout(function() {
+  
+// },1000);

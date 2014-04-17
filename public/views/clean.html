@@ -1,23 +1,35 @@
 <div class="tweet-wall">
   
   <header>
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <!-- <div class="nav-logo"></div> -->
+    <nav class="navbar navbar-default navbar-fixed-top clean-navbar" role="navigation">
       <div class="navbar-text navbar-right">
         <div class="join-the-conversation"><div class="twitter-logo"></div>JOIN THE CONVERSATION</div>
         <div class="hashtag">
-          <input class="hashtag-input" ng-model="hashtag" ng-blur="saveHashtag()" placeholder="{{hashtag}}"></input>
+          <div>{{hashtag}}</div>
         </div>
       </div>
       
     </nav>
   </header>
-  <div class="grid" grid></div>
+  
+  <div class="flip-container">
+    <div class="flipper">
+      <div id="grid" class="grid active" grid></div>
+      <div id="grid2" class="grid inactive" grid2></div>
+    </div>
+  </div>
 
   <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-md-offset-9">
+        <div class="col-md-6">
+          <div class="nav-sponsor-logo-container" ng-repeat="logo in sponsorLogos">
+            <div style="background-image:url({{logo.path}});" class="nav-sponsor-logo">
+            </div>
+          </div>
+        </div>
+            
+        <div class="col-md-3 col-md-offset-3">
           <div class="powered-by-pusher">
             <img class="pusher-logo" src="/img/powered_by_pusher.png">
           </div>

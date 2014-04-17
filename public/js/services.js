@@ -2,6 +2,23 @@
 
 var twitterWallServices = angular.module('twitterWallServices', []);
 
+twitterWallServices.factory('Hashtag', ['$http', '$q', function($http, $q) {
+  return {
+    get: function () {
+      var deferred = $q.defer();
+      $http.get('/api/hashtag')
+        .success(function(res) {
+          var hashtag = res.hashtag;
+          deferred.resolve(hashtag);
+        })
+      return deferred.promise;
+    },
+    set: function(hashtag) {
+      return $http.post('/api/update-hashtag', { hashtag: { text: hashtag } });
+    }
+  };
+}]);
+
 twitterWallServices.factory('CleanTweets', ['$http', '$q', function($http, $q) {
   var cleanTweets = [];
 
@@ -23,7 +40,6 @@ twitterWallServices.factory('CleanTweets', ['$http', '$q', function($http, $q) {
     }
   };
 }]);
-
 
 twitterWallServices.factory('Tweets', ['$http', function($http) {
   return {
