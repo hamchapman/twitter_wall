@@ -16,7 +16,8 @@ twitterWallControllers.controller('HashtagCtrl', [
   'Hashtag',
   function ($scope, $http, Hashtag) {
     Hashtag.get().then(function(hashtag) {
-      $scope.hashtag = hashtag.text;
+      if (hashtag) { $scope.hashtag = hashtag.text }
+      else { $scope.hashtag = '#changeMe'; }
     });
 
     $scope.saveHashtag = function() {
@@ -40,11 +41,6 @@ twitterWallControllers.controller('ViewerCtrl', [
       .success(function(res) {
         $scope.sponsorLogos = res.logos;
       });
-
-    var hashtag = Hashtag.get().then(function(hashtag) {
-      if (hashtag) { $scope.hashtag = hashtag.text }
-      else { $scope.hashtag = '#changeMe'; }
-    });
 
     $scope.windowWidth = $window.innerWidth;
     $scope.windowHeight = $window.innerHeight;
