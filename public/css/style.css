@@ -313,7 +313,7 @@ a {
 .green-bg-white .photo-card-triangle {
   position: absolute;
   right: 50%;
-  top: 45%;
+  top: 20%;
   width: 0; 
   height: 0; 
   border-top: 20px solid transparent;
@@ -337,7 +337,7 @@ a {
 .white-bg-green .photo-card-triangle {
   position: absolute;
   right: 50%;
-  top: 45%;
+  top: 20%;
   width: 0; 
   height: 0; 
   border-top: 20px solid transparent;
@@ -361,7 +361,7 @@ a {
 .white-bg-pink .photo-card-triangle {
   position: absolute;
   right: 50%;
-  top: 45%;
+  top: 20%;
   width: 0; 
   height: 0; 
   border-top: 20px solid transparent;
@@ -385,7 +385,7 @@ a {
 .white-bg-black .photo-card-triangle {
   position: absolute;
   right: 50%;
-  top: 45%;
+  top: 20%;
   width: 0; 
   height: 0; 
   border-top: 20px solid transparent;
@@ -409,7 +409,7 @@ a {
 .pink-bg-white .photo-card-triangle {
   position: absolute;
   right: 50%;
-  top: 45%;
+  top: 20%;
   width: 0; 
   height: 0; 
   border-top: 20px solid transparent;
