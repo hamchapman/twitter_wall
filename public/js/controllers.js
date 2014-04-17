@@ -194,7 +194,7 @@ twitterWallControllers.controller('ModerateCtrl', [
     $scope.activeIndexRight = -1;
     $http.get('/api/tweets-to-moderate')
       .success(function(res) {
-        $scope.tweets = res.tweets;
+        $scope.tweets = res.tweets.reverse();
       })
 
     Pusher.subscribe('twitter_wall', 'new_tweet', function (data) {
