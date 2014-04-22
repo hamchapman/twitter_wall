@@ -33,9 +33,7 @@ twitterWallControllers.controller('ViewerCtrl', [
   'Pusher',
   'CleanTweets',
   '$window',
-  'Hashtag',
-  '$document',
-  function ($scope, $http, $q, Pusher, CleanTweets, $window, Hashtag, $document) { 
+  function ($scope, $http, $q, Pusher, CleanTweets, $window) { 
     $scope.sponsorLogos = [];
     $http.get('/sponsor-logos')
       .success(function(res) {
@@ -46,6 +44,9 @@ twitterWallControllers.controller('ViewerCtrl', [
     $scope.windowHeight = $window.innerHeight;
     $scope.dimensions = { w: $scope.windowWidth, h: $scope.windowHeight - 80 };
 
+    // Repacks the grid with more / fewer cards depending on window resize
+    // Could choose to resize the cards if number of cards is wanted to remain constant
+    // Would need to add in another call to addBlockInfoToCleanTweets to do that
     var w = angular.element($window); 
     w.bind('resize', function () {
       $scope.$apply(function () { 
@@ -91,7 +92,7 @@ twitterWallControllers.controller('ViewerCtrl', [
           grid1.classList.remove("active");
           grid1.classList.add("inactive");
         });  
-        previousGrid = -1;
+        previousGrid = -1;  // Set the previousGrid value to -1 to imply that the grids has flipped over
       } else {
         $scope.cleanTweets = _.cloneDeep($scope.cleanTweets2);
         $scope.cleanTweets.unshift(tweet);
@@ -120,6 +121,8 @@ twitterWallControllers.controller('ViewerCtrl', [
     });
 
     var addBlockInfoToTweet = function(dimensions, tweet, numX, numY) {
+      // Packer block info gets added to the tweets based on grid layout and window size
+      // Tweets are also given the appropriate style to later be given the appropriate template
       var unitWidth = $scope.dimensions.w / numX;
       var unitHeight = $scope.dimensions.h / numY;
       if (tweet.media_url) {
@@ -153,6 +156,8 @@ twitterWallControllers.controller('QueryCtrl', [
   'Pusher',
   function ($scope, $http, Pusher) {
     $scope.queries = [];
+
+    // Get request to API to get a list of the current queries
     $http.get('/api/queries')
       .success(function(res) {
         res.queries.forEach(function(query) {
@@ -197,10 +202,12 @@ twitterWallControllers.controller('ModerateCtrl', [
         $scope.tweets = res.tweets.reverse();
       })
 
+    // Subscribe to Pusher event that new tweet has been added to DB
     Pusher.subscribe('twitter_wall', 'new_tweet', function (data) {
       $scope.tweets.push(data['tweet']);
     });
 
+    // Verify that a tweet can be shown on the twitter wall
     $scope.verifyTweet = function (tweet, $index) {
       $scope.activeIndexLeft = $index;
       var i = $scope.tweets.indexOf(tweet);
@@ -331,7 +338,7 @@ twitterWallControllers.controller('MirrorCtrl', [
         $scope.cleanTweets.splice(tweetIndex, 1);
       }
 
-      // *** Need to do something like this to make it relayout when a tweet is removed *** 
+      // *** Potentially need to do something like this to make it relayout when a tweet is removed *** 
 
       // var packery = Packery.get();
       // packery.reloadItems();

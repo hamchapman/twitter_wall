@@ -30,7 +30,7 @@ exports.pusherCreate = function(req, res) {
 exports.twitter = function(req, res) {
   db.TwitterOAuth.findAll()
   .success(function(oauths) {
-    if(oauths.length > 0) {     // Check if Tiwtter OAuth has already been added
+    if(oauths.length > 0) {     // Check if Twitter OAuth has already been added
       res.redirect('/');        // If it has then send on to admin panel
     } else {
       res.render('setup/twitter', {
