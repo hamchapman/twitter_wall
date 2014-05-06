@@ -238,6 +238,14 @@ twitterWallControllers.controller('ConfigCtrl', [
           $scope.isAutomatic = res.automatic;
         });
 
+    $http.get('/setup/pusher-info')
+        .success(function(res) {
+          console.log(res);
+          $scope.pusherAppId = res.app_id;
+          $scope.pusherKey = res.key;
+          $scope.pusherSecret = res.secret;
+        });
+
     $scope.updatePusherConfig = function() {
       var app_id = $scope.pusher_app_id;
       var key = $scope.pusher_key;

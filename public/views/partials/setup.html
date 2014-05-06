@@ -22,6 +22,7 @@
             <div ng-controller="HashtagCtrl" class="hashtag-container">
               <div class="hashtag-text">Choose Hashtag</div>
               <input class="hashtag-input" ng-model="hashtag" ng-blur="saveHashtag()" placeholder="{{hashtag}}"></input>
+              <button type="submit" ng-click="saveHashtag()" class="config-update-button">Update</button>
             </div>
           </div>
           
@@ -81,9 +82,9 @@
         <div class="inner-config-container">
           <h4>Config</h4>
           <div class="sub-heading-text"> Update your Pusher app details or change modes </div>
-          <input type="text" ng-model="pusher_app_id" placeholder="App ID" class="pusher-app-id pusher-input">
-          <input type="text" ng-model="pusher_key" placeholder="Key" class="pusher-key pusher-input">
-          <input type="text" ng-model="pusher_secret" placeholder="Secret" class="pusher-secret pusher-input">
+          <input type="text" ng-value="{{pusherAppId}}" ng-model="pusher_app_id" class="pusher-app-id pusher-input">
+          <input type="text" ng-value="{{pusherKey}}" ng-model="pusher_key" class="pusher-key pusher-input">
+          <input type="text" ng-value="{{pusherSecret}}" ng-model="pusher_secret" class="pusher-secret pusher-input">
           <div class="config-buttons-container">
             <button type="submit" ng-click="updatePusherConfig()" class="config-update-button">Update</button>
 

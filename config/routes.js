@@ -31,6 +31,7 @@ exports.init = function(app, passport, auth) {
   // Routes for the settings page in the Angular app
   app.get('/api/queries', api.queries);
   app.get('/sponsor-logos', setup.sponsorLogos);
+  app.get('/setup/pusher-info', setup.pusherInfo);
   app.post('/api/pusher', setup.pusherUpdate);
   app.post('/logo-upload', setup.logoUpload);
   app.post('/sponsor-logo-upload', setup.sponsorLogoUpload);
